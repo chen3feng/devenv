@@ -640,7 +640,11 @@ class Env:
 
 class Output:
   def __init__(self):
-    self.string = ''
+    self._string = []
+
+  @property
+  def string(self):
+    return ''.join(self._string)
 
   def GetLastLine(self):
     index = self.string.rfind('\n')
@@ -650,7 +654,7 @@ class Output:
     return self.string[index + 1:]
 
   def Append(self, s):
-    self.string += s
+    self._string.append(s)
 
 
 def RunAtomicCode(env, node, output):
