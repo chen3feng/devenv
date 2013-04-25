@@ -1,0 +1,35 @@
+#!/usr/bin/awk -f
+# source code indent depth stats
+
+
+BEGIN {
+    indent = 0;
+}
+
+{
+    if ($0 ~ /{/ )
+    {
+        ++indent;
+        ++indents[indent];
+#        print indent, $0;
+        if (indent > 3)
+        {
+            print indent, $0;
+            printf FILENAME ":" FNR "\n";
+        }
+    }
+
+    if ($0 ~ /}/)
+    {
+        --indent;
+#        print indent, $0;
+    }
+}
+
+END {
+    print "summary:";
+    print "total lines", NR;
+    for (i in indents)
+        print i, indents[i];
+}
+

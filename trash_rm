@@ -1,0 +1,175 @@
+#!/bin/bash
+# Author: CHEN Feng <phongchen@tencent.com>
+# Date: 2012-01-18
+# Description: a rm function with trash support
+
+TRASH_DIR=$HOME/.trash
+if [ ! -d "$TRASH_DIR" ]; then
+    mkdir -p $HOME/.trash
+    echo "Trash dir $TRASH_DIR created"
+fi
+
+function _abs_path()
+{
+    local path="$1"
+    local base
+    local dir
+    if [ "${path:0:1}" = "/" ]; then
+        echo "$path"
+        return 0
+    fi
+
+    base=`basename "$path"`
+    if dir=$(cd $(dirname "$path") && pwd); then
+        echo "${dir}/${base}"
+        return 0
+    fi
+    return 1
+}
+
+function _file_in_dir()
+{
+    local file
+    local dir
+    file="$(_abs_path "$1")"
+    dir="$2"
+    file_dir="$file"
+    while :; do
+        if [ "$file_dir" = "$dir" ]; then
+            return 0;
+        fi
+        file_dir=`dirname "$file_dir"`
+        if [ "$file_dir" = "/" ]; then
+            return 1
+        fi
+    done
+    return 1
+}
+
+function rm()
+{
+    if [ $# == 0 ]; then
+        /bin/rm
+        return
+    fi
+
+    local arg
+    local confirm
+    local direct
+    local error
+    local force
+    local interactive
+    local recursive
+    local trash_dir
+    local verbose
+
+    trash_dir="$TRASH_DIR"
+
+    if ! rm_args=`getopt -o firDRv -n rm --long direct,force,help,interactive,recursive,verbose,version -- "$@"`; then
+        return 1;
+    fi
+    eval set -- "$rm_args"
+    while [ -n "$1" ]; do
+        case "$1" in
+            -D|--direct)
+                direct='-D'
+                shift;;
+            -f|--force)
+                force="-f"
+                shift;;
+            -i|--interactive)
+                interactive="-i"
+                shift;;
+            -r|-R|--recursive)
+                recursive="-r"
+                shift;;
+            -verbose|--verbose)
+                verbose="-v"
+                shift;;
+            --help)
+                /bin/rm "$1"
+                echo -e "\nAddition options:\n  -D, --direct          remove directly, don't use trash"
+                return;;
+            --version)
+                /bin/rm "$1"
+                return;;
+            --)
+                shift;
+                break ;;
+            *)
+                echo "unknown option $1" >&2
+                exit 1;;
+        esac
+    done
+
+    if [ -n "$direct" ]; then
+        echo "remove directly (y/n)?"
+        read answer
+        if [ "$answer" = "y" ]; then
+            /bin/rm $force $recursive $verbose $interactive "$@"
+        fi
+        return $?
+    fi
+
+    error=0
+
+    for arg in "$@"; do
+        if _file_in_dir "$arg" "$trash_dir"; then
+            /bin/rm $force $recursive $verbose $interactive "$arg"
+            continue
+        fi
+
+        if ! stat "$arg" &> /dev/null; then
+            if [ -z "$force" ]; then
+                echo "rm: cannot remove \`$arg': No such file or directory"
+                error=1
+            fi
+            continue
+        fi
+
+        if [[ -d "$arg" && -z "$recursive" ]]; then
+            echo "cannot remove \`$arg': Is a directory"
+            error=1
+            continue
+        fi
+
+        if [ -n "$interactive" ]; then
+            if [ -d "$arg" ]; then
+                file_type="directory"
+            elif [ -L "$arg" ]; then
+                file_type="symbolic link"
+            else
+                file_type="file"
+            fi
+            echo -n "rm: remove $file_type \`$arg'?"
+            read confirm
+            if [ "$confirm" != "y" ]; then
+                continue;
+            fi
+        fi
+
+        if [ -L "$arg" ]; then
+            if [ -n "$verbose" ]; then
+                echo "rm symbolic link $arg"
+            fi
+            /bin/rm "$arg"
+        else
+            target_name="$trash_dir/$arg"
+            if [ -e "$target_name" ]; then
+                target_name="$target_name.`date +%Y%m%d.%H%M%S.%N`"
+            fi
+
+            target_dir=`dirname "$target_name"`
+            if [ ! -e "$target_dir" ]; then
+                mkdir -p "$target_dir"
+            fi
+
+            if [ -n "$verbose" ]; then
+                echo "rm: mv $arg to $target_name"
+            fi
+            mv -T "$arg" "$target_name"
+        fi
+    done
+
+    return $error
+}

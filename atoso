@@ -1,0 +1,31 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]; then
+    echo -e "Convert archive to shared library\nUsage: $0 libname.a libs...">&2
+    exit 1
+fi
+
+
+static_library_to_shared () {
+    local aname=$1
+    if arch=`LC_ALL=C objdump -a $1 2>/dev/null`; then
+        if [[ "$arch" =~ i386 ]]; then
+            bits=32
+        elif [[ "$arch" =~ x86-64 ]]; then
+            bits=64
+        else
+            echo "invalid archive" >&2
+            return 1;
+        fi
+        soname=${1/%.a/.so}
+        shift
+        if g++ -m$bits --shared -o $soname -Xlinker --no-undefined \
+                -Xlinker --whole-archive ${aname} -Xlinker --no-whole-archive $@; then
+            echo "$soname created."
+        fi
+    fi
+}
+
+static_library_to_shared "$@"
+
+
