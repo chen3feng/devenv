@@ -1213,7 +1213,7 @@ def CheckForCopyright(filename, lines, error):
     if re.search(r'Copyright', lines[line], re.I): break
   else:                       # means no copyright line was found
     error(filename, 1, 'legal/copyright', 5,
-          'No copyright, suggest: "Copyright (c) %d, Tencent Inc.'
+          'No copyright, suggest: "Copyright (c) %d, The Toft Authors.\n'
           ' All rights reserved."' % datetime.date.today().year)
 
 
