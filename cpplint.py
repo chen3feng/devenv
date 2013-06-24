@@ -100,7 +100,7 @@ Syntax: cpplint.py [--verbose=#] [--output=vs7] [--filter=-x,+y,...]
         <file> [file] ...
 
   The style guidelines this tries to follow are those in
-    http://km.oa.com/group/2574/articles/show/51469
+    http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml
 
   Every problem is given a confidence score from 1-5, with 5 meaning we are
   certain of the problem, and 1 meaning it could be a legitimate construct.
@@ -2340,8 +2340,8 @@ def CheckSpacing(filename, clean_lines, linenum, nesting_state, error):
     prev_prev_line = ''
     m_num = 1
     if linenum > 2:
-      prev_prev_line = elided[linenum - 2] # 取出上上一行代码
-      m_num = linenum - 2 # 记录上上一行的行号
+      prev_prev_line = elided[linenum - 2] # 取锟斤拷锟斤拷锟斤拷一锟叫达拷锟斤拷
+      m_num = linenum - 2 # 锟斤拷录锟斤拷锟斤拷一锟叫碉拷锟叫猴拷
     prevbrace = prev_line.rfind('{')
     # TODO(unknown): Don't complain if line before blank line, and line after,
     #                both start with alnums and are Findented the same amount.
@@ -2381,7 +2381,7 @@ def CheckSpacing(filename, clean_lines, linenum, nesting_state, error):
       # stop warning if prev prev line is namespace or extern "C"
       if prev_prev_line.find('namespace') != -1 or prev_prev_line.find("extern \"C\""):
         exception = True
-      else: # 如果上上一行是空行，则继续向上找，一直搜索至文件的第一行
+      else: # 锟斤拷锟斤拷锟斤拷锟斤拷一锟斤拷锟角匡拷锟叫ｏ拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟揭ｏ拷一直锟斤拷锟斤拷锟斤拷锟侥硷拷锟侥碉拷一锟斤拷
         m_numTmp = m_num
         while ((prev_prev_line == '' or prev_prev_line.isspace() == True) and m_numTmp >= 1):
           m_numTmp -= 1
@@ -2406,7 +2406,7 @@ def CheckSpacing(filename, clean_lines, linenum, nesting_state, error):
     #   } else if (condition2) {
     #     // Something else
     #   }
-    # 下面的代码段用于出现namespace关键字时，倒数第二行是空行不提示报警，其他关键字还是报警
+    # 锟斤拷锟斤拷锟侥达拷锟斤拷锟斤拷锟斤拷锟节筹拷锟斤拷namespace锟截硷拷锟斤拷时锟斤拷锟斤拷锟斤拷锟节讹拷锟斤拷锟角匡拷锟叫诧拷锟斤拷示锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟截硷拷锟街伙拷锟角憋拷锟斤拷
     if linenum + 1 < clean_lines.NumLines():
       next_line = raw[linenum + 1]
       if (next_line
