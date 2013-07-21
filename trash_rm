@@ -154,16 +154,15 @@ function rm()
             fi
             /bin/rm "$arg"
         else
-            target_name="$trash_dir/$arg"
-            if [ -e "$target_name" ]; then
-                target_name="$target_name.`date +%Y%m%d.%H%M%S.%N`"
+            timestamp=`date +%Y%m%d.%H%M%S.%N`
+            # Put file into corresponding dir according removing date
+            date_dir="$trash_dir/${timestamp:0:8}"
+            if [ ! -e "$date_dir" ]; then
+                mkdir -p "$date_dir"
+                # Make user easy locating dir of today
+                ln -sf "$date_dir" "$trash_dir/today"
             fi
-
-            target_dir=`dirname "$target_name"`
-            if [ ! -e "$target_dir" ]; then
-                mkdir -p "$target_dir"
-            fi
-
+            target_name="$date_dir/`basename "$arg"`.$timestamp"
             if [ -n "$verbose" ]; then
                 echo "rm: mv $arg to $target_name"
             fi
