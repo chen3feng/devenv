@@ -6,7 +6,7 @@
 # ===========================================================================
 # How to use:
 # ---------------------------------------------------------------------------
-# 1. Download the script
+# 1. Download this script
 # 2. Add the following line into your ~/.bashrc
 # ------------------------------
 #    source /path/to/trash_rm
