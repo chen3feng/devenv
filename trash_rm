@@ -3,12 +3,51 @@
 # Date: 2012-01-18
 # Description: a rm function with trash support
 
+# ===========================================================================
+# How to use:
+# ---------------------------------------------------------------------------
+# 1. Download the script
+# 2. Add the following line into your ~/.bashrc
+# ------------------------------
+#    source /path/to/trash_rm
+# ------------------------------
+# 3. Relogin
+# 4. Your rm command is replaced now (you can also call original rm by /bin/rm)
+# 5. Enjoy it!
+#
+# ===========================================================================
+# How to view the removed files?
+# ---------------------------------------------------------------------------
+# Using the following commands:
+# ----------------------------------------------
+#   cd ~/.trash
+#   ls lastday/
+# ----------------------------------------------
+# All removed file are organized by removed date and time.
+#
+# ===========================================================================
+# How to restore removed files?
+# ---------------------------------------------------------------------------
+# You can use mv or cp command to restore
+#
+# ===========================================================================
+# How to remove file permanently?
+# ---------------------------------------------------------------------------
+# Add -D flag to rm command, (-D means directly)
+# To removed the files in trash, just using the rm command
+# ----------------------------------------------
+#   rm ~/.trash/path/to/removed/files.
+# ----------------------------------------------
+
+# The path of trash directory
 TRASH_DIR=$HOME/.trash
+
 if [ ! -d "$TRASH_DIR" ]; then
     mkdir -p $HOME/.trash
-    echo "Trash dir $TRASH_DIR created"
+    echo "Trash dir $TRASH_DIR created."
 fi
 
+# string _abs_path(string path)
 function _abs_path()
 {
     local path="$1"
@@ -27,6 +66,7 @@ function _abs_path()
     return 1
 }
 
+# bool _file_in_dir(string file, string dir)
 function _file_in_dir()
 {
     local file
@@ -46,6 +86,7 @@ function _file_in_dir()
     return 1
 }
 
+# This function will replace the rm command of system.
 function rm()
 {
     if [ $# == 0 ]; then
@@ -149,6 +190,7 @@ function rm()
         fi
 
         if [ -L "$arg" ]; then
+            # Put symbolic link into trash is meaningless, remove it directly.
             if [ -n "$verbose" ]; then
                 echo "rm symbolic link $arg"
             fi
