@@ -168,7 +168,7 @@ function rm()
             continue
         fi
 
-        if [[ -d "$arg" && -z "$recursive" ]]; then
+        if [[ -d "$arg" && ! -L "$arg" && -z "$recursive" ]]; then
             echo "cannot remove \`$arg': Is a directory"
             error=1
             continue
