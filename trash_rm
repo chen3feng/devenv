@@ -144,7 +144,7 @@ function rm()
     done
 
     if [ -n "$direct" ]; then
-        echo "remove directly (y/n)?"
+        echo -n "remove directly (y/n)?"
         read answer
         if [ "$answer" = "y" ]; then
             /bin/rm $force $recursive $verbose $interactive "$@"
