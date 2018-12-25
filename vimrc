@@ -57,7 +57,7 @@ set showmode
 set wildmenu
 set wildmode=longest:full,full
 if version >= 703
-    set colorcolumn=80,100
+    set colorcolumn=81,101
 endif
 
 " status line
@@ -242,7 +242,8 @@ autocmd BufReadPost * nested
             \ endif
 
 autocmd BufEnter /*/include/c++/* nested setfiletype cpp
-autocmd BufEnter /usr/include/* nested call GnuIndent()
+" autocmd BufEnter /usr/include/* nested call GnuIndent()
+autocmd BufEnter */include/c++/*.*.*/* nested call GnuIndent()
 autocmd BufWritePre * nested call RemoveTrailingSpace()
 autocmd FileType make nested colorscheme murphy |
 
@@ -256,7 +257,7 @@ function SetLogHighLight()
     syntax match LogWarning "^W\d\+ .*$"
     " syntax match LogInfo "^I\d\+ .*$"
 endfunction
-autocmd BufEnter *.{log,INFO,WARNING,ERROR,FATAL} nested call SetLogHighLight()
+autocmd BufEnter *.{INFO,WARNING,ERROR,FATAL},*.log.{INFO,WARNING,ERROR,FATAL}.* nested call SetLogHighLight()
 
 "autocmd BufEnter *.log match DiffAdd '\%>1024v.*'
 
@@ -291,11 +292,11 @@ function! s:InsertHeaderGuard()
     else
         let path = expand("%")
     endif
-    let varname = toupper(substitute(path, "[^a-zA-Z0-9]", "_", "g"))
+    let varname = toupper(substitute(path, "[^a-zA-Z0-9]", "_", "g")) . "_"
     exec 'norm O#ifndef ' . varname
     exec 'norm o#define ' . varname
     exec 'norm o#pragma once'
-    exec '$norm o#endif // ' . varname
+    exec '$norm o#endif  // ' . varname
 endfunction
 autocmd BufNewFile *.{h,hh.hxx,hpp} nested call <SID>InsertHeaderGuard()
 
@@ -356,7 +357,7 @@ command! -complete=file -nargs=1 PlaybackBuildLog call PlaybackBuildLog('<args>'
 function! ViewComments(...)
     let l:old_makeprg = &makeprg
     setlocal makeprg=curl
-    execute "make -s http://codereview.soso.oa.com/" . join(a:000) . "/comments"
+    execute "make -s http://codereview.oa.com/" . join(a:000) . "/comments"
     let &makeprg=old_makeprg
 endfunction
 command! -nargs=1 ViewComments call ViewComments('<args>')
