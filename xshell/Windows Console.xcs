@@ -1,0 +1,23 @@
+[Windows Console]
+text=ffffff
+cyan(bold)=00ffff
+text(bold)=ffffff
+magenta=800080
+green=008000
+green(bold)=00ff00
+background=000000
+cyan=008080
+red(bold)=ff0000
+yellow=808000
+magenta(bold)=ff00ff
+yellow(bold)=ffff00
+red=800000
+white=c0c0c0
+blue(bold)=0000ff
+white(bold)=ffffff
+black=000000
+blue=000080
+black(bold)=808080
+[Names]
+name0=Windows Console
+count=1
