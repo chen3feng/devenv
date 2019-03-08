@@ -1,3 +1,6 @@
+" Chen3feng's .vimrc
+" Author: CHEN Feng <chen3feng@gmail.com>
+
 if version < 700
     echo "~/.vimrc: Vim 7.0+ is required!, you should upgrade your vim to latest version."
 endif
@@ -20,6 +23,8 @@ if !isdirectory(expand(&backupdir))
         call mkdir(expand(&backupdir), "p")
     endif
 endif
+
+set autowrite
 
 " input settings
 set backspace=2
@@ -233,6 +238,7 @@ augroup filetype
     autocmd! BufRead,BufNewFile *.thrift set filetype=thrift
     autocmd! BufRead,BufNewFile *.pump set filetype=pump
     autocmd! BufRead,BufNewFile BUILD set filetype=blade
+    autocmd! BufRead,BufNewFile *.go set filetype=go
 augroup end
 
 " When editing a file, always jump to the last cursor position
@@ -306,6 +312,8 @@ endif
 
 autocmd FileType python syn keyword Function self
 
+autocmd FileType go set noexpandtab ts=8 sw=8
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom commands sections
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -361,4 +369,3 @@ function! ViewComments(...)
     let &makeprg=old_makeprg
 endfunction
 command! -nargs=1 ViewComments call ViewComments('<args>')
-
