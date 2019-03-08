@@ -15,6 +15,7 @@ Put develop tools here, such as style check and editing
 * 自动识别终端编码，避免显示乱码
 * 高亮显示代码中的TAB字符
 * 以彩色高亮显示glog日志文件中的错误，警告等信息
+* 编辑时，<Ctrl-P>触发代码补全
 * 保存时，自动删除行尾空白字符，对unix格式文本文件自动删除多余的\r字符
 * [QuickFix模式](http://vimcdoc.sourceforge.net/doc/quickfix.html)快捷键：F3上一个错误，F4下一个错误，F5构建代码，F9切换QuickFix窗口
 * `:Blade`自定义命令，不离开vim，编译代码，并进入QuickFix模式
