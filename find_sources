@@ -11,7 +11,7 @@ function findall() {
             expr+=" -or -name *.$ext"
         fi
     done
-    ( set -f; find $expr | grep -Ev 'build(32|64)_(debug_release)' )
+    ( set -f; find $expr | grep -Ev 'build(32|64)_(debug|release)' )
 }
 
 # Generate a find* command alias for specified file extensions
@@ -29,7 +29,7 @@ function generate_find_aliase() {
             expr+=" -or -name '*.$ext'"
         fi
     done
-    local find_cmd="find $expr | grep -Ev 'build(32|64)_(debug_release)'"
+    local find_cmd="find $expr | grep -Ev 'build(32|64)_(debug|release)'"
     alias $name="$find_cmd"
 }
 
