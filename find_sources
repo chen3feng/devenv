@@ -46,5 +46,3 @@ function generate_all_find_aliases() {
 }
 
 generate_all_find_aliases
-
-
