@@ -153,6 +153,11 @@ map <F7> :A<CR>
 
 nnoremap <silent> <F8> :TlistToggle<CR>
 
+map <silent><S-Left>  :bprevious<CR>
+map <silent><S-Right> :bnext<CR>
+map <silent><S-End>   :blast<CR>
+map <silent><S-Home>  :bfirst<CR>
+
 " QUICKFIX WINDOW
 " @see http://c9s.blogspot.com/2007/10/vim-quickfix-windows.html
 command -bang -nargs=? QFix call QFixToggle(<bang>0)
@@ -251,7 +256,12 @@ autocmd BufEnter /*/include/c++/* nested setfiletype cpp
 " autocmd BufEnter /usr/include/* nested call GnuIndent()
 autocmd BufEnter */include/c++/*.*.*/* nested call GnuIndent()
 autocmd BufWritePre * nested call RemoveTrailingSpace()
+
 autocmd FileType make nested colorscheme murphy |
+autocmd FileType python nested set ts=4 sw=4
+autocmd FileType python syn keyword Function self
+autocmd FileType go set noexpandtab ts=8 sw=8
+
 
 function SetLogHighLight()
     highlight LogFatal ctermbg=red guifg=red
@@ -310,10 +320,6 @@ if version >= 700
     autocmd QuickFixCmdPost * :QFix
 endif
 
-autocmd FileType python syn keyword Function self
-
-autocmd FileType go set noexpandtab ts=8 sw=8
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom commands sections
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -360,12 +366,3 @@ function! PlaybackBuildLog(...)
     let &makeprg=old_makeprg
 endfunction
 command! -complete=file -nargs=1 PlaybackBuildLog call PlaybackBuildLog('<args>')
-
-" see codereview comments in vim
-function! ViewComments(...)
-    let l:old_makeprg = &makeprg
-    setlocal makeprg=curl
-    execute "make -s http://codereview.oa.com/" . join(a:000) . "/comments"
-    let &makeprg=old_makeprg
-endfunction
-command! -nargs=1 ViewComments call ViewComments('<args>')
