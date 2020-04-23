@@ -9,6 +9,9 @@ fi
 test -s ~/bin/bladefunctions && . ~/bin/bladefunctions || true
 
 source find_sources
+source trash_rm
+
+alias mytop='top -u $USER'
 
 export GREP_OPTIONS="--color --exclude=\*.svn\*"
 export EDITOR=vim
