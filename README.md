@@ -53,3 +53,5 @@ grep 自动带彩色，排除 `.svn`、`.git` 目录
 
 # .inputrc
 输入命令的前缀，然后按上下箭头就只出匹配前缀的历史命令。
+
+修改后输入 <kbd>Ctrl</kbd>-<kbd>X</kbd> <kbd>Ctrl</kbd>-<kbd>R</kbd> 或者执行 `bind -f  ~/.inputrc` 生效，如果不行，尝试重新登录。
