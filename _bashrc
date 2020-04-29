@@ -8,11 +8,25 @@ fi
 # User specific aliases and functions
 test -s ~/bin/bladefunctions && . ~/bin/bladefunctions || true
 
-source find_sources
-source trash_rm
+# Git branch in prompt.
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+  }
+export PS1="\u@\h \w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+source ~/find_sources
+source ~/trash_rm
 
 alias mytop='top -u $USER'
 
-export GREP_OPTIONS="--color --exclude=\*.svn\*"
+# Only show my processes
+alias mytop='top -u $USER'
+
+# Grep options
+_GREP_OPTIONS="--color --exclude-dir=.svn --exclude-dir=.git"
+alias grep="grep $_GREP_OPTIONS"
+alias egrep="egrep $_GREP_OPTIONS"
+alias fgrep="fgrep $_GREP_OPTIONS"
+
 export EDITOR=vim
 export FIGNORE=svn
