@@ -30,3 +30,4 @@ alias fgrep="fgrep $_GREP_OPTIONS"
 
 export EDITOR=vim
 export FIGNORE=svn
+export NINJA_STATUS='[%f/%r/%t] '
