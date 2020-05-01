@@ -6,6 +6,7 @@ Put develop tools here, such as style check and editing.
 一些开发相关的配置和辅助工具。
 
 由于某些 git 平台的限制，`.` 开头的文件名改为了下划线 `_`，使用时需要恢复，或者用符号链接的方式使用。
+或者在你自己的文件中 `source` 这些配置文件。
 
 # .vimrc
 功能
