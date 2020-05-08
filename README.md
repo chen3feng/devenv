@@ -61,7 +61,7 @@ grep 自动带彩色，排除 `.svn`、`.git` 目录
 
 修改后输入 <kbd>Ctrl</kbd>-<kbd>X</kbd> <kbd>Ctrl</kbd>-<kbd>R</kbd> 或者执行 `bind -f  ~/.inputrc` 生效，如果不行，尝试重新登录。
 
-# _zshrc
+# .zshrc
 最近在试用 zsh，配合 zinit，开启了语法高亮和智能补全，感觉还不错（试过 oh-my-zsh 感觉太慢，放弃了），也配置了以上的按键支持。
 
 # XShell 的问题
