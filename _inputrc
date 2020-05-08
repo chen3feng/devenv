@@ -1,6 +1,13 @@
 $include /etc/inputrc
 
+
+# Arrow up/down to history by existed prefix
 "\e[A": history-search-backward
 "\e[B": history-search-forward
-"\e[C": forward-char
-"\e[D": backward-char
+
+# Shift-Left/Right to move work by word
+"\e[1;2D": backward-word
+"\e[1;2C": forward-word
+
+set show-all-if-ambiguous on
+# set completion-ignore-case on
