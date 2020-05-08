@@ -1,5 +1,8 @@
 $include /etc/inputrc
 
+# DELETE key
+# NOTE: bash know HOME/END keys
+"\e[3~": delete-char
 
 # Arrow up/down to history by existed prefix
 "\e[A": history-search-backward
@@ -9,5 +12,8 @@ $include /etc/inputrc
 "\e[1;2D": backward-word
 "\e[1;2C": forward-word
 
+# Ctrl-Left/Right, same as above, for XShell
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
+
 set show-all-if-ambiguous on
-# set completion-ignore-case on

@@ -1,8 +1,14 @@
 # HOME, END and DELETE key
-bindkey  "^[[H"   beginning-of-line
-bindkey  "^[[F"   end-of-line
-bindkey  "^[[3~"  delete-char
+bindkey  "\e[H"   beginning-of-line
+bindkey  "\e[F"   end-of-line
+bindkey  "\e[3~"  delete-char
 
 # Shift-Left/Right to move work by word
 bindkey "\e[1;2D" backward-word
 bindkey "\e[1;2C" forward-word
+
+# Ctrl-Left/Right, same as above, for XShell
+bindkey "\e[1;5D" backward-word
+bindkey "\e[1;5C" forward-word
+
+
