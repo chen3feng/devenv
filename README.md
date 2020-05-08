@@ -22,7 +22,7 @@ VIM 的配置文件，功能：
 * 以彩色高亮显示 glog 日志文件中的错误，警告等信息
 * 编辑时，<kbd>Ctrl</kbd>-<kbd>P</kbd>触发代码补全
 * 多Tab编辑文件时，<kbd>Shift</kbd>-<kbd>←</kbd>到上一个文件，<kbd>Shift</kbd>-<kbd>→</kbd>到下一个文件
-* 修改过的文件自动被分到 `~/.vimbackup` 目录下
+* 修改过的文件自动备份到 `~/.vimbackup` 目录下
 * 保存时，自动删除行尾空白字符，对unix格式文本文件自动删除多余的 `\r` 字符
 * [QuickFix模式](http://vimcdoc.sourceforge.net/doc/quickfix.html)快捷键：<kbd>F5</kbd> 构建代码(执行blade build命令)，<kbd>F3</kbd> 上一个错误，<kbd>F4</kbd> 下一个错误，<kbd>F9</kbd> 切换QuickFix窗口
 * `:Blade` 自定义命令，不离开 vim，编译代码，并进入 QuickFix 模式
@@ -37,7 +37,7 @@ VIM 的配置文件，功能：
 # .bashrc
 
 ## trash\_rm
-对 `rm` 和 `mv` 命令增加回收站功能。
+对 `rm` 命令增加回收站功能，被删除的文件或者目录会被移到 `~/.trash` 目录里。
 
 ## find\_sources
 对 `find` 命令的包装，用于搜索源代码文件：
