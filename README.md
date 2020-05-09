@@ -55,7 +55,7 @@ grep 自动带彩色，排除 `.svn`、`.git` 目录。
 # .inputrc
 这是 bash，python 交互环境等用的 `readline` 库的配置文件。
 功能：
-- 输入命令的前缀，然后按上下箭头就只出匹配前缀的历史命令。
+- 输入命令的前缀，然后按<kbd>↑</kbd><kbd>↓</kbd>箭头就只出匹配前缀的历史命令。
 - 输入 <kbd>Shift</kbd>-<kbd>←</kbd> 和 <kbd>Shift</kbd>-<kbd>→</kbd> 以词为单位移动光标
 - 同上，只是换为 <kbd>Ctrl</kbd> 键，因为 Windows 上的 XShell 默认无法输入以上组合键
 - Mac 上支持 <kbd> Delete</kbd> 键和 <kbd>Home</kbd> 和 <kbd>End</kbd> 键
