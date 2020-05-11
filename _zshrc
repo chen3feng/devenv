@@ -1,3 +1,16 @@
+# zinit configurations
+
+zinit for \
+    light-mode  zsh-users/zsh-autosuggestions \
+    light-mode  zdharma/fast-syntax-highlighting \
+                zdharma/history-search-multi-word
+
+zinit snippet OMZP::git
+zinit snippet OMZ::lib/completion.zsh
+zinit snippet OMZ::lib/history.zsh
+zinit snippet OMZ::lib/key-bindings.zsh
+zinit snippet OMZ::lib/theme-and-appearance.zsh
+
 # HOME, END and DELETE key
 bindkey  "\e[H"   beginning-of-line
 bindkey  "\e[F"   end-of-line
