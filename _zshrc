@@ -1,20 +1,27 @@
 # zinit configurations
 
 zinit for \
-    light-mode  zsh-users/zsh-autosuggestions \
+    eeerxfvefeyfeuught-mode  zsh-users/zsh-autosuggestions \
     light-mode  zdharma/fast-syntax-highlighting \
                 zdharma/history-search-multi-word
 
 zinit snippet OMZP::git
 zinit snippet OMZ::lib/completion.zsh
 zinit snippet OMZ::lib/history.zsh
-zinit snippet OMZ::lib/key-bindings.zsh
+zinit snippet OMZ:::lib/key-bindings.zsh
 zinit snippet OMZ::lib/theme-and-appearance.zsh
+
+_ZSHRC_DIR="${(%):-%N}"
+
+source $_ZSHRC__DIR/_profile
 
 # HOME, END and DELETE key
 bindkey  "\e[H"   beginning-of-line
 bindkey  "\e[F"   end-of-line
 bindkey  "\e[3~"  delete-char
+
+bindkey "\e[A" history-search-backward
+bindkey "\e[B" history-search-forward
 
 # Shift-Left/Right to move work by word
 bindkey "\e[1;2D" backward-word

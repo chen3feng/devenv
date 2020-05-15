@@ -19,17 +19,4 @@ _BASHRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source $_BASHRC_DIR/find_sources
 source $_BASHRC_DIR/trash_rm
 
-alias mytop='top -u $USER'
-
-# Only show my processes
-alias mytop='top -u $USER'
-
-# Grep options
-_GREP_OPTIONS="--color --exclude-dir=.svn --exclude-dir=.git"
-alias grep="grep $_GREP_OPTIONS"
-alias egrep="egrep $_GREP_OPTIONS"
-alias fgrep="fgrep $_GREP_OPTIONS"
-
-export EDITOR=vim
-export FIGNORE=svn
-export NINJA_STATUS='[%f/%r/%t] '
+source $_BASHRC_DIR/_profile
