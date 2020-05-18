@@ -35,7 +35,7 @@ function _generate_find_aliase() {
 }
 
 function generate_all_find_aliases() {
-    if [[ "$SHELL" == */zsh ]]; then
+    if [[ -n "$ZSH_VERSION" ]]; then
         setopt sh_word_split
     fi
 
@@ -49,7 +49,7 @@ function generate_all_find_aliases() {
     _generate_find_aliase findallgo go
     _generate_find_aliase findallcode "$cc java proto py js scala sh go"
 
-    if [[ "$SHELL" == */zsh ]]; then
+    if [[ -n "$ZSH_VERSION" ]]; then
         unsetopt sh_word_split
     fi
 }

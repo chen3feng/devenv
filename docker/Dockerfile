@@ -30,3 +30,7 @@ COPY .inputrc /root/.inputrc
 COPY .vimrc /root/.vimrc
 
 CMD ["/bin/bash"]
+
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py && \
+    pip install coverage
+
