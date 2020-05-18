@@ -18,7 +18,7 @@ function findall() {
 # Params:
 #  $1 alias name
 #  $2 a string contains specified file extensions, must be quoted if more than one
-function generate_find_aliase() {
+function _generate_find_aliase() {
     local name="$1"
     local exts="$2"
     local expr=''
@@ -31,18 +31,27 @@ function generate_find_aliase() {
     done
     local find_cmd="find $expr | grep -Ev 'build(32|64)_(debug|release)'"
     alias $name="$find_cmd"
+
 }
 
 function generate_all_find_aliases() {
+    if [[ "$SHELL" == */zsh ]]; then
+        setopt sh_word_split
+    fi
+
     local cc_src="c cc cpp cxx c++ C"
     local cc_h="h hh hpp hxx H"
     local cc="$cc_src $cc_h"
-    generate_find_aliase findallh "$cc_h"
-    generate_find_aliase findallccsrc "$cc_src"
-    generate_find_aliase findallcc "$cc"
-    generate_find_aliase findalljava java
-    generate_find_aliase findallgo go
-    generate_find_aliase findallcode "$cc java proto py js scala sh go"
+    _generate_find_aliase findallh "$cc_h"
+    _generate_find_aliase findallccsrc "$cc_src"
+    _generate_find_aliase findallcc "$cc"
+    _generate_find_aliase findalljava java
+    _generate_find_aliase findallgo go
+    _generate_find_aliase findallcode "$cc java proto py js scala sh go"
+
+    if [[ "$SHELL" == */zsh ]]; then
+        unsetopt sh_word_split
+    fi
 }
 
 generate_all_find_aliases

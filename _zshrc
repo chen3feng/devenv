@@ -11,6 +11,10 @@ zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZ::lib/key-bindings.zsh
 zinit snippet OMZ::lib/theme-and-appearance.zsh
 
+BASHRC_DIR=$(dirname ${(%):-%N})
+
+source $BASHRC_DIR/find_sources
+
 # HOME, END and DELETE key
 bindkey  "\e[H"   beginning-of-line
 bindkey  "\e[F"   end-of-line
@@ -23,5 +27,3 @@ bindkey "\e[1;2C" forward-word
 # Ctrl-Left/Right, same as above, for XShell
 bindkey "\e[1;5D" backward-word
 bindkey "\e[1;5C" forward-word
-
-
