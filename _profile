@@ -1,0 +1,2 @@
+source $_THIS_DIR/find_sources
+source $_THIS_DIR/trash_rm

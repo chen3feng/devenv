@@ -11,9 +11,8 @@ zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZ:::lib/key-bindings.zsh
 zinit snippet OMZ::lib/theme-and-appearance.zsh
 
-_ZSHRC_DIR=$(dirname ${(%):-%N})
-
-source $_ZSHRC_DIR/_profile
+_THIS_DIR=$(dirname ${(%):-%N})
+source $_THIS_DIR/_profile
 
 # HOME, END and DELETE key
 bindkey  "\e[H"   beginning-of-line

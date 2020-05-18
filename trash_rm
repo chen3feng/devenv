@@ -47,31 +47,12 @@ if [ ! -d "$TRASH_DIR" ]; then
     echo "Trash dir $TRASH_DIR created."
 fi
 
-# string _abs_path(string path)
-function _abs_path()
-{
-    local path="$1"
-    local base
-    local dir
-    if [ "${path:0:1}" = "/" ]; then
-        echo "$path"
-        return 0
-    fi
-
-    base=`basename "$path"`
-    if dir=$(cd $(dirname "$path") && pwd); then
-        echo "${dir}/${base}"
-        return 0
-    fi
-    return 1
-}
-
 # bool _file_in_dir(string file, string dir)
 function _file_in_dir()
 {
     local file
     local dir
-    file="$(_abs_path "$1")"
+    file="$(realpath "$1")"
     dir="$2"
     file_dir="$file"
     while :; do
@@ -89,7 +70,7 @@ function _file_in_dir()
 # This function will replace the rm command of system.
 function rm()
 {
-    if [ $# == 0 ]; then
+    if [[ $# == 0 ]]; then
         /bin/rm
         return
     fi

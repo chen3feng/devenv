@@ -14,9 +14,5 @@ parse_git_branch() {
 }
 export PS1="\u@\h \w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
-_BASHRC_DIR=$(dirname "${BASH_SOURCE[0]}")
-
-source $_BASHRC_DIR/find_sources
-source $_BASHRC_DIR/trash_rm
-
-source $_BASHRC_DIR/_profile
+_THIS_DIR=$(dirname "${BASH_SOURCE[0]}")
+source $_THIS_DIR/_profile
