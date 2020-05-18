@@ -1,14 +1,14 @@
 # zinit configurations
 
 zinit for \
-    eeerxfvefeyfeuught-mode  zsh-users/zsh-autosuggestions \
+    light-mode  zsh-users/zsh-autosuggestions \
     light-mode  zdharma/fast-syntax-highlighting \
                 zdharma/history-search-multi-word
 
 zinit snippet OMZP::git
 zinit snippet OMZ::lib/completion.zsh
 zinit snippet OMZ::lib/history.zsh
-zinit snippet OMZ:::lib/key-bindings.zsh
+zinit snippet OMZ::lib/key-bindings.zsh
 zinit snippet OMZ::lib/theme-and-appearance.zsh
 
 _THIS_DIR=$(dirname ${(%):-%N})
