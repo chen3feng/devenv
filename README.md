@@ -5,7 +5,33 @@ Put develop tools here, such as style check and editing.
 
 一些开发相关的配置和辅助工具。
 
-由于某些 git 平台的限制，`.` 开头的文件名改为了下划线 `_`，使用时需要恢复，或者用符号链接的方式使用。
+`_` 开头的文件都是原本应该以`.`开头的放在 HOME 目录下的，由于某些 git 平台的限制，改为了下划线 `_`，使用时需要恢复。
+或者用符号链接的方式使用，更方便，`git pull` 即可升级，方法如下：
+
+在你自己的开发机上 clone 本仓库：
+```bash
+git clone https://github.com/chen3feng/tools.git
+```
+
+然后，创建你自己的配置文件：
+
+- 你的 ~/.bashrc（如果你用 zsh）：
+  ```bash
+  source /path/to/this/tools/_bashrc
+  ```
+- 你的 ~/.inputrc（如果你用 bash）：
+  ```inputrc
+  $include /path/to/this/tools/_zshrc
+  ```
+- 你的 ~/.zshrc（如果你用 zsh）：
+  ```zsh
+  source /path/to/this/tools/_zshrc
+  ```
+- 你的 ~/.vimrc（如果你用 vim）：
+  ```vim
+  source /path/to/this/tools/_vimrc
+  ```
+
 或者在你自己的文件中 `source` 这些配置文件。
 
 # .vimrc
@@ -77,3 +103,9 @@ grep 自动带彩色，排除 `.svn`、`.git` 目录。
   - 如果你真照着输入就错了，因为开头的 `^[` 实际上是 [<kbd>ESC</kbd>](https://zh.wikipedia.org/wiki/%E9%80%80%E5%87%BA%E9%94%AE) 字符，需要通过按<kbd>Alt</kbd>+小键盘“27”来输入
   - 但是 XShell 的这个编辑框不支持这么输入特殊字符，所以得换个编辑器，比如【记事本】，输入后复制过来
 - 输入完成后，点击【确定】生效
+
+# xshell 目录
+xshell 的一些配置文件，主要是一些主题。
+
+# docker 目录
+我用的开发镜像
