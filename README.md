@@ -9,7 +9,7 @@
 
 在你自己的开发机上 clone 本仓库：
 ```bash
-git clone https://github.com/chen3feng/tools.git
+git clone https://github.com/chen3feng/devenv.git
 ```
 
 然后，创建你自己的配置文件：
