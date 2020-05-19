@@ -107,4 +107,4 @@ grep 自动带彩色，排除 `.svn`、`.git` 目录。
 xshell 的一些配置文件，主要是一些主题。
 
 ## [docker 目录](docker)
-基于 docker 的开发环境
+基于 docker 的 Linux 开发环境，方便在 Mac/Windows 下进行 Linux 开发，并确保使用相同的工具集合。
