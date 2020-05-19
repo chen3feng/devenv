@@ -1,5 +1,10 @@
 # Shared by both bash and zsh
 
+if [[ -z "$_THIS_DIR" ]]; then
+    echo "Error: don't source this file directly, source '_bashrc' or '_zshrc'"
+    return
+fi
+
 source $_THIS_DIR/find_sources
 source $_THIS_DIR/trash_rm
 
@@ -24,3 +29,5 @@ alias ll='ls -l'
 export EDITOR=vim
 export FIGNORE=svn
 export NINJA_STATUS='[%f/%r/%t] '
+export PATH=$PATH:$HOME/.local/bin
+

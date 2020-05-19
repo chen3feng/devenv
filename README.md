@@ -1,14 +1,70 @@
-tools
-=====
+# 我的 Linux 开发环境
 
-Put develop tools here, such as style check and editing.
+这里是我的一些开发环境相关的配置和辅助工具。我平时开发的代码注意运行在 Linux 下，但是开发机则有 iMac、MacBook、Windows 7、Linux 服务器等多种不同环境。除了 Linux 服务器环境是公司内使用的外，其余的个人使用较多，这部分配置主要是针对这些环境服务的。
 
-一些开发相关的配置和辅助工具。
+我平时编辑代码虽然也用 VS Code，但是由于习惯，还是以 vim 为主，zsh也是最近刚开始使用。
 
-由于某些 git 平台的限制，`.` 开头的文件名改为了下划线 `_`，使用时需要恢复，或者用符号链接的方式使用。
-或者在你自己的文件中 `source` 这些配置文件。
+这些配置主要是给 Linux（包括 docker 里的 Linux）使用，但是大部分功能也适用于 Mac 下的终端。
 
-# .vimrc
+`_` 开头的文件都是原本应该以`.`开头的放在 HOME 目录下的，由于某些 git 平台的限制，改为了下划线 `_`，使用时需要恢复。
+或者用符号链接的方式使用，更方便，`git pull` 即可升级，方法如下：
+
+在你自己的开发机上 clone 本仓库：
+```bash
+git clone https://github.com/chen3feng/devenv.git
+```
+
+然后，创建你自己的配置文件：
+
+- 你的 ~/.bashrc（如果你用 zsh）：
+  ```bash
+  source /path/to/this/tools/_bashrc
+  ```
+- 你的 ~/.inputrc（如果你用 bash）：
+  ```inputrc
+  $include /path/to/this/tools/_zshrc
+  ```
+- 你的 ~/.zshrc（如果你用 zsh）：
+  ```zsh
+  source /path/to/this/tools/_zshrc
+  ```
+- 你的 ~/.vimrc（如果你用 vim）：
+  ```vim
+  source /path/to/this/tools/_vimrc
+  ```
+
+## .bashrc
+
+### trash\_rm
+对 `rm` 命令增加回收站功能，被删除的文件或者目录会被移到 `~/.trash` 目录里。
+
+### find\_sources
+对 `find` 命令的包装，用于搜索源代码文件：
+```bash
+# 查找所有的 c/c++ 源代码（包括头文件）
+findallcc | xargs grep '#include'
+```
+
+### 常用命令的设置
+grep 自动带彩色，排除 `.svn`、`.git` 目录。
+
+### mytop
+在 top 命令中只显示自己用户的进程。
+
+## .inputrc
+这是 bash，python 交互环境等用的 `readline` 库的配置文件。
+功能：
+- 输入命令的前缀，然后按<kbd>↑</kbd><kbd>↓</kbd>箭头就只出匹配前缀的历史命令。
+- 输入 <kbd>Shift</kbd>-<kbd>←</kbd> 和 <kbd>Shift</kbd>-<kbd>→</kbd> 以词为单位移动光标
+- 同上，只是换为 <kbd>Ctrl</kbd> 键，因为 Windows 上的 XShell 默认无法输入以上组合键
+- Mac 上支持 <kbd> Delete</kbd> 键和 <kbd>Home</kbd> 和 <kbd>End</kbd> 键
+
+修改后输入 <kbd>Ctrl</kbd>-<kbd>X</kbd> <kbd>Ctrl</kbd>-<kbd>R</kbd> 或者执行 `bind -f  ~/.inputrc` 生效，如果不行，尝试重新登录。
+
+## .zshrc
+最近在试用 zsh，配合 zinit，开启了语法高亮和智能补全，感觉还不错（试过 oh-my-zsh 感觉太慢，放弃了），也配置了以上的按键支持。
+
+## .vimrc
 VIM 的配置文件，功能：
 * 设置基于 [google 代码规范](http://google.github.io/styleguide/)的格式控制
 * 创建 c++ 头文件时自动插入符合 google代码规范的 inclusion guard
@@ -28,44 +84,13 @@ VIM 的配置文件，功能：
 * `:Blade` 自定义命令，不离开 vim，编译代码，并进入 QuickFix 模式
 * `:PlaybackBuildlog` 自定义命令，用于加载任意类似编译错误的代码构建检查日志文件，进入 QuickFix 模式
 
-## QuickFix模式
+### QuickFix模式
 是指 Vim 里自动分析编译错误信息，在不离开 Vim 的情况下，定位到各个出错行的一种快速代码修复模式。
 
-## PlaybackBuildlog
+### PlaybackBuildlog
 这里的 `build.log` 是指任何类似编译器错误信息格式的文本文件，包含文件名，行号，（列号），错误信息，除了编译器，`grep` 带上 `-n` 参数，以及很多代码检查工具，都能生成这种格式。
 
-# .bashrc
-
-## trash\_rm
-对 `rm` 命令增加回收站功能，被删除的文件或者目录会被移到 `~/.trash` 目录里。
-
-## find\_sources
-对 `find` 命令的包装，用于搜索源代码文件：
-```bash
-# 查找所有的 c/c++ 源代码（包括头文件）
-findallcc | xargs grep '#include'
-```
-
-## 常用命令的设置
-grep 自动带彩色，排除 `.svn`、`.git` 目录。
-
-## mytop
-在 top 命令中只显示自己用户的进程。
-
-# .inputrc
-这是 bash，python 交互环境等用的 `readline` 库的配置文件。
-功能：
-- 输入命令的前缀，然后按<kbd>↑</kbd><kbd>↓</kbd>箭头就只出匹配前缀的历史命令。
-- 输入 <kbd>Shift</kbd>-<kbd>←</kbd> 和 <kbd>Shift</kbd>-<kbd>→</kbd> 以词为单位移动光标
-- 同上，只是换为 <kbd>Ctrl</kbd> 键，因为 Windows 上的 XShell 默认无法输入以上组合键
-- Mac 上支持 <kbd> Delete</kbd> 键和 <kbd>Home</kbd> 和 <kbd>End</kbd> 键
-
-修改后输入 <kbd>Ctrl</kbd>-<kbd>X</kbd> <kbd>Ctrl</kbd>-<kbd>R</kbd> 或者执行 `bind -f  ~/.inputrc` 生效，如果不行，尝试重新登录。
-
-# .zshrc
-最近在试用 zsh，配合 zinit，开启了语法高亮和智能补全，感觉还不错（试过 oh-my-zsh 感觉太慢，放弃了），也配置了以上的按键支持。
-
-# XShell 的问题
+## XShell 的问题
 我在 Windows 上主要使用 XShell，但是发现它不能输入 <kbd>Shift</kbd>-<kbd>←</kbd> 和 <kbd>Shift</kbd>-<kbd>→</kbd> 组合键，用以下方法可以解决：
 - 点击打开【工具/按键对应】菜单
 - 按【新建】按钮
@@ -77,3 +102,9 @@ grep 自动带彩色，排除 `.svn`、`.git` 目录。
   - 如果你真照着输入就错了，因为开头的 `^[` 实际上是 [<kbd>ESC</kbd>](https://zh.wikipedia.org/wiki/%E9%80%80%E5%87%BA%E9%94%AE) 字符，需要通过按<kbd>Alt</kbd>+小键盘“27”来输入
   - 但是 XShell 的这个编辑框不支持这么输入特殊字符，所以得换个编辑器，比如【记事本】，输入后复制过来
 - 输入完成后，点击【确定】生效
+
+## [xshell 目录](xshell)
+xshell 的一些配置文件，主要是一些主题。
+
+## [docker 目录](docker)
+基于 docker 的 Linux 开发环境，方便在 Mac/Windows 下进行 Linux 开发，并确保使用相同的工具集合。
