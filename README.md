@@ -18,19 +18,19 @@ git clone https://github.com/chen3feng/devenv.git
 
 - 你的 ~/.bashrc（如果你用 zsh）：
   ```bash
-  source /path/to/this/tools/_bashrc
+  source /path/to/this/devenv/_bashrc
   ```
 - 你的 ~/.inputrc（如果你用 bash）：
   ```inputrc
-  $include /path/to/this/tools/_zshrc
+  $include /path/to/this/devenv/_zshrc
   ```
 - 你的 ~/.zshrc（如果你用 zsh）：
   ```zsh
-  source /path/to/this/tools/_zshrc
+  source /path/to/this/devenv/_zshrc
   ```
 - 你的 ~/.vimrc（如果你用 vim）：
   ```vim
-  source /path/to/this/tools/_vimrc
+  source /path/to/this/devenv/_vimrc
   ```
 
 ## .bashrc

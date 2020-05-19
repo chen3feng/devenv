@@ -1,1 +1,1 @@
-source /code/tools/_bashrc
+source /code/devenv/_bashrc
