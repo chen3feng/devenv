@@ -4,6 +4,9 @@
 
 FROM ubuntu
 
+ARG DEBIAN_FRONTEND=nointeractive
+ENV TZ=Asia/Shanghai
+
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.cloud.tencent.com/@g /etc/apt/sources.list && \
     apt-get -y update && \
     apt-get install -y \
@@ -35,3 +38,4 @@ RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py
     pip install coverage
 
 RUN pip install pex
+RUN apt-get install -y maven scala

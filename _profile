@@ -31,3 +31,17 @@ export FIGNORE=svn
 export NINJA_STATUS='[%f/%r/%t] '
 export PATH=$PATH:$HOME/.local/bin
 
+# Set the best locale
+function _set_locale() {
+    local all
+    local l
+    all=$(locale -a 2>/dev/null)
+    for l in "zh_CN.UTF-8" "en_US.UTF-8" "C.UTF-8"; do
+        if [[ "$all" == *"$l"* ]]; then
+            export LC_ALL="$l"
+            return
+        fi
+    done
+    echo "Warning: Can't set correct locale" > /dev/stderr
+}
+_set_locale
