@@ -25,6 +25,7 @@ else
 fi
 
 alias ll='ls -l'
+alias la='ls -a'
 
 export EDITOR=vim
 export FIGNORE=svn
