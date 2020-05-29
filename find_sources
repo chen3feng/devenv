@@ -6,11 +6,12 @@ function findall() {
     local expr=''
     for ext in $exts; do
         if [ -z "$expr" ]; then
-            expr="-name *.$ext"
+            expr="-name \"*.$ext\""
         else
-            expr+=" -or -name *.$ext"
+            expr+=" -or -name \"*.$ext\""
         fi
     done
+    echo "$expr"
     ( set -f; find $expr | grep -Ev 'build(32|64)_(debug|release)' )
 }
 
