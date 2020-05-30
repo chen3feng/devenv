@@ -75,17 +75,13 @@ function rm()
         return
     fi
 
-    local arg
-    local confirm
     local direct
-    local error
     local force
     local interactive
     local recursive
-    local trash_dir
     local verbose
 
-    trash_dir="$TRASH_DIR"
+    local trash_dir="$TRASH_DIR"
 
     if ! rm_args=`getopt -o firDRv -n rm --long direct,force,help,interactive,recursive,verbose,version -- "$@"`; then
         return 1;
@@ -115,7 +111,7 @@ function rm()
             --version)
                 /bin/rm "$1"
                 return;;
-            --)
+             --)
                 shift;
                 break ;;
             *)
@@ -124,12 +120,12 @@ function rm()
         esac
     done
 
+    local arg
+    local confirm
+    local error
+
     if [ -n "$direct" ]; then
-        echo -n "remove directly (y/n)?"
-        read answer
-        if [ "$answer" = "y" ]; then
-            /bin/rm $force $recursive $verbose $interactive "$@"
-        fi
+        /bin/rm $force $recursive $verbose $interactive "$@"
         return $?
     fi
 
@@ -156,6 +152,7 @@ function rm()
         fi
 
         if [ -n "$interactive" ]; then
+            local file_type
             if [ -d "$arg" ]; then
                 file_type="directory"
             elif [ -L "$arg" ]; then
@@ -177,6 +174,9 @@ function rm()
             fi
             /bin/rm "$arg"
         else
+            local timestamp
+            local date_dir
+            local target_name
             timestamp=`date +%Y%m%d.%H%M%S.%N`
             # Put file into corresponding dir according removing date
             date_dir="$trash_dir/${timestamp:0:8}"
