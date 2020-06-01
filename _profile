@@ -24,20 +24,20 @@ else
     alias ls='ls --color'
 fi
 
-# The `install` aliaa
+# The `pinstall` aliaa -- package install
 make_install_alias() {
     local sudo
     if which sudo &> /dev/null; then
         sudo='sudo '
     fi
     if which yum &> /dev/null; then
-        alias install="${sudo}yum install"
+        alias pinstall="${sudo}yum install"
     elif which brew &> /dev/null; then
-        alias install="brew install"
+        alias pinstall="brew install"
     elif which apt &> /dev/null; then
-        alias install="${sudo}apt install"
+        alias pinstall="${sudo}apt install"
     elif which apt-get &> /dev/null; then
-        alias install="${sudo}apt-get install"
+        alias pinstall="${sudo}apt-get install"
     fi
 }
 
