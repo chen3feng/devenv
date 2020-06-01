@@ -195,3 +195,11 @@ function rm()
 
     return $error
 }
+
+
+trash_clean() {
+    local item
+    for item in $TRASH_DIR/* ; do
+        /bin/rm -fr "$item"
+    done
+}
