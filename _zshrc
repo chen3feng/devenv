@@ -14,6 +14,8 @@ zinit snippet OMZ::lib/theme-and-appearance.zsh
 _THIS_DIR=$(dirname ${(%):-%N})
 source $_THIS_DIR/_profile
 
+export PS1=$'[%n@%m]%~\e[32m$(parse_git_branch)\e[m%# '
+
 # HOME, END and DELETE key
 bindkey  "\e[H"   beginning-of-line
 bindkey  "\e[F"   end-of-line

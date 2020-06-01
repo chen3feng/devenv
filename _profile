@@ -47,3 +47,8 @@ function _set_locale() {
     echo "Warning: Can't set correct locale" > /dev/stderr
 }
 _set_locale
+
+# Git branch in prompt.
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
