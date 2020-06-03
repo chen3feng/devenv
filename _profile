@@ -19,9 +19,9 @@ alias fgrep="fgrep $_GREP_OPTIONS"
 
 if [[ $(uname) == "Darwin" ]]; then
     export CLICOLOR=1
-    alias ls='ls -G'
+    alias ls="ls -G"
 else
-    alias ls='ls --color'
+    alias ls="ls --color --time-style='+%F %T'"
 fi
 
 # The `pinstall` aliaa -- package install

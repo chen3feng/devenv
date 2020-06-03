@@ -48,8 +48,7 @@ if [ ! -d "$TRASH_DIR" ]; then
 fi
 
 # bool _file_in_dir(string file, string dir)
-function _file_in_dir()
-{
+function _file_in_dir() {
     local file
     local dir
     file="$(realpath "$1")"
@@ -68,8 +67,7 @@ function _file_in_dir()
 }
 
 # This function will replace the rm command of system.
-function rm()
-{
+function rm() {
     if [[ $# == 0 ]]; then
         /bin/rm
         return
@@ -123,6 +121,9 @@ function rm()
     local arg
     local confirm
     local error
+    local timestamp
+    local date_dir
+    local target_name
 
     if [ -n "$direct" ]; then
         /bin/rm $force $recursive $verbose $interactive "$@"
@@ -174,9 +175,6 @@ function rm()
             fi
             /bin/rm "$arg"
         else
-            local timestamp
-            local date_dir
-            local target_name
             timestamp=`date +%Y%m%d.%H%M%S.%N`
             # Put file into corresponding dir according removing date
             date_dir="$trash_dir/${timestamp:0:8}"
