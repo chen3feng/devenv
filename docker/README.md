@@ -4,7 +4,7 @@
 
 ## 安装 docker
 Linux 一般自带，如果没有，可以通过包管理安装。
-Mac 和 Windows 10 下安装 [Docker Desktop](https://www.docker.com/products/docker-desktop)。
+Mac 和 Windows 10 下可以安装 [Docker Desktop](https://www.docker.com/products/docker-desktop)。
 Windows 10 之前的版本，比如 Windows 7，则只能安装 [Docker ToolBox](https://docs.docker.com/toolbox/toolbox_install_windows/)。
 
 需要注意的是 Mac 和 Windows 下是通过虚拟化方式运行的，性能明显低于 Linux，特别是访问卷方式加载文件系统时。
