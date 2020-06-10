@@ -8,9 +8,9 @@
 
 大部分设置可以通过进入设置选单【Mac:Code/Perference/Settings, Windows:File/Perference/Settings】进行图形界面配置，并可输入配置项的名字进行搜索。
 
-- 文件浏览器缩进宽度：默认缩进太小看不清，"tree.indent"，从 8 改为 16，参见[此 Issue](https://github.com/microsoft/vscode/issues/35447#issuecomment-455461013)。
-- 区别显示空格和 Tab 字符：设置 "editor.renderWhitespace"，改为 "all", 参见[此 StackOverflow 回答](https://stackoverflow.com/questions/30140595/show-whitespace-characters-in-visual-studio-code)
-- 显示垂直标尺：设置 "editor.rulers": [80,100]，参见[StackOverflow 回答](https://stackoverflow.com/questions/29968499/vertical-rulers-in-visual-studio-code)
+- 文件浏览器缩进宽度：默认缩进太小看不清，"tree.indent"，从 8 改为 16，[来源](https://github.com/microsoft/vscode/issues/35447#issuecomment-455461013)。
+- 区别显示空格和 Tab 字符：设置 "editor.renderWhitespace"，改为 "all", [来源](https://stackoverflow.com/a/30140625/364334)
+- 显示垂直标尺：设置 "editor.rulers": [80,100]，[来源](https://stackoverflow.com/a/29972073/364334)
 - 文件浏览器中隐藏某些类型的文件：设置"files:exclude"，[来源](https://stackoverflow.com/a/30142299/364334)
 
 ## 常用插件
