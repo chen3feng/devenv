@@ -14,6 +14,14 @@
 - 文件浏览器中隐藏某些类型的文件：设置"files:exclude"，[来源](https://stackoverflow.com/a/30142299/364334)
 - 中文字体和英文字体对不齐：下载安装`更纱黑体`或者`M+ FONTS`字体，并在"editor.fontFamily" 里设置（参见[来源](https://zhuanlan.zhihu.com/p/110945562)），不过这样会导致代码里的英文变得过于细小，因此可以[单独针对 markdown 设置](https://moe.best/gotagota/vscode-monospaced.html)
 
+## 快捷键
+
+|功能             |Mac    |Windows|
+|----------------|-------|-------|
+|扩展中心         |<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>
+|Command Palette|<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
+|Markdown 预览   |<kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>P</kbd>
+
 ## 常用插件
 
 - cpplint
