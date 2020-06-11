@@ -29,6 +29,7 @@
 - pylint
 - protobuf
 - markdownlint 自动提示 markdown 文件的错误，是编写 Markdown 的利器。
+- Markdown preview Enhanced 增强预览功能
 
 ## 文档
 
