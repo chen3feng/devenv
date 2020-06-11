@@ -21,6 +21,7 @@
 |扩展中心         |<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>
 |Command Palette|<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
 |Markdown 预览   |<kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>P</kbd>
+|Markdown分屏预览 |<kbd>Cmd</kbd>+<kbd>K</kbd> <kbd>V</kbd> | <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>V</kbd>
 
 ## 常用插件
 
