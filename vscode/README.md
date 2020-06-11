@@ -12,6 +12,7 @@
 - 区别显示空格和 Tab 字符：设置 "editor.renderWhitespace"，改为 "all", [来源](https://stackoverflow.com/a/30140625/364334)
 - 显示垂直标尺：设置 "editor.rulers": [80,100]，[来源](https://stackoverflow.com/a/29972073/364334)
 - 文件浏览器中隐藏某些类型的文件：设置"files:exclude"，[来源](https://stackoverflow.com/a/30142299/364334)
+- 中文字体和英文字体对不齐：下载安装`更纱黑体`或者`M+ FONTS`字体，并在"editor.fontFamily" 里设置（参见[来源](https://zhuanlan.zhihu.com/p/110945562)），不过这样会导致代码里的英文变得过于细小，因此可以[单独针对 markdown 设置](https://moe.best/gotagota/vscode-monospaced.html)
 
 ## 常用插件
 
