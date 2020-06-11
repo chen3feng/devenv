@@ -18,6 +18,7 @@
 
 |功能             |Mac    |Windows|
 |----------------|-------|-------|
+|设置            |<kbd>Cmd</kbd>+<kbd>,</kbd>
 |扩展中心         |<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>
 |Command Palette|<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
 |Markdown 预览   |<kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>P</kbd>
