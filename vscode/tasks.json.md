@@ -17,4 +17,4 @@ tasks.js 支持下面的预定义变量:
 - ${execPath} - vscode执行文件所在的目录
 - ${defaultBuildTask} - 默认编译任务(build task)的名字
 
-来源 <https://zhuanlan.zhihu.com/p/92175757>
+来源 <https://zhuanlan.zhihu.com/p/92175757>，源文档<https://code.visualstudio.com/docs/editor/variables-reference>
