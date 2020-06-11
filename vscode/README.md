@@ -19,3 +19,9 @@
 - pylint
 - protobuf
 - markdownlint 自动提示 markdown 文件的错误，是编写 Markdown 的利器。
+
+## 文档
+
+- [官方文档](https://code.visualstudio.com/docs)
+- [Microsoft Visual Studio Code 中文手册](https://jeasonstudio.gitbooks.io/vscode-cn-doc/content/)
+
