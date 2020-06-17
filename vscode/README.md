@@ -13,6 +13,7 @@
 - 显示垂直标尺：设置 "editor.rulers": [80,100]，[来源](https://stackoverflow.com/a/29972073/364334)
 - 文件浏览器中隐藏某些类型的文件：设置"files:exclude"，[来源](https://stackoverflow.com/a/30142299/364334)
 - 中文字体和英文字体对不齐：下载安装`更纱黑体`或者`M+ FONTS`字体，并在"editor.fontFamily" 里设置（参见[来源](https://zhuanlan.zhihu.com/p/110945562)），不过这样会导致代码里的英文变得过于细小，因此可以[单独针对 markdown 设置](https://moe.best/gotagota/vscode-monospaced.html)
+- 自动保存：设置 "files.autoSave"，可以考虑选择 onFocusChange，也可以通过【File/Auto Save】选单项，[来源](https://juejin.im/post/5cb87c6e6fb9a068a03af93a)
 
 ## 快捷键
 
