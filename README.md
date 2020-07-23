@@ -103,8 +103,15 @@ VIM 的配置文件，功能：
   - 但是 XShell 的这个编辑框不支持这么输入特殊字符，所以得换个编辑器，比如【记事本】，输入后复制过来
 - 输入完成后，点击【确定】生效
 
-## [xshell 目录](xshell)
-xshell 的一些配置文件，主要是一些主题。
+## 目录结构
 
-## [docker 目录](docker)
+### [docker 目录](docker)
+
 基于 docker 的 Linux 开发环境，方便在 Mac/Windows 下进行 Linux 开发，并确保使用相同的工具集合。
+
+### [vscode 目录](vscode)
+
+由于 VS Code 支持了远程开发，我就在学习和逐渐转移到上面去，记录一些相关的信息。
+
+### [xshell 目录](xshell)
+xshell 的一些配置文件，主要是一些主题。
