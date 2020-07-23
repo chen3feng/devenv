@@ -81,7 +81,7 @@ VIM 的配置文件，功能：
 * 修改过的文件自动备份到 `~/.vimbackup` 目录下
 * 保存时，自动删除行尾空白字符，对unix格式文本文件自动删除多余的 `\r` 字符
 * [QuickFix模式](http://vimcdoc.sourceforge.net/doc/quickfix.html)快捷键：<kbd>F5</kbd> 构建代码(执行blade build命令)，<kbd>F3</kbd> 上一个错误，<kbd>F4</kbd> 下一个错误，<kbd>F9</kbd> 切换QuickFix窗口
-* `:Blade` 自定义命令，不离开 vim，编译代码，并进入 QuickFix 模式
+* `:Build` 自定义命令，不离开 vim，编译代码，并进入 QuickFix 模式，比如 `:Build blade build ...`
 * `:PlaybackBuildlog` 自定义命令，用于加载任意类似编译错误的代码构建检查日志文件，进入 QuickFix 模式
 
 ### QuickFix模式

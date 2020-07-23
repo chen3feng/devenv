@@ -143,10 +143,10 @@ map <F3> :cp<CR>
 map <F4> :cn<CR>
 
 " run make command
-map <F5> :Blade build<CR>
+map <F5> :Build blade build<CR>
 
 " run make clean command
-map <F6> :Blade clean<CR>
+map <F6> :Build blade clean<CR>
 
 " alt .h .cpp
 map <F7> :A<CR>
@@ -325,13 +325,14 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " integrate blade into vim
-function! Blade(...)
+function! Build(build, ...)
     let l:old_makeprg = &makeprg
-    setlocal makeprg=blade
+    let &makeprg=a:build
+    echo a:build
     execute "make " . join(a:000)
     let &makeprg=old_makeprg
 endfunction
-command! -complete=dir -nargs=* Blade call Blade('<args>')
+command! -complete=dir -nargs=* Build call Build('<args>')
 
 " integrate cpplint into vim
 function! CppLint(...)
