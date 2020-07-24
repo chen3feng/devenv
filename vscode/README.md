@@ -15,6 +15,8 @@
 - 中文字体和英文字体对不齐：下载安装`更纱黑体`或者`M+ FONTS`字体，并在"editor.fontFamily" 里设置（参见[来源](https://zhuanlan.zhihu.com/p/110945562)），不过这样会导致代码里的英文变得过于细小，因此可以[单独针对 markdown 设置](https://moe.best/gotagota/vscode-monospaced.html)
 - 自动保存：设置 "files.autoSave"，可以考虑选择 onFocusChange，也可以通过【File/Auto Save】选单项，[来源](https://juejin.im/post/5cb87c6e6fb9a068a03af93a)
 - 确保文件以换行结尾：设置 "files.insertFinalNewline"，[来源](https://stackoverflow.com/questions/44704968/visual-studio-code-insert-new-line-at-the-end-of-files)
+- 避免误按 Cmd+Q 时直接退出：可以改为按两次 Cmd+Q，在【Code/Perference/Keyboard Shortcuts】进入图形界面配置，或者直接[修改 keybindings.json](https://github.com/microsoft/vscode/issues/14710#issuecomment-488114446)。
+  或者安装 [Quit Control 扩展](https://marketplace.visualstudio.com/items?itemName=artdiniz.quitcontrol-vscode)。
 
 ## 快捷键
 
