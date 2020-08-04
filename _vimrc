@@ -117,7 +117,7 @@ let c_no_curly_error = 1
 " match DiffAdd '\%>100v.*'
 
 " hilight extra spaces at end of line
-" match Error '\s\+$'
+match Error '\s\+$'
 
 let g:load_doxygen_syntax=1
 
