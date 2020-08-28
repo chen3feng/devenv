@@ -10,6 +10,7 @@
 
 - 文件浏览器缩进宽度：默认缩进太小看不清，"tree.indent"，从 8 改为 16，[来源](https://github.com/microsoft/vscode/issues/35447#issuecomment-455461013)。
 - 区别显示空格和 Tab 字符：设置 "editor.renderWhitespace"，改为 "all", [来源](https://stackoverflow.com/a/30140625/364334)
+- 保存时自动删除行尾多余的空格：设置 "files.trimTrailingWhitespace": true，[来源](https://stackoverflow.com/questions/30884131/remove-trailing-spaces-automatically-or-with-a-shortcut)
 - 显示垂直标尺：设置 "editor.rulers": [80,100]，[来源](https://stackoverflow.com/a/29972073/364334)
 - 文件浏览器中隐藏某些类型的文件：设置"files:exclude"，[来源](https://stackoverflow.com/a/30142299/364334)
 - 中文字体和英文字体对不齐：下载安装`更纱黑体`或者`M+ FONTS`字体，并在"editor.fontFamily" 里设置（参见[来源](https://zhuanlan.zhihu.com/p/110945562)），不过这样会导致代码里的英文变得过于细小，因此可以[单独针对 markdown 设置](https://moe.best/gotagota/vscode-monospaced.html)
@@ -33,6 +34,7 @@
 - cpplint
 - pylint
 - protobuf
+- [Trailing Spaces](https://marketplace.visualstudio.com/items?itemName=shardulm94.trailing-spaces) 高亮显示行尾空格
 - markdownlint 自动提示 markdown 文件的错误，是编写 Markdown 的利器。
 - Markdown preview Enhanced 增强预览功能
 
