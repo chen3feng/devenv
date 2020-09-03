@@ -19,6 +19,10 @@
 - 避免误按 Cmd+Q 时直接退出：可以改为按两次 Cmd+Q，在【Code/Perference/Keyboard Shortcuts】进入图形界面配置，或者直接[修改 keybindings.json](https://github.com/microsoft/vscode/issues/14710#issuecomment-488114446)。
   或者安装 [Quit Control 扩展](https://marketplace.visualstudio.com/items?itemName=artdiniz.quitcontrol-vscode)。
 
+## 同步配置
+
+点击左下角的小齿轮，在弹出的选单中选择“Settings Sync”，登录 github 账号或者 Microsoft 账户，按提示操作即可。
+
 ## 快捷键
 
 |功能             |Mac    |Windows|
