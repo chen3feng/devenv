@@ -36,7 +36,7 @@ git clone https://github.com/chen3feng/devenv.git
 ## .bashrc
 
 ### trash\_rm
-对 `rm` 命令增加回收站功能，被删除的文件或者目录会被移到 `~/.trash` 目录里。
+对 `rm` 命令增加回收站功能，被删除的文件或者目录会被移到 `~/.trash` 目录里。使用 `-D` 参数绕过回收站直接删除。
 
 ### find\_sources
 
