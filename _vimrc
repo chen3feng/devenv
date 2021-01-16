@@ -46,9 +46,7 @@ set incsearch
 set smartcase
 
 " quickfix settings
-if version >= 700
-    compiler gcc
-endif
+compiler gcc
 
 let g:NeoComplCache_EnableAtStartup = 1 " Old neocomplcache
 let g:neocomplcache_enable_at_startup = 1 " New neocomplcache
@@ -61,7 +59,7 @@ set showmatch
 set showmode
 set wildmenu
 set wildmode=longest:full,full
-if version >= 703
+if getbufvar($, '&diff') == 0
     set colorcolumn=81,101
 endif
 
@@ -316,12 +314,10 @@ function! s:InsertHeaderGuard()
 endfunction
 autocmd BufNewFile *.{h,hh.hxx,hpp} nested call <SID>InsertHeaderGuard()
 
-if version >= 700
-    autocmd QuickFixCmdPost * :QFix
-endif
+autocmd QuickFixCmdPost * :QFix
 
-
-" Auto paste mode
+" Auto paste mode, from
+" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
 
 function! WrapForTmux(s)
     if !exists('$TMUX')
