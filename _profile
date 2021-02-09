@@ -69,5 +69,10 @@ _set_locale
 
 # Git branch in prompt.
 parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    LC_ALL=C git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+# Make dir and change to it immediately
+mcd() {
+    mkdir $@ && cd "${@: -1}"
 }

@@ -50,9 +50,26 @@ findallcc | xargs grep '#include'
 
 grep 自动带彩色，排除 `.svn`、`.git` 目录。
 
-### mytop
+### mcd 命令
+
+创建并立即进入目录，支持 `mkdir` 的各种参数，比如 `-p` 等，只允许支持一个目录名参数。
+
+示例：
+
+```
+mcd 123
+mcd -p 1/2/3
+```
+
+### mytop 命令
 
 在 top 命令中只显示自己用户的进程。
+
+### pinstall 命令
+
+统一的包管理命令别名，根据系统的不同，实际可能是 `apt install`、`yum install`、`brew install`。
+此命令仅为减少一点输入量，没有任何其他功能。
+（当前为实验状态）
 
 ## .inputrc
 

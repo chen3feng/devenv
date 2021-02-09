@@ -60,7 +60,8 @@ set showmode
 set wildmenu
 set wildmode=longest:full,full
 if getbufvar($, '&diff') == 0
-    set colorcolumn=81,101
+    " set colorcolumn=81,101
+    set colorcolumn=101
 endif
 
 " status line
