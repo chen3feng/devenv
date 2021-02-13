@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$branch" = "master" ]; then
+    echo "You are already on master branch"
+    exit 1
+fi
+
+git switch master
+git pull

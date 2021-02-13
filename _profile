@@ -5,8 +5,8 @@ if [[ -z "$_THIS_DIR" ]]; then
     return
 fi
 
-source $_THIS_DIR/find_sources
-source $_THIS_DIR/trash_rm
+source $_THIS_DIR/shell/find_sources
+source $_THIS_DIR/shell/trash_rm
 
 # Only show my processes
 alias mytop='top -u $(id -u -n)'
@@ -50,6 +50,7 @@ export EDITOR=vim
 export FIGNORE=svn
 export NINJA_STATUS='[%f/%r/%t] '
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$_THIS_DIR/bin
 export PYTHONDONTWRITEBYTECODE=1
 
 # Set the best locale
