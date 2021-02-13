@@ -13,6 +13,8 @@ iMac、MacBook、Windows 7、Linux 服务器等多种不同环境。除了 Linux
 使用时需要恢复成正确的文件名，或者用符号链接的方式使用，更方便。
 `git pull` 即可升级。方法如下：
 
+## 安装
+
 在你自己的开发机上 clone 本仓库：
 ```bash
 git clone https://github.com/chen3feng/devenv.git
@@ -26,7 +28,7 @@ git clone https://github.com/chen3feng/devenv.git
   ```
 - 你的 ~/.inputrc（如果你用 bash）：
   ```inputrc
-  $include /path/to/this/devenv/_zshrc
+  $include /path/to/this/devenv/_inputrc
   ```
 - 你的 ~/.zshrc（如果你用 zsh）：
   ```zsh
@@ -36,6 +38,8 @@ git clone https://github.com/chen3feng/devenv.git
   ```vim
   source /path/to/this/devenv/_vimrc
   ```
+
+我也提供了一个简单的 `install` 命令以自动安装。
 
 ## .bashrc
 

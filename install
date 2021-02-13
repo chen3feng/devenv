@@ -1,0 +1,19 @@
+#!/bin/sh
+
+tag="###chen3feng-devenv###"
+
+this_dir="$(cd $(dirname $0) && pwd)"
+
+
+install() {
+  local command="$1"
+  local from="$2"
+  local to="$3"
+  local comment="$4"
+  echo "$command $this_dir/$from  $comment $tag" >> $to
+}
+
+install source _bashrc ~/.bashrc "#"
+install source _zshrc ~/.zshrc "#"
+install source _vimrc ~/.vimrc '"'
+install "\$include" _inputrc ~/.inputrc "#"
