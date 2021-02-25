@@ -1,4 +1,10 @@
 # zinit configurations
+#
+# This can be useful when pasting large amount of text in the terminal, to avoid triggering
+# autosuggestion for strings that are too long.
+# see https://github.com/zsh-users/zsh-autosuggestions#disabling-suggestion-for-large-buffers
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 zinit for \
     light-mode  zsh-users/zsh-autosuggestions \

@@ -2,15 +2,29 @@
 
 tag="###chen3feng-devenv###"
 
-this_dir="$(cd $(dirname $0) && pwd)"
-
+get_this_dir() {
+  local this_dir="$(cd $(dirname $0) && pwd)"
+  local out
+  if out=$(realpath --relative-to="$HOME" "$this_dir"); then
+    echo "~/$out"
+  else
+    echo $this_dir
+  fi
+}
 
 install() {
+  local this_dir
+  this_dir=$(get_this_dir)
   local command="$1"
-  local from="$2"
+  local from="$this_dir/$2"
   local to="$3"
   local comment="$4"
-  echo "$command $this_dir/$from  $comment $tag" >> $to
+  local stmt="$command $from  $comment $tag"
+  if grep "$tag" "$to" > /dev/null; then
+    sed -i -e "s|.*$tag.*|$stmt|g" $to
+  else
+    echo "$stmt" >> $to
+  fi
 }
 
 install source _bashrc ~/.bashrc "#"
