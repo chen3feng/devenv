@@ -82,15 +82,13 @@ mcd() {
 _no_vim_in_vscode() {
     echo "Don't use vim in vscode terminal, [cmd+click] the filename to edit in in vscode." > /dev/stderr
     # Check this variable again to allow change the behavior dynamically
-    if [ "$ALLOW_VIM_IN_VSCODE" = "" ]; then
-        return 1
-    fi
-    if [ "$ALLOW_VIM_IN_VSCODE" = "1" ]; then
+    if [ "$ALLOW_VIM_IN_VSCODE" != "1" ]; then
         local answer
-        echo -n "Continue (y/N)? "
+        echo -n "Open it in vscode (y/N)? "
         read answer
-        if [ "$answer" != "y" ]; then
-            return 1
+        if [ "$answer" = "y" ]; then
+            code "$@"
+            return
         fi
     fi
     \vim "$@"
