@@ -77,3 +77,26 @@ parse_git_branch() {
 mcd() {
     mkdir $@ && cd "${@: -1}"
 }
+
+# Prohibit the use of vim in the vscode terminal
+_no_vim_in_vscode() {
+    echo "Don't use vim in vscode terminal, [cmd+click] the filename to edit in in vscode." > /dev/stderr
+    # Check this variable again to allow change the behavior dynamically
+    if [ "$ALLOW_VIM_IN_VSCODE" = "" ]; then
+        return 1
+    fi
+    if [ "$ALLOW_VIM_IN_VSCODE" = "1" ]; then
+        local answer
+        echo -n "Continue (y/N)? "
+        read answer
+        if [ "$answer" != "y" ]; then
+            return 1
+        fi
+    fi
+    \vim "$@"
+}
+
+if [ "$ALLOW_VIM_IN_VSCODE" != "1" -a "$TERM_PROGRAM" = "vscode" ]; then
+    alias vim=_no_vim_in_vscode
+    alias vi=vim
+fi

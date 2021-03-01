@@ -42,6 +42,22 @@
 - markdownlint 自动提示 markdown 文件的错误，是编写 Markdown 的利器。
 - Markdown preview Enhanced 增强预览功能
 
+## 其他
+
+从 `vim` 转来的开发者往往会不由自主地在 `vscode` 的终端里继续用 `vim`，为了加快适应使用 `vscode`，默认禁止这种用法。
+
+可以通过环境变量 `ALLOW_VIM_IN_VSCODE` 来解除限制：
+
+```shell
+ALLOW_VIM_IN_VSCODE=1  # 允许使用但是依然提示
+ALLOW_VIM_IN_VSCODE=2  # 允许使用并且不提示
+```
+
+或者直接用 `\vim` 的方式来调用：
+```console
+\vim myfile
+```
+
 ## 文档
 
 - [官方文档](https://code.visualstudio.com/docs)
