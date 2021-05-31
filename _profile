@@ -48,7 +48,7 @@ alias la='ls -a'
 
 export EDITOR=vim
 export FIGNORE=svn
-export NINJA_STATUS='[%f/%r/%t] '
+export NINJA_STATUS='[%es:%p %o/s %f/%r/%t] '
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$_THIS_DIR/bin
 export PYTHONDONTWRITEBYTECODE=1
