@@ -21,42 +21,43 @@ Windows 10 之前的版本，比如 Windows 7，则只能安装 [Docker ToolBox]
 
 ### 启动
 
-在任意目录下执行 start.sh
-我的共享卷目录放在 /Volumes/code 下，因此 hardcode 了其路径。
+在任意目录下执行 `start.sh`。
+
+我的共享卷目录放在 `/Volumes/code` 下，因此 hardcode 了其路径。
 如果不同，需要修改路径。
 
-启动后，代码下载到 /code 下，即可在容器内可见。
-需要注意在 docker 容器内的任何修改，在退出后都会丢失。因此永久性修改都要放在挂接的 /code/ 下。
+启动后，代码下载到 `/code` 下，即可在容器内可见。
+需要注意在 docker 容器内的任何修改，在退出后都会丢失。因此永久性修改都要放在挂接的 `/code/` 下。
 
 ### 登录另一个终端
 
-很多时候一个终端可能不够用，我们希望再登录更多的终端，比如 top 查看编译进程运行情况等。
+很多时候一个终端可能不够用，我们希望再登录更多的终端，比如 `top` 查看编译进程运行情况等。
 
 首先列出当前有哪些活动的容器：
 
-```bash
+```console
 $ docker ps
 CONTAINER ID  IMAGE          COMMAND      CREATED       STATUS       PORTS   NAMES
 09b93464c2f7  ubuntu-devbox  "/bin/bash"  12 hours ago  Up 12 hours          laughing_northcutt
 ```
 然后输入以下命令，就能再起一个 shell:
 
-```bash
+```console
 $ docker exec -it 09b93464c2f7 /bin/bash
 ```
 
 ### 退出
 
-```bash
+```console
 # exit
 ```
 
 ## 增加软件
 
-由于容器退出后内容会丢失，因此需要安装的软件，需要修改 dockerfile，重新 build。安装新的包等时，建议不要动原来的 CMD，而是增加新的 CMD。
-这看起来和 docker 的最佳实践违背，不过由于我们不是生成环境，这样做有利于利用以前缓存的镜像层，大大加快构建速度。
+由于容器退出后内容会丢失，因此需要安装的软件，需要修改 `Dockerfile`，重新 build。安装新的包等时，建议不要动原来的 `CMD`，而是增加新的 `CMD`。
+这看起来和 docker 的最佳实践违背，不过由于我们不是生产环境，这样做有利于利用以前缓存的镜像层，大大加快构建速度。
 
 ## Mac 下需要注意
 
 Mac 文件系统默认是不区分大小写的，如果主要在 Linux 下开发，建议[创建大小写敏感的文件系统卷](https://www.google.com/search?q=mac+%E5%A4%A7%E5%B0%8F%E5%86%99%E6%95%8F%E6%84%9F+%E5%8D%B7)（不需要分区），
-挂接到 mac 下，我是挂接到 /Volumns/code/ 目录下。
+挂接到 mac 下，我是挂接到 `/Volumns/code/` 目录下。
