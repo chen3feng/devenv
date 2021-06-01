@@ -6,16 +6,18 @@
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-zinit for \
-    light-mode  zsh-users/zsh-autosuggestions \
-    light-mode  zdharma/fast-syntax-highlighting \
-                zdharma/history-search-multi-word
+if command -v zinit &> /dev/null; then
+    zinit for \
+        light-mode  zsh-users/zsh-autosuggestions \
+        light-mode  zdharma/fast-syntax-highlighting \
+                    zdharma/history-search-multi-word
 
-zinit snippet OMZP::git
-zinit snippet OMZ::lib/completion.zsh
-zinit snippet OMZ::lib/history.zsh
-zinit snippet OMZ::lib/key-bindings.zsh
-zinit snippet OMZ::lib/theme-and-appearance.zsh
+    zinit snippet OMZP::git
+    zinit snippet OMZ::lib/completion.zsh
+    zinit snippet OMZ::lib/history.zsh
+    zinit snippet OMZ::lib/key-bindings.zsh
+    zinit snippet OMZ::lib/theme-and-appearance.zsh
+fi
 
 _THIS_DIR=$(dirname ${(%):-%N})
 source $_THIS_DIR/_profile
