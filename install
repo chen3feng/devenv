@@ -20,7 +20,7 @@ install() {
   local to="$3"
   local comment="$4"
   local stmt="$command $from  $comment $tag"
-  if grep "$tag" "$to" > /dev/null; then
+  if [ -e $to ] && grep "$tag" "$to" > /dev/null; then
     sed -i -e "s|.*$tag.*|$stmt|g" $to
   else
     echo "$stmt" >> $to
