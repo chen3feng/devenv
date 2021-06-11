@@ -24,7 +24,7 @@ source $_THIS_DIR/_profile
 
 # Using shorter prompt in vscode terminal
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-    export PS1=$'%~\e[32m$(parse_git_branch)\e[m%# '
+    export PS1=$'%(4~|.../%3~|%~)\e[32m$(parse_git_branch)\e[m%# '
 else
     export PS1=$'[%n@%m]%~\e[32m$(parse_git_branch)\e[m%# '
 fi
