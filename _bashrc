@@ -11,4 +11,13 @@ test -s ~/bin/bladefunctions && . ~/bin/bladefunctions || true
 _THIS_DIR=$(dirname "${BASH_SOURCE[0]}")
 source $_THIS_DIR/_profile
 
-export PS1="\u@\h \w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+# Shorten shell prompt
+PROMPT_DIRTRIM=3
+
+# Using shorter prompt in vscode terminal
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+    export PS1="\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+else
+    export PS1="\u@\h \w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+fi

@@ -22,6 +22,7 @@ fi
 _THIS_DIR=$(dirname ${(%):-%N})
 source $_THIS_DIR/_profile
 
+# Using shorter prompt in vscode terminal
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
     export PS1=$'%~\e[32m$(parse_git_branch)\e[m%# '
 else
