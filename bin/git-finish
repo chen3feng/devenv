@@ -9,5 +9,5 @@ if [ "$branch" = "master" ]; then
     exit 1
 fi
 
-git switch master
+git checkout master
 git pull
