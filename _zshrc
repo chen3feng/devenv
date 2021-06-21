@@ -22,6 +22,13 @@ fi
 _THIS_DIR=$(dirname ${(%):-%N})
 source $_THIS_DIR/_profile
 
+# Ohyyzsh beceme too slow in large git repository,
+# See https://github.com/ohmyzsh/ohmyzsh/issues/3009
+if [[ $ZSH =~ .*\.oh-my-zsh ]]; then
+    git config --global --add oh-my-zsh.hide-dirty 1
+    git config --global --add oh-my-zsh.hide-status 1
+fi
+
 # Using shorter prompt in vscode terminal
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
     export PS1=$'%(4~|.../%3~|%~)\e[32m$(parse_git_branch)\e[m%# '
