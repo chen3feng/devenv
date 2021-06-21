@@ -47,6 +47,14 @@
 |Markdown 预览   |<kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>P</kbd>
 |Markdown分屏预览 |<kbd>Cmd</kbd>+<kbd>K</kbd> <kbd>V</kbd> | 
 
+编辑：
+
+|功能             |按键    |说明   |
+|----------------|-------|-------|
+|切换是否行注释     |⌘/
+|切换是否行注释     |⇧⌥A
+
+
 ## 常用插件
 
 - cpplint
