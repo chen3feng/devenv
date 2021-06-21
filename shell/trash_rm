@@ -182,14 +182,20 @@ function rm() {
             fi
             /bin/rm "$arg"
         else
-            timestamp=`date +%Y%m%d.%H%M%S.``printf "%05d" $RANDOM`
+            # Mac's date doesn't support %N, and linux eval $RANDOM at load time
+            if [ `uname` =  Darwin ]; then
+                timestamp=`date +%Y%m%d.%H%M%S.``printf "%05d" $RANDOM`
+            else
+                timestamp=`date +%Y%m%d.%H%M%S.%N`
+            fi
             # Put file into corresponding dir according removing date
             date_dir="$trash_dir/${timestamp:0:8}"
             if [ ! -e "$date_dir" ]; then
                 mkdir -p "$date_dir"
-                # Make user easy locating dir of today
-                ln -sf "$date_dir" "$trash_dir/lastday"
             fi
+            # Make user easy locating dir of today
+            /bin/rm -f "$trash_dir/lastday"
+            ln -sf "$date_dir" "$trash_dir/lastday"
             target_name="$date_dir/${timestamp}  `basename "$arg"`"
             if [ -n "$verbose" ]; then
                 echo "rm: mv $arg to $target_name"
