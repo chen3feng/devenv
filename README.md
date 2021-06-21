@@ -60,15 +60,15 @@ findallcc | xargs grep '#include'
 
 grep 自动带彩色，排除 `.svn`、`.git` 目录。
 
-### mcd 命令
+### mkcd 命令
 
 创建并立即进入目录，支持 `mkdir` 的各种参数，比如 `-p` 等，只允许支持一个目录名参数。
 
 示例：
 
 ```
-mcd 123
-mcd -p 1/2/3
+mkcd 123
+mkcd -p 1/2/3
 ```
 
 ### mytop 命令

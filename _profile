@@ -74,7 +74,7 @@ parse_git_branch() {
 }
 
 # Make dir and change to it immediately
-mcd() {
+mkcd() {
     mkdir $@ && cd "${@: -1}"
 }
 
