@@ -81,8 +81,15 @@ function rm() {
 
     local trash_dir="$TRASH_DIR"
 
-    if ! rm_args=`getopt -o firDRv -n rm --long direct,force,help,interactive,recursive,verbose,version -- "$@"`; then
-        return 1;
+    if [[ `getopt 2>/dev/null` == ' --' ]]; then
+        # Mac's getopt doesn't support long options
+        if ! rm_args=`getopt firDRv "$@"`; then
+            return 1;
+        fi
+    else
+        if ! rm_args=`getopt -o firDRv -n rm --long direct,force,help,interactive,recursive,verbose,version -- "$@"`; then
+            return 1;
+        fi
     fi
     eval set -- "$rm_args"
     while [ -n "$1" ]; do
@@ -175,19 +182,19 @@ function rm() {
             fi
             /bin/rm "$arg"
         else
-            timestamp=`date +%Y%m%d.%H%M%S.%N`
+            timestamp=`date +%Y%m%d.%H%M%S.``printf "%05d" $RANDOM`
             # Put file into corresponding dir according removing date
             date_dir="$trash_dir/${timestamp:0:8}"
             if [ ! -e "$date_dir" ]; then
                 mkdir -p "$date_dir"
                 # Make user easy locating dir of today
-                ln -sfT "$date_dir" "$trash_dir/lastday"
+                ln -sf "$date_dir" "$trash_dir/lastday"
             fi
             target_name="$date_dir/${timestamp}  `basename "$arg"`"
             if [ -n "$verbose" ]; then
                 echo "rm: mv $arg to $target_name"
             fi
-            mv -T "$arg" "$target_name"
+            mv "$arg" "$target_name"
         fi
     done
 

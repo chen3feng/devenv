@@ -39,3 +39,4 @@ RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py
 
 RUN pip install pex
 RUN apt-get install -y maven scala
+RUN apt-get install -y gdb
