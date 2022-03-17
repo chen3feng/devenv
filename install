@@ -4,12 +4,7 @@ tag="###chen3feng-devenv###"
 
 get_this_dir() {
   local this_dir="$(cd $(dirname $0) && pwd)"
-  local out
-  if out=$(realpath --relative-to="$HOME" "$this_dir"); then
-    echo "~/$out"
-  else
-    echo $this_dir
-  fi
+  echo $this_dir
 }
 
 install() {
