@@ -29,6 +29,10 @@ if [[ $ZSH =~ .*\.oh-my-zsh ]]; then
     git config --global --add oh-my-zsh.hide-status 1
 fi
 
+# zsh 5.8 disabled this option defaultly,
+# see https://github.com/advisories/GHSA-735j-r9q6-48mw
+setopt PROMPT_SUBST
+
 # Using shorter prompt in vscode terminal
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
     export PS1=$'%(4~|.../%3~|%~)\e[32m$(parse_git_branch)\e[m%# '
