@@ -47,6 +47,12 @@ if [ ! -d "$TRASH_DIR" ]; then
     echo "Trash dir $TRASH_DIR created."
 fi
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    realpath() {
+        [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+    }
+fi
+
 # bool _file_in_dir(string file, string dir)
 function _file_in_dir() {
     local file
