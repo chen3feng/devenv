@@ -13,6 +13,8 @@ set nocompatible
 syntax on
 filetype plugin on
 filetype plugin indent on
+set modeline
+set modelines=10
 
 " backup settings
 set backup
@@ -184,6 +186,9 @@ set pastetoggle=<F11>
 
 " remove trailing spaces
 function! RemoveTrailingSpace()
+    if &filetype == 'sh'  " here document required tabs to indent
+        return
+    endif
     if $VIM_HATE_SPACE_ERRORS != '0'
         normal m`
         silent! :%s/\s\+$//e
