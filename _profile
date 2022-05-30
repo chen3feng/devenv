@@ -11,6 +11,19 @@ source $_THIS_DIR/shell/trash_rm
 # Only show my processes
 alias mytop='top -u $(id -u -n)'
 
+
+# Dequarantine files downloaded from the Internet
+if [[ $(uname) == "Darwin" ]]; then
+    alias dequarantine='xattr -r -d com.apple.quarantine'
+    allowapp() {
+        if [[ "$#" -eq 0 ]]; then
+            echo "Usage: $0 <path/to/app>"
+            return 1
+        fi
+        codesign --sign - --force --deep $@ && xattr -d com.apple.quarantine $@
+    }
+fi
+
 # Grep options
 _GREP_OPTIONS="--color --exclude-dir=.svn --exclude-dir=.git"
 alias grep="grep $_GREP_OPTIONS"
