@@ -122,10 +122,12 @@ match Error '\s\+$'
 
 let g:load_doxygen_syntax=1
 
-" show tab as --->
-" show trailing space as -
+" show tab as '--->'
+" show trailing space as '-'
+" set their color to darkgray
 set listchars=tab:>-,trail:-
 set list
+highlight SpecialKey ctermfg=darkgray guifg=grey70
 
 " fix vim quick fix
 set errorformat^=%-GIn\ file\ included\ %.%#
