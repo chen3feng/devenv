@@ -41,14 +41,25 @@ git clone https://github.com/chen3feng/devenv.git
 
 我也提供了一个简单的 `install` 命令以自动安装。
 
-## .bashrc
+## Shell
 
-### trash\_rm
+### .bashrc
+
+bash 基本配置。
+
+### .zshrc
+
+最近在试用 zsh，配合 zinit，开启了语法高亮和智能补全，感觉还不错（试过 oh-my-zsh 感觉太慢，放弃了），
+也配置了以上的按键支持。
+
+### 一些自定义的便利的命令
+
+#### trash\_rm
 
 对 `rm` 命令增加回收站功能，被删除的文件或者目录会被移到 `~/.trash` 目录里。使用 `-D` 参数绕过回收站
 直接删除。
 
-### find\_sources
+#### find\_sources
 
 对 `find` 命令的包装，用于搜索源代码文件：
 ```bash
@@ -56,11 +67,11 @@ git clone https://github.com/chen3feng/devenv.git
 findallcc | xargs grep '#include'
 ```
 
-### 常用命令的设置
+#### 常用命令的设置
 
 grep 自动带彩色，排除 `.svn`、`.git` 目录。
 
-### mkcd 命令
+#### mkcd 命令
 
 创建并立即进入目录，支持 `mkdir` 的各种参数，比如 `-p` 等，只允许支持一个目录名参数。
 
@@ -71,11 +82,11 @@ mkcd 123
 mkcd -p 1/2/3
 ```
 
-### mytop 命令
+#### mytop 命令
 
 在 top 命令中只显示自己用户的进程。
 
-### pinstall 命令
+#### pinstall 命令
 
 统一的包管理命令别名，根据系统的不同，实际可能是 `apt install`、`yum install`、`brew install`。
 此命令仅为减少一点输入量，没有任何其他功能。
@@ -92,11 +103,6 @@ mkcd -p 1/2/3
 
 修改后输入 <kbd>Ctrl</kbd>-<kbd>X</kbd> <kbd>Ctrl</kbd>-<kbd>R</kbd> 或者执行 `bind -f  ~/.inputrc`
 生效，如果不行，尝试重新登录。
-
-## .zshrc
-
-最近在试用 zsh，配合 zinit，开启了语法高亮和智能补全，感觉还不错（试过 oh-my-zsh 感觉太慢，放弃了），
-也配置了以上的按键支持。
 
 ## .vimrc
 

@@ -9,7 +9,7 @@
 test -s ~/bin/bladefunctions && . ~/bin/bladefunctions || true
 
 _THIS_DIR=$(dirname "${BASH_SOURCE[0]}")
-source $_THIS_DIR/_profile
+source $_THIS_DIR/shellrc
 
 
 # Shorten shell prompt

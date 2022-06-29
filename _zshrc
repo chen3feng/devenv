@@ -20,7 +20,7 @@ if command -v zinit &> /dev/null; then
 fi
 
 _THIS_DIR=$(dirname ${(%):-%N})
-source $_THIS_DIR/_profile
+source $_THIS_DIR/shellrc
 
 # Ohyyzsh beceme too slow in large git repository,
 # See https://github.com/ohmyzsh/ohmyzsh/issues/3009
