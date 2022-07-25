@@ -4,7 +4,7 @@ old=$(git config --global core.hookspath)
 hookspath=$(cd $(dirname $0)/hooks &&pwd)
 
 if [[ -n $old && $hookspath != $old ]]; then
-    echo "global 'core.hookspath' is already set to '$old', do you want to overrite it? (y/N)"
+    echo "global 'core.hooksPath' is already set to '$old', do you want to overrite it? (y/N)"
     read ans
     if [[ $ans != 'y' ]]; then
         exit 1
@@ -12,4 +12,4 @@ if [[ -n $old && $hookspath != $old ]]; then
 fi
 
 echo "git global hook '$hookspath' is installed."
-git config --global core.hookspath $hookspath
+git config --global core.hooksPath $hookspath
