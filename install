@@ -1,15 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 tag="###chen3feng-devenv###"
-
-get_this_dir() {
-  local this_dir="$(cd $(dirname $0) && pwd)"
-  echo $this_dir
-}
+this_dir="$(cd $(dirname $0) && pwd)"
 
 install() {
-  local this_dir
-  this_dir=$(get_this_dir)
   local command="$1"
   local from="$this_dir/$2"
   local to="$3"
@@ -20,9 +14,12 @@ install() {
   else
     echo "$stmt" >> $to
   fi
+  echo "$to is updated."
 }
 
 install source _bashrc ~/.bashrc "#"
 install source _zshrc ~/.zshrc "#"
 install source _vimrc ~/.vimrc '"'
 install "\$include" _inputrc ~/.inputrc "#"
+
+$this_dir/git/install

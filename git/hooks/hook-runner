@@ -1,0 +1,41 @@
+#!/bin/bash
+
+HOOK_NAME=$(basename $0)
+
+run_repository_hooks() {
+    if [[ -x .git/hooks/$HOOK_NAME ]]; then
+        local hook=.git/hooks/$HOOK_NAME
+        $hook
+        ret=$?
+        if [ $ret -ne 0 ]; then
+            echo "$hook exited $ret" > /dev/stderr
+            exit $ret
+        fi
+    fi
+}
+
+# Run hooks under `HOOK_NAME.d` dirs
+run_hooks_plugins() {
+    if [ -d $0.d ]; then
+        # allows patterns which match no files to expand to a null string, rather than themselves
+        shopt -s nullglob
+        for hook in $0.d/*; do
+            # Ignore non-executable or files starts with "_"
+            if [[ ! -x $hook || $(basename $hook) == _* ]]; then
+                continue
+            fi
+            $hook
+            local ret=$?
+            if [[ $ret -ne 0 ]]; then
+                echo "$hook exited $ret" > /dev/stderr
+                exit $ret
+            fi
+        done
+    fi
+}
+
+run_repository_hooks
+run_hooks_plugins
+
+# For debuging dry run
+# exit 1
