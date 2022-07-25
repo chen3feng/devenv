@@ -396,3 +396,24 @@ function! PlaybackBuildLog(...)
     let &makeprg=old_makeprg
 endfunction
 command! -complete=file -nargs=1 PlaybackBuildLog call PlaybackBuildLog('<args>')
+
+" The `vim-plug` plugin, see
+" https://github.com/junegunn/vim-plug
+call plug#begin('~/.vim/plugged')
+
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+Plug 'vim-scripts/a.vim'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using a non-default branch
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+" Unmanaged plugin (manually installed and updated)
+" Plug '~/my-prototype-plugin'
+
+" Initialize plugin system
+call plug#end()
