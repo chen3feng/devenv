@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# list go mods in current dir tree.
-
-for mod in `find . -name 'go.mod'`; do echo `dirname $mod | sed -e "s|./||g"`; done
