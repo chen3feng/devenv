@@ -42,11 +42,6 @@
 # The path of trash directory
 TRASH_DIR=$HOME/.local/trash
 
-if [ ! -d "$TRASH_DIR" ]; then
-    mkdir -p $HOME/.trash
-    echo "Trash dir $TRASH_DIR created."
-fi
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
     realpath() {
         [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
@@ -70,6 +65,49 @@ function _file_in_dir() {
         fi
     done
     return 1
+}
+
+function _move_to_trash() {
+    local verbose=$1
+    local arg=$2
+    local osas
+
+    # Move it to the ~/.Trash dir under macos
+    if [ `uname` = Darwin ]; then
+        osas="tell application \"Finder\" to delete POSIX file \"${PWD}/${arg}\""
+        if [ -n "$verbose" ]; then
+            osascript -e "$osas"
+        else
+            osascript -e "$osas" >/dev/null
+        fi
+        return
+    fi
+
+    if [ ! -d "$TRASH_DIR" ]; then
+        mkdir -p $TRASH_DIR
+        echo "Trash dir $TRASH_DIR created."
+    fi
+
+    local timestamp date_dir target_name
+    # Mac's date doesn't support %N, and linux eval $RANDOM at load time
+    if [ `uname` =  Darwin ]; then
+        timestamp=`date +%Y%m%d.%H%M%S.``printf "%05d" $RANDOM`
+    else
+        timestamp=`date +%Y%m%d.%H%M%S.%N`
+    fi
+    # Put file into corresponding dir according removing date
+    date_dir="$TRASH_DIR/${timestamp:0:8}"
+    if [ ! -e "$date_dir" ]; then
+        mkdir -p "$date_dir"
+    fi
+    # Make user easy locating dir of today
+    /bin/rm -f "$TRASH_DIR/lastday"
+    ln -sf "$date_dir" "$TRASH_DIR/lastday"
+    target_name="$date_dir/${timestamp}  `basename "$arg"`"
+    if [ -n "$verbose" ]; then
+        echo "move $arg to $target_name"
+    fi
+    mv "$arg" "$target_name"
 }
 
 # This function will replace the rm command of system.
@@ -112,7 +150,7 @@ function rm() {
             -r|-R|--recursive)
                 recursive="-r"
                 shift;;
-            -verbose|--verbose)
+            -v|--verbose)
                 verbose="-v"
                 shift;;
             --help)
@@ -127,7 +165,7 @@ function rm() {
                 break ;;
             *)
                 echo "unknown option $1" >&2
-                exit 1;;
+                return 1;;
         esac
     done
 
@@ -188,25 +226,7 @@ function rm() {
             fi
             /bin/rm "$arg"
         else
-            # Mac's date doesn't support %N, and linux eval $RANDOM at load time
-            if [ `uname` =  Darwin ]; then
-                timestamp=`date +%Y%m%d.%H%M%S.``printf "%05d" $RANDOM`
-            else
-                timestamp=`date +%Y%m%d.%H%M%S.%N`
-            fi
-            # Put file into corresponding dir according removing date
-            date_dir="$trash_dir/${timestamp:0:8}"
-            if [ ! -e "$date_dir" ]; then
-                mkdir -p "$date_dir"
-            fi
-            # Make user easy locating dir of today
-            /bin/rm -f "$trash_dir/lastday"
-            ln -sf "$date_dir" "$trash_dir/lastday"
-            target_name="$date_dir/${timestamp}  `basename "$arg"`"
-            if [ -n "$verbose" ]; then
-                echo "rm: mv $arg to $target_name"
-            fi
-            mv "$arg" "$target_name"
+            _move_to_trash "$verbose" "$arg"
         fi
     done
 
