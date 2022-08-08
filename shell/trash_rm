@@ -40,7 +40,7 @@
 # ----------------------------------------------
 
 # The path of trash directory
-TRASH_DIR=$HOME/.trash
+TRASH_DIR=$HOME/.local/trash
 
 if [ ! -d "$TRASH_DIR" ]; then
     mkdir -p $HOME/.trash
