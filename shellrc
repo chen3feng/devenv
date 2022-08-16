@@ -112,3 +112,8 @@ if [ "$ALLOW_VIM_IN_VSCODE" != "1" -a "$TERM_PROGRAM" = "vscode" ]; then
     alias vim=_no_vim_in_vscode
     alias vi=vim
 fi
+
+# Use vscode as git editor in vscode terminal
+if [ "$TERM_PROGRAM" = "vscode" ]; then
+    export EDITOR="code --wait"
+fi

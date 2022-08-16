@@ -179,6 +179,34 @@ nmap <F9> :QFix<CR>
 map <F10> :NERDTreeToggle<CR>
 imap <F10> <ESC> :NERDTreeToggle<CR>
 
+" netrw config. See https://shapeshed.com/vim-netrw/
+let g:netrw_liststyle = 3 " Changing the directory view in netrw
+let g:netrw_banner = 0 " Removing the banner
+let g:netrw_browse_split = 1
+let g:netrw_winsize = 25
+let g:netrw_altv = 1
+
+" https://vi.stackexchange.com/questions/10988/toggle-explorer-window
+let g:NetrwIsOpen=0
+function! ToggleNetrw()
+    if g:NetrwIsOpen
+        let i = bufnr("$")
+        while (i >= 1)
+            if (getbufvar(i, "&filetype") == "netrw")
+                silent exe "bwipeout " . i
+            endif
+            let i-=1
+        endwhile
+        let g:NetrwIsOpen=0
+    else
+        let g:NetrwIsOpen=1
+        silent Lexplore
+    endif
+endfunction
+
+" Add your own mapping. For example:
+noremap <silent> <C-E> :call ToggleNetrw()<CR>
+
 " F11 toggle paste mode
 set pastetoggle=<F11>
 
@@ -411,6 +439,9 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Using a non-default branch
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'tpope/vim-vinegar'
 
 " Unmanaged plugin (manually installed and updated)
 " Plug '~/my-prototype-plugin'
