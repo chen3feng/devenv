@@ -11,3 +11,4 @@ fi
 
 git checkout master
 git pull $@  # can be --rebase
+git branch -D $branch
