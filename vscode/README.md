@@ -56,13 +56,15 @@
 |切换是否行注释     |⇧⌥A
 
 
-## 常用插件
+## 常用扩展
 
+- C++ [配置](https://code.visualstudio.com/docs/languages/cpp)及[扩展](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+- Go [配置](https://code.visualstudio.com/docs/languages/go) 及[扩展](https://marketplace.visualstudio.com/items?itemName=golang.go)
 - cpplint
 - pylint
 - protobuf
 - [Trailing Spaces](https://marketplace.visualstudio.com/items?itemName=shardulm94.trailing-spaces) 高亮显示行尾空格
-- markdownlint 自动提示 markdown 文件的错误，是编写 Markdown 的利器。
+- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) 自动提示 markdown 文件的错误，是编写 Markdown 的利器。
 - Markdown preview Enhanced 增强预览功能
 - [Sort](https://marketplace.visualstudio.com/items?itemName=henriiik.vscode-sort) 排序，选中后按 <kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd> 排序，再按一次逆序。
 - [Zip Explorer](https://marketplace.visualstudio.com/items?itemName=slevesque.vscode-zipexplorer)，查看 Zip 文件的内容。
