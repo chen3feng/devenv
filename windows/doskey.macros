@@ -1,0 +1,6 @@
+cat=type $*
+ls=dir $*
+mkdir=md $*
+mv=move $*
+pwd=cd
+rm=del $*
