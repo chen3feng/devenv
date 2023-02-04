@@ -1,5 +1,7 @@
 # zinit configurations
-#
+autoload -Uz compinit
+compinit
+
 # This can be useful when pasting large amount of text in the terminal, to avoid triggering
 # autosuggestion for strings that are too long.
 # see https://github.com/zsh-users/zsh-autosuggestions#disabling-suggestion-for-large-buffers
