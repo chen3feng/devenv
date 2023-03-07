@@ -9,7 +9,7 @@
 安装：
 
 ```console
-reg add "HKCU\Software\Microsoft\Command Processor" /v Autorun /d "doskey /macrofile=\"C:\Users\chen3\doskey.macros\"" /f
+reg add "HKCU\Software\Microsoft\Command Processor" /v Autorun /d "doskey /macrofile=\"C:\Users\chen3feng\doskey.macros\"" /f
 ```
 
 查询：
