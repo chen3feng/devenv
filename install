@@ -7,11 +7,15 @@ install() {
   local command="$1"
   local from="$this_dir/$2"
   local to="$3"
-  local comment="$4"
-  local stmt="$command $from  $comment $tag"
-  if [ -e $to ] && grep "$tag" "$to" > /dev/null; then
-    sed -i -e "s|.*$tag.*|$stmt|g" $to
+  local comment="$4 $tag"
+  local stmt="$command $from"
+  if [ -e $to ] && grep "$comment" "$to" > /dev/null; then
+    # Find the tag line
+    local lineno=$(grep -n -m1 "$comment" "$to" | cut -f1 -d:)
+    let lineno++
+    sed -i "${lineno}s|.*|$stmt|g" $to # Replace next line of tag line
   else
+    echo "$comment" >> $to
     echo "$stmt" >> $to
   fi
   echo "$to is updated."
