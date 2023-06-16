@@ -1,7 +1,7 @@
 :: Show branch name in command prompt. See https://stackoverflow.com/a/52411694
 
 set GITBRANCH=
-for /f "tokens=2" %%I in ('git.exe branch 2^> NUL ^| findstr /b "* "') do set GITBRANCH=%%I
+for /f "tokens=1" %%I in ('git.exe rev-parse --abbrev-ref HEAD 2^> NUL') do set GITBRANCH=%%I
 
 if "%GITBRANCH%" == "" (
     prompt $P$G 
