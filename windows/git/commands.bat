@@ -33,5 +33,5 @@ if errorlevel 1 (
 git.exe checkout %DEFAULT_BRANCH%
 :: can be --rebase ?
 shift
-git.exe pull $*
+git.exe pull %*
 goto :eof
