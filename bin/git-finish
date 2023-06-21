@@ -2,13 +2,19 @@
 
 set -e
 
-branch="$(git rev-parse --abbrev-ref HEAD)"
+default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed -e 's|^refs/remotes/origin/||g')
+current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-if [ "$branch" = "master" ]; then
-    echo "You are already on master branch"
+if [ "$current_branch" = "$default_branch" ]; then
+    echo "You are already on mainline ($default_branch) branch"
     exit 1
 fi
 
-git checkout master
+if ! git diff --name-status --exit-code; then
+    echo You have uncommitted local changes.
+    exit 1
+fi
+
+git checkout $default_branch
 git pull $@  # can be --rebase
 git branch -D $branch

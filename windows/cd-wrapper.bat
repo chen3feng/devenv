@@ -12,6 +12,6 @@ if '%*'=='-' (
     cd /d %*
     if not errorlevel 1 (
 		set OLDPWD="%cd%"
-		call %~dp0update-git-prompt.cmd
+		call %~dp0git\update-prompt.cmd
 	)
 )

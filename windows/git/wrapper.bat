@@ -3,6 +3,6 @@
 git.exe %*
 set /a exitcode=%errorlevel%
 
-call %~dp0update-git-prompt.cmd
+call %~dp0update-prompt.cmd
 
 exit /B %exitcode%
