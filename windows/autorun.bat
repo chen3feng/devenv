@@ -1,4 +1,7 @@
 @echo off
+
+set PATH=%PATH%;%~dp0bin
+
 doskey /macrofile=%~dp0doskey.macros
 doskey git=%~dp0git-wrapper.bat $*
 
