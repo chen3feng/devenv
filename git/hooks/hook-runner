@@ -1,6 +1,7 @@
 #!/bin/bash
 
-HOOK_NAME=$(basename $0)
+HOOK_NAME=$1
+shift
 
 run_repository_hooks() {
     if [[ -x .git/hooks/$HOOK_NAME ]]; then

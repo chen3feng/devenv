@@ -1,1 +1,3 @@
-hook-runner
+#!/bin/bash
+
+$(dirname $0)/hook-runner $(basename $0) $@
