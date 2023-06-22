@@ -68,7 +68,7 @@ endif
 
 " status line
 set laststatus=2
-set statusline=%<%f\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P\ %-10.3n
+set statusline=%<%f\ %h%m%r%=%k[%{&fileformat}][%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P\ %-10.3n
 
 if has("mswin")
     set diffexpr=MyDiff()

@@ -3,7 +3,7 @@ if '%*'=='' cd & exit /b
 if '%*'=='-' (
 	if '%OLDPWD%' neq '' (
 		cd /d %OLDPWD%
-		call %~dp0update-git-prompt.cmd
+		call %~dp0git\update-prompt.cmd
 	)
     set OLDPWD="%cd%"
 ) else if '%*'=='~' (
