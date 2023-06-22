@@ -1,5 +1,6 @@
 cat=type $*
 ls=dir $*
+ll=dir $*
 mkdir=md $*
 mv=move $*
 pwd=cd
