@@ -425,6 +425,11 @@ function! PlaybackBuildLog(...)
 endfunction
 command! -complete=file -nargs=1 PlaybackBuildLog call PlaybackBuildLog('<args>')
 
+if !exists("*plug#begin")
+    finish
+endif
+
+
 " The `vim-plug` plugin, see
 " https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
