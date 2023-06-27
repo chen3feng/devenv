@@ -1,7 +1,6 @@
 @echo off
 
 if '%*'=='' cd && exit /b
-
 set PWD=%cd%
 
 if '%*'=='-' (
@@ -14,7 +13,8 @@ if '%*'=='-' (
 )
 
 if errorlevel 1 exit /b %errorlevel%
-if '%cd%' == '%pwd%' exit /b
+if '%cd%' == '%PWD%' exit /b
 
-set OLDPWD=%pwd%
+set OLDPWD=%PWD%
+set PWD=%cd%
 call %~dp0git\update-prompt.cmd
