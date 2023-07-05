@@ -16,6 +16,14 @@
 - ...   ::进入上上一级目录
 - ....  ::依此类推...
 
+### sudo
+
+用管理员权限执行
+
+```console
+sudo notepad C:\Windows\System32\drivers\etc\hosts
+```
+
 ### Git 增强
 
 在命令提示符中显示当前分支
