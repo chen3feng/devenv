@@ -45,16 +45,19 @@
 |Source Control |⇧⌘G
 |Run and Debug  |⇧⌘D
 |扩展中心         |⇧⌘X
-|Markdown 预览   |<kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>P</kbd>
-|Markdown分屏预览 |<kbd>Cmd</kbd>+<kbd>K</kbd> <kbd>V</kbd> | 
+|Markdown 预览   |<kbd>⌃</kbd><kbd>K</kbd> <kbd>P</kbd>
+|Markdown分屏预览 |<kbd>⌘</kbd><kbd>K</kbd> <kbd>V</kbd> | 
 
 编辑：
 
 |功能             |按键    |说明   |
 |----------------|-------|-------|
-|切换是否行注释     |⌘/
-|切换是否行注释     |⇧⌥A
-
+|切换是否行注释    |<kbd>⌘</kbd><kbd>/</kbd>
+|切换是否块注释    |⇧⌥A
+|全选当前行        |⌘L
+|复制当前行        |⌘C   | 无选择的情况下自动复制当前行
+|重复当前行        |⇧⌥↑
+|移动当前行        |⌥↑或↓
 
 ## 常用扩展
 
