@@ -1,4 +1,5 @@
 cat=type $*
+cp=copy $*
 ls=dir $*
 ll=dir $*
 mkdir=md $*
