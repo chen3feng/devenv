@@ -59,6 +59,11 @@ make_install_alias
 alias ll='ls -l'
 alias la='ls -a'
 
+# Fix `tail -f` problem for WSL
+if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
+    alias tail='tail ---disable-inotify'
+fi
+
 export EDITOR=vim
 export FIGNORE=svn
 export NINJA_STATUS='[%es:%p %o/s %f/%r/%t] '
