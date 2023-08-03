@@ -122,3 +122,7 @@ fi
 if [ "$TERM_PROGRAM" = "vscode" ]; then
     export EDITOR="code --wait"
 fi
+
+# Shell history optimization
+# ignoreboth=ignoreboth:ignoredups
+export HISTCONTROL=ignoreboth
