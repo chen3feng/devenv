@@ -5,7 +5,7 @@ for /f "tokens=1" %%I in ('git.exe rev-parse --abbrev-ref HEAD 2^> NUL') do set 
 if "%GITBRANCH%" == "" (
     prompt $P$G
 ) else (
-    git.exe diff --name-only --exit-code > nul
+    git.exe diff --name-only --exit-code > nul 2>&1
     if errorlevel 1 (
         prompt $P $C$E[1;31m%GITBRANCH%$E[0m$F $G
     ) else (
