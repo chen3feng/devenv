@@ -4,9 +4,9 @@
 
 ## 目录列表
 
-### 类 Unix 命令别名
+### 类 Unix 命令
 
-在 Windows 命令提示符下支持 `ls`、`pwd`、`cat`、`mkdir`、`rm` 等命令别名。
+在 Windows 命令提示符下支持 `ls`、`pwd`、`cat`、`mkdir`、`rm`、`wc` 等命令。
 
 ### CD 命令增强
 
