@@ -19,6 +19,7 @@
 - 避免误按 Cmd+Q 时直接退出：可以改为按两次 Cmd+Q，在【Code/Perference/Keyboard Shortcuts】进入图形界面配置，或者直接[修改 keybindings.json](https://github.com/microsoft/vscode/issues/14710#issuecomment-488114446)。
   或者安装 [Quit Control 扩展](https://marketplace.visualstudio.com/items?itemName=artdiniz.quitcontrol-vscode)。
 - 修改 Python 折行宽度：根据选择的格式化工具做相应的设置，比如 autopep8 就修改 ”python.formatting.autopep8Args“，参见[来源](https://stackoverflow.com/questions/47406741/disable-auto-wrap-long-line-in-visual-studio-code)。
+- 文件比较编辑器是否忽略空白字符：设置 "diffEditor.ignoreTrimWhitespace"。
 
 ## 同步配置
 
