@@ -6,7 +6,7 @@
 
 ### 类 Unix 命令
 
-在 Windows 命令提示符下支持 `ls`、`pwd`、`cat`、`mkdir`、`rm`、`wc` 等命令。
+在 Windows 命令提示符下支持 `ls`、`pwd`、`cat`、`mkdir`、`rm`、`wc`、`sleep` 等命令。
 
 ### CD 命令增强
 
@@ -24,9 +24,13 @@
 sudo notepad C:\Windows\System32\drivers\etc\hosts
 ```
 
+### timer
+
+类似于 Linux 下的 `time` 命令，衡量命令的执行时间。不能用 `time` 是因为 Windows 上已经存在。
+
 ### Git 增强
 
-在命令提示符中显示当前分支
+在命令提示符中显示当前分支名，红色表示有未提交的修改，绿色表示没有。
 
 ```console
 C:\Work\code\devenv (master) > git push

@@ -6,3 +6,4 @@ mkdir=md $*
 mv=move $*
 pwd=cd
 rm=del $*
+sleep=timeout /nobreak $* >nul
