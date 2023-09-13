@@ -6,7 +6,16 @@
 
 ### 类 Unix 命令
 
-在 Windows 命令提示符下支持 `ls`、`pwd`、`cat`、`mkdir`、`rm`、`wc`、`sleep` 等命令。
+在 Windows 命令提示符下支持一些 Unix 命令：
+
+- `cat`
+- `ls`
+- `mkdir`
+- `pwd`
+- `rm`
+- `sleep`
+- `touch`
+- `wc`
 
 ### CD 命令增强
 
