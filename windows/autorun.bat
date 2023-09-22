@@ -10,6 +10,7 @@ set git_commands=%~dp0git\commands.bat
 :: git alias external command only accept unix path
 call :to_unix_path git_commands
 git config --global alias.finish "!%git_commands% finish"
+set git_commands=
 
 ::CD Aliases
 ::https://stackoverflow.com/questions/9228950/what-is-the-alternative-for-users-home-directory-on-windows-command-prompt
@@ -33,4 +34,5 @@ exit /b 0
 :to_unix_path
 call set to_unix_path_val=%%%1%%%
 call set %1="%to_unix_path_val:\=/%"
+set to_unix_path_val=
 exit /b 0
