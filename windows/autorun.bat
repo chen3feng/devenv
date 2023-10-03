@@ -9,7 +9,7 @@ doskey git=%~dp0git\wrapper.bat $*
 set git_commands=%~dp0git\commands.bat
 :: git alias external command only accept unix path
 call :to_unix_path git_commands
-git config --global alias.finish "!%git_commands% finish"
+git config --global --replace-all alias.finish "!%git_commands% finish"
 set git_commands=
 
 ::CD Aliases
