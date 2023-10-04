@@ -16,6 +16,9 @@
 - `sleep`
 - `touch`
 - `wc`
+- `which`
+- `whoami`
+- `xargs`
 
 ### CD 命令增强
 

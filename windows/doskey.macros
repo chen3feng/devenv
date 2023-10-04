@@ -1,9 +1,11 @@
 cat=type $*
 cp=copy $*
-ls=dir $*
 ll=dir $*
+ls=dir /b $*
 mkdir=md $*
 mv=move $*
 pwd=cd
 rm=del $*
-sleep=timeout /nobreak $* >nul
+sleep=powershell.exe sleep $*
+which=where $*
+whoami=powershell.exe whoami $*
