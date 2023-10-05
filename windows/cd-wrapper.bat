@@ -5,7 +5,7 @@ set PWD=%cd%
 
 if "%*" == "-" (
 	if "%OLDPWD%" == "" exit /b
-	cd /d %OLDPWD%
+	cd /d "%OLDPWD%"
 ) else if "%*" == "~" (
 	cd /d "%USERPROFILE%"
 ) else (
