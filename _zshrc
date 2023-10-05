@@ -42,7 +42,7 @@ setopt PROMPT_SUBST
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
     export PS1=$'%(4~|.../%3~|%~)\e[32m$(parse_git_branch)\e[m%# '
 else
-    export PS1=$'[%n@%m]%~\e[32m$(parse_git_branch)\e[m%# '
+    export PS1=$'%(5~|%-2~/…/%3~|%4~)\e[32m$(parse_git_branch)\e[m%# '
 fi
 
 # HOME, END and DELETE key
