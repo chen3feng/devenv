@@ -112,11 +112,6 @@ function _move_to_trash() {
 
 # This function will replace the rm command of system.
 function rm() {
-    if [[ $# == 0 ]]; then
-        /bin/rm
-        return
-    fi
-
     local direct
     local force
     local interactive
@@ -179,6 +174,13 @@ function rm() {
     if [ -n "$direct" ]; then
         /bin/rm $force $recursive $verbose $interactive "$@"
         return $?
+    fi
+
+    if [[ $# == 0 ]]; then
+        if [[ -z "$force" ]]; then
+            /bin/rm
+        fi
+        return
     fi
 
     error=0
