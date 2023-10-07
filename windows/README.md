@@ -22,11 +22,11 @@
 
 ### CD 命令增强
 
-- cd -  ::返回先前目录
-- cd ~  ::进入HOME目录
-- ..    ::进入上一级目录
-- ...   ::进入上上一级目录
-- ....  ::依此类推...
+- `cd -`  ::返回先前目录
+- `cd ~`  ::进入HOME目录
+- `..`    ::进入上一级目录
+- `...`   ::进入上上一级目录
+- `....`  ::依此类推...
 
 ### sudo
 
@@ -38,7 +38,7 @@ sudo notepad C:\Windows\System32\drivers\etc\hosts
 
 ### timer
 
-类似于 Linux 下的 `time` 命令，衡量命令的执行时间。不能用 `time` 是因为 Windows 上已经存在。
+类似于 Linux 下的 `time` 命令，衡量命令的执行时间。不能叫 `time` 是因为 Windows 上已经存在 `time`。
 
 ### Git 增强
 
