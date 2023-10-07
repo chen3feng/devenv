@@ -98,7 +98,7 @@ mkcd -p 1/2/3
 
 ## .inputrc
 
-这是 bash，python 交互环境等用的 `readline` 库的配置文件。
+这是 bash，python 交互环境等用的 [readline](https://zh.wikipedia.org/zh-cn/GNU_Readline) 库的配置文件。
 功能：
 - 输入命令的前缀，然后按<kbd>↑</kbd><kbd>↓</kbd>箭头就只出匹配前缀的历史命令。
 - 输入 <kbd>Shift</kbd>-<kbd>←</kbd> 和 <kbd>Shift</kbd>-<kbd>→</kbd> 以词为单位移动光标
