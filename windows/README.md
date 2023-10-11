@@ -9,6 +9,8 @@
 在 Windows 命令提示符下支持一些 Unix 命令：
 
 - `cat`
+- `clear`
+- `cp`
 - `ls`
 - `mkdir`
 - `pwd`

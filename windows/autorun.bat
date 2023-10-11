@@ -1,5 +1,14 @@
 @echo off
 
+:: Avoid nested initialization.
+if not [%SHLVL%] == [] goto :Nested
+set SHLVL=1
+
+:: In case of the window directory was removed from PATH by something like Unreal Engine builder script.
+::if not [%SESSIONNAME%] == [] exit /b 0
+doskey /? >nul 2>nul
+if errorlevel 1 goto :EOF
+
 set PATH=%PATH%;%~dp0bin
 
 doskey /macrofile=%~dp0doskey.macros
@@ -9,7 +18,7 @@ doskey git=%~dp0git\wrapper.bat $*
 set git_commands=%~dp0git\commands.bat
 :: git alias external command only accept unix path
 call :to_unix_path git_commands
-git config --global --replace-all alias.finish "!%git_commands% finish"
+git.exe config --global --replace-all alias.finish "!%git_commands% finish"
 set git_commands=
 
 ::CD Aliases
@@ -27,6 +36,10 @@ doskey ........=%~dp0cd-wrapper.bat ..\..\..\..\..\..\..
 doskey .........=%~dp0cd-wrapper.bat ..\..\..\..\..\..\..\..
 
 
+exit /b 0
+
+:Nested
+set /a SHLVL=%SHLVL% + 1
 exit /b 0
 
 
