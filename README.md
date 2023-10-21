@@ -39,7 +39,7 @@ git clone https://github.com/chen3feng/devenv.git
   source /path/to/this/devenv/_vimrc
   ```
 
-我也提供了一个简单的 `install` 命令以自动安装。
+我也提供了一个简单的 `install` （Windows: `install.bat`）命令以自动安装。
 
 ## Shell
 

@@ -2,11 +2,12 @@
 
 HOOK_NAME=$1
 shift
+GLOBAL_HOOKS_DIR=$(dirname $0)
 
 run_repository_hooks() {
     if [[ -x .git/hooks/$HOOK_NAME ]]; then
         local hook=.git/hooks/$HOOK_NAME
-        $hook
+        $hook $@
         ret=$?
         if [ $ret -ne 0 ]; then
             echo "$hook exited $ret" > /dev/stderr
@@ -17,15 +18,16 @@ run_repository_hooks() {
 
 # Run hooks under `HOOK_NAME.d` dirs
 run_hooks_plugins() {
-    if [ -d $0.d ]; then
+    local PLUGIN_DIR=$GLOBAL_HOOKS_DIR/$HOOK_NAME.d
+    if [ -d $PLUGIN_DIR ]; then
         # allows patterns which match no files to expand to a null string, rather than themselves
         shopt -s nullglob
-        for hook in $0.d/*; do
+        for hook in $PLUGIN_DIR/*; do
             # Ignore non-executable or files starts with "_"
             if [[ ! -x $hook || $(basename $hook) == _* ]]; then
                 continue
             fi
-            $hook
+            $hook $@
             local ret=$?
             if [[ $ret -ne 0 ]]; then
                 echo "$hook exited $ret" > /dev/stderr
@@ -35,8 +37,8 @@ run_hooks_plugins() {
     fi
 }
 
-run_repository_hooks
-run_hooks_plugins
+run_repository_hooks $@
+run_hooks_plugins $@
 
 # For debuging dry run
 # exit 1
