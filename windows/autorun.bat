@@ -1,18 +1,18 @@
 @echo off
 
+:: In case of the window directory was removed from PATH by something like Unreal Engine builder script.
+::if not [%SESSIONNAME%] == [] exit /b 0
+
+:: In case of cmd.exe is not started from a console process, but it's grandpa process is cmd.exe,
+:: the doskey is not inherited, so it should be set every time before the SHLVL checking.
+doskey /macrofile=%~dp0doskey.macros 2>nul
+doskey git=%~dp0git\wrapper.bat $* 2>nul
+
 :: Avoid nested initialization.
 if not [%SHLVL%] == [] goto :Nested
 set SHLVL=1
 
-:: In case of the window directory was removed from PATH by something like Unreal Engine builder script.
-::if not [%SESSIONNAME%] == [] exit /b 0
-doskey /? >nul 2>nul
-if errorlevel 1 goto :EOF
-
 set PATH=%PATH%;%~dp0bin
-
-doskey /macrofile=%~dp0doskey.macros
-doskey git=%~dp0git\wrapper.bat $*
 
 :: Git subcommands
 set git_commands=%~dp0git\commands.bat
