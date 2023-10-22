@@ -29,6 +29,7 @@ _GREP_OPTIONS="--color --exclude-dir=.svn --exclude-dir=.git"
 alias grep="grep $_GREP_OPTIONS"
 alias egrep="egrep $_GREP_OPTIONS"
 alias fgrep="fgrep $_GREP_OPTIONS"
+alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
 if [[ $(uname) == "Darwin" ]]; then
     export CLICOLOR=1
