@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo HAHAHA
 remote=$(git remote get-url --push origin)
 email=$(git config user.email)
 
