@@ -17,6 +17,7 @@ run_repository_hooks() {
 
 # Run hooks under `HOOK_NAME.d` dirs
 run_hooks_plugins() {
+    pwd
     echo AAAA: $HOOK_NAME
     if [ -d $HOOK_NAME.d ]; then
         echo AAA
