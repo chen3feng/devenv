@@ -2,6 +2,7 @@
 
 HOOK_NAME=$1
 shift
+GLOBAL_HOOKS_DIR=$(dirname $0)
 
 run_repository_hooks() {
     if [[ -x .git/hooks/$HOOK_NAME ]]; then
@@ -17,14 +18,12 @@ run_repository_hooks() {
 
 # Run hooks under `HOOK_NAME.d` dirs
 run_hooks_plugins() {
-    pwd
-    echo AAAA: $HOOK_NAME
-    if [ -d $HOOK_NAME.d ]; then
-        echo AAA
-        exit 1
+    local PLUGIN_DIR=$GLOBAL_HOOKS_DIR/$HOOK_NAME.d
+    if [ -d $PLUGIN_DIR ]; then
         # allows patterns which match no files to expand to a null string, rather than themselves
         shopt -s nullglob
-        for hook in $0.d/*; do
+        for hook in $PLUGIN_DIR/*; do
+            echo CCC $hook
             # Ignore non-executable or files starts with "_"
             if [[ ! -x $hook || $(basename $hook) == _* ]]; then
                 continue
