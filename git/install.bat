@@ -4,6 +4,8 @@ setlocal enabledelayedexpansion
 
 for /f %%i in ('git config --global core.hookspath') do set old=%%i
 set hookspath=%~dp0hooks
+set hookspath=%hookspath:\=/%
+echo %hookspath%
 
 if not [%old%] == [] (
 	if not [%hookspath%] == [%old%] (
