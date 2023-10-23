@@ -5,8 +5,7 @@
 
 :: In case of cmd.exe is not started from a console process, but it's grandpa process is cmd.exe,
 :: the doskey is not inherited, so it should be set every time before the SHLVL checking.
-doskey /macrofile=%~dp0doskey.macros 2>nul
-doskey git=%~dp0git\wrapper.bat $* 2>nul
+call :init_doskey
 
 :: Avoid nested initialization.
 if not [%SHLVL%] == [] goto :Nested
@@ -49,3 +48,13 @@ call set to_unix_path_val=%%%1%%%
 call set %1="%to_unix_path_val:\=/%"
 set to_unix_path_val=
 exit /b 0
+
+:init_doskey
+doskey /? >nul 2>nul
+if errorlevel 1 exit /b
+doskey /macrofile=%~dp0doskey.macros
+:: cmder has it's own git prompt support.
+doskey git=%~dp0git\wrapper.bat $*
+doskey /macrofile=%~dp0doskey.macros 2>nul
+doskey git=%~dp0git\wrapper.bat $* 2>nul
+exit /b

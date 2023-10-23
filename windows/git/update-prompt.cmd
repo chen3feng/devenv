@@ -1,5 +1,11 @@
 :: Show branch name in command prompt. See https://stackoverflow.com/a/52411694
 
+:: cmder has its own git branch prompt
+if not [%CMDER_CONFIGURED%] == [] (
+    :: In case call vscode from cmder
+    if not [%TERM_PROGRAM%] == [vscode]  exit /b
+)
+
 set GITBRANCH=
 for /f "tokens=1" %%I in ('git.exe rev-parse --abbrev-ref HEAD 2^> NUL') do set GITBRANCH=%%I
 if "%GITBRANCH%" == "" (
