@@ -1,3 +1,4 @@
 @echo off
+
 :: Pass all arguments to PowerShell script
-powershell -ExecutionPolicy Bypass -File "%~dp0RemoveItemToRecycleBin.ps1" %*
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0RemoveItemToRecycleBin.ps1" %*

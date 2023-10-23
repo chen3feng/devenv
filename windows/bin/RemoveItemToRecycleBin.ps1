@@ -1,3 +1,5 @@
+# This script implements the POSIX rm command, with additional recycle bin support.
+
 function Show-Help {
     param (
         [array]$OptionSet
@@ -6,9 +8,11 @@ function Show-Help {
     Write-Host "Usage: YourScript.ps1 [options]"
 
     foreach ($option in $OptionSet) {
+        if ($name -match "^-") {
+            continue
+        }
         $name = $option.Name
         $alias = $option.Alias
-        $type = $option.Type
         $help = $option.Help
 
         $optionText = if ($alias) { "-$alias, --$name" } else { "--$name" }
@@ -60,6 +64,9 @@ function Parse-CommandLine {
             $shortOptions = $Matches[1] -split ''
 
             foreach ($shortOption in $shortOptions) {
+                if ($shortOption -eq "") {
+                    continue
+                }
                 $matchedOption = $null
 
                 # Find the option in the OptionSet
@@ -75,14 +82,12 @@ function Parse-CommandLine {
                         $options[$matchedOption.Name] = $true
                     }
                     else {
-                        $i++
-                        $value = $Arguments[$i]
-                        $options[$matchedOption.Name] = $value
+                        Write-Error "Short option: $arg must be bool type"
                     }
                 }
                 else {
                     # Unknown option, report an error
-                    Write-Error "Unknown option: $arg"
+                    Write-Error "Unknown option: $shortOption"
                 }
             }
         }
@@ -107,7 +112,13 @@ $optionSet = @(
         "Name"  = "help"
         "Alias" = $null
         "Type"  = "bool"
-        "Help"  = "Show help information."
+        "Help"  = "display this help and exit"
+    },
+    @{
+        "Name"  = "version"
+        "Alias" = $null
+        "Type"  = "string"
+        "Help"  = "output version information and exit"
     },
     @{
         "Name"  = "force"
@@ -116,25 +127,41 @@ $optionSet = @(
         "Help"  = "ignore nonexistent files and arguments, never prompt"
     },
     @{
-        "Name"  = "directly"
-        "Alias" = "d"
+        "Name"  = "interactive"
+        "Alias" = "i"
         "Type"  = "bool"
-        "Help"  = "Specify 'directly'."
+        "Help"  = "prompt before every removal"
+    },
+    @{
+        "Name"  = "recursive"
+        "Alias" = "r"
+        "Type"  = "bool"
+        "Help"  = "remove directories and their contents recursively"
+    }, 
+    @{
+        "Name"  = "directly"
+        "Alias" = "D"
+        "Type"  = "bool"
+        "Help"  = "remove directly, don't move to recycle bin"
+    },
+    @{
+        "Name"  = "verbose"
+        "Alias" = "v"
+        "Type"  = "bool"
+        "Help"  = "explain what is being done"
     }
 )
 
-$commandLineOptions, $commandLineArguments = Parse-CommandLine -Arguments $args -OptionSet $optionSet
+$commandLineOptions, $commandLineArgs = Parse-CommandLine -Arguments $args -OptionSet $optionSet
 
-Write-Host "commandLineOptions:"
+Write-Debug "commandLineOptions:"
 foreach ($key in $commandLineOptions.Keys) {
     $value = $commandLineOptions[$key]
-    Write-Host "$key : $value"
+    Write-Debug "$key : $value"
 }
 
-Write-Host "commandLineArguments:"
-$commandLineArguments | ForEach-Object { Write-Host $_ }
-
-exit
+Write-Debug "commandLineArgs:"
+$commandLineArgs | ForEach-Object { Write-Debug $_ }
 
 # Check for help and version options
 if ($Help) {
@@ -143,8 +170,6 @@ if ($Help) {
 Usage: rm [OPTION]... [FILE]...
 Remove (unlink) the FILE(s).
 
-  -f, --force           ignore nonexistent files and arguments, never prompt
-  -i                    prompt before every removal
   -I                    prompt once before removing more than three files, or
                           when removing recursively; less intrusive than -i,
                           while still giving protection against most mistakes
@@ -154,11 +179,7 @@ Remove (unlink) the FILE(s).
       --preserve-root[=all]  do not remove '/' (default);
                               with 'all', reject any command line argument
                               on a separate device from its parent
-  -r, -R, --recursive   remove directories and their contents recursively
   -d, --dir             remove empty directories
-  -v, --verbose         explain what is being done
-      --help     display this help and exit
-      --version  output version information and exit
 
 By default, rm does not remove directories.  Use the --recursive (-r or -R)
 option to remove each listed directory, too, along with all of its contents.
@@ -171,23 +192,25 @@ use one of these commands:
 "
 }
 
-if ($Version) {
-    # Display version information and exit
-    Write-Host "rm version 1.0"
-    exit 0
-}
+$Direct = $commandLineOptions["directly"]
+$Force = $commandLineOptions["force"]
+$Interactive = $commandLineOptions["interactive"]
+$Recursive = $commandLineOptions["recursive"]
+$Verbose = $commandLineOptions["verbose"]
 
-if ($commandLineArgs.Items.Count -eq 0) {
-    Write-Host "rm: missing operand"
-    Write-Host "Try 'rm --help' for more information."
+if ($commandLineArgs.Count -eq 0) {
+    if (-not $Force) {
+        Write-Host "rm: missing operand"
+        Write-Host "Try 'rm --help' for more information."    
+    }
     exit 0
 }
 
 # Define a function to prompt for confirmation if the -i option is used
-function Prompt-For-Confirmation($Path) {
-    if ($Interactive -or ($InteractiveOnce -and ($commandLineArgs.Items.Count -gt 3 -or $Recursive))) {
+function Confirm-For-Confirmation($Path) {
+    if (-not $Force -and $Interactive) {
         $confirmation = Read-Host "Delete '$Path'? [Y/N]"
-        if ($confirmation -ne "Y") {
+        if ($confirmation -ine "Y") {
             Write-Host "Skipped: $Path"
             return $false
         }
@@ -201,10 +224,10 @@ function Remove-ToRecycleBin($Path) {
 
     if (Test-Path $Path) {
         $item = Get-Item $Path
-        $folder = $shell.Namespace(0x0a)
-        $folder.ParseName($item.FullName).InvokeVerb("delete")
-
-        Write-Host "Deleted to system recycle bin: $Path"
+        $shell.Namespace(0).ParseName($item).InvokeVerb("delete")
+        if ($Verbose) {
+            Write-Host "$Path is moved to recycle bin"
+        }
     }
     else {
         Write-Host "$Path does not exist."
@@ -212,29 +235,32 @@ function Remove-ToRecycleBin($Path) {
 }
 
 # Loop through the provided paths
-foreach ($Path in $commandLineArgs.Items) {
-    Write-Host $Path
-    if ($NoPreserveRoot -and ($Path -eq "/" -or $Path -eq "\")) {
-        Write-Host "Error: '/' or '\' cannot be removed."
-        continue
-    }
+foreach ($Path in $commandLineArgs) {
+    Write-Debug "Remove $Path"
 
     if ($Verbose) {
         Write-Host "Deleting: $Path"
     }
 
     if (Test-Path $Path) {
-        if ($Force -or (Prompt-For-Confirmation $Path)) {
-            if ($Recursive) {
+        if (-not $Recursive -and (Test-Path -Path $path -PathType Container)) {
+            Write-Host "The path '$path' is a directory."
+            continue
+        }
+        if (Confirm-For-Confirmation $Path) {
+            if ($Direct) {
                 Remove-Item -Path $Path -Recurse -Force
-            }
-            else {
+                if ($Verbose) {
+                    Write-Host "$Path is deleted"
+                }
+            } else {
                 Remove-ToRecycleBin $Path
             }
-            Write-Host "Deleted to system recycle bin: $Path"
         }
     }
     else {
-        Write-Host "$Path does not exist."
+        if (-not $Force) {
+            Write-Host "$Path does not exist."
+        }
     }
 }
