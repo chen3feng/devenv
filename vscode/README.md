@@ -10,6 +10,7 @@
 
 - 文件浏览器缩进宽度：默认缩进太小看不清，`"tree.indent": 16`，从 8 改为 16，[来源](https://github.com/microsoft/vscode/issues/35447#issuecomment-455461013)。
 - 区别显示空格和 Tab 字符：设置 `"editor.renderWhitespace": "all"`, [来源](https://stackoverflow.com/a/30140625/364334)
+- 高亮显示行尾空白字符：安装[Trailing Spaces](https://marketplace.visualstudio.com/items?itemName=ybaumes.highlight-trailing-white-spaces)扩展。
 - 保存时自动删除行尾多余的空格：设置 `"files.trimTrailingWhitespace": true`，[来源](https://stackoverflow.com/questions/30884131/remove-trailing-spaces-automatically-or-with-a-shortcut)
 - 显示垂直标尺：设置 `"editor.rulers": [80,100]`，[来源](https://stackoverflow.com/a/29972073/364334)
 - 文件浏览器中隐藏某些类型的文件：设置 `"files:exclude"`，[来源](https://stackoverflow.com/a/30142299/364334)
