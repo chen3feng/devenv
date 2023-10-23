@@ -11,7 +11,9 @@
 - `cat`
 - `clear`
 - `cp`
+- `history`
 - `ls`
+- `ll`
 - `mkdir`
 - `pwd`
 - `rm`

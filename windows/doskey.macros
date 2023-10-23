@@ -1,6 +1,7 @@
 cat=type $*
 clear=cls
 cp=copy $*
+history=doskey /history
 ll=dir $*
 ls=dir /b $*
 mkdir=md $*
