@@ -7,7 +7,6 @@ ls=dir /b $*
 mkdir=md $*
 mv=move $*
 pwd=cd
-rm=del $*
 sleep=powershell.exe sleep $*
 which=where $*
 whoami=powershell.exe whoami $*
