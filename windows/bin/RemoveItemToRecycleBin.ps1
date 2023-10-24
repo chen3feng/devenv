@@ -1,134 +1,19 @@
 # This script implements the POSIX rm command, with additional recycle bin support.
 
-function Show-Help {
-    param (
-        [string]$Prog,
-        [array]$OptionSet,
-        [string]$Desc,
-        [string]$Epilog
-    )
-
-    Write-Host "Usage: $Prog [options]... [files]...`n$Desc`n"
-
-    foreach ($option in $OptionSet) {
-        if ($name -match "^-") {
-            continue
-        }
-        $name = $option.Name
-        $alias = $option.Alias
-        $help = $option.Help
-
-        $optionText = if ($alias) { "-$alias, --$name" } else { "--$name" }
-        Write-Host "$optionText : $help"
-    }
-
-    if ($Epilog -ne "") {
-        Write-Host "`n$Epilog"
-    }
-}
-
-# Parse command line arguments with case sensitivity
-function Parse-CommandLine {
-    param (
-        [string]$Prog,
-        [array]$OptionSet,
-        [string[]]$Arguments,
-        [string]$Desc,
-        [string]$Epilog
-    )
-
-    $options = @{}
-    $parsedArguments = @()
-
-    $i = 0
-    while ($i -lt $Arguments.Count) {
-        $arg = $Arguments[$i]
-        if ($arg -match '^--(.+)') {
-            # Long option with a value
-            $name = $Matches[1]
-            $value = $true
-
-            if ($name -match '(.+)=(.+)') {
-                $name = $Matches[1]
-                $value = $Matches[2]
-            }
-            $matchedName = $null
-
-            # Find the option in the OptionSet
-            foreach ($option in $OptionSet) {
-                if ($option.Name -eq $name -or ($option.Alias -ne $null -and $option.Alias -eq $name)) {
-                    $matchedName = $name
-                    break
-                }
-            }
-            if ($matchedName -ne $null) {
-                $options[$matchedName] = $value
-            }
-            else {
-                # Unknown option, report an error
-                Write-Error "Unknown option: $arg"
-            }
-        }
-        elseif ($arg -match '^-(.+)') {
-            # Short option(s)
-            $shortOptions = $Matches[1] -split ''
-
-            foreach ($shortOption in $shortOptions) {
-                if ($shortOption -eq "") {
-                    continue
-                }
-                $matchedOption = $null
-
-                # Find the option in the OptionSet
-                foreach ($option in $OptionSet) {
-                    if ($option.Name -eq $shortOption -or ($option.Alias -ne $null -and $option.Alias -eq $shortOption)) {
-                        $matchedOption = $option
-                        break
-                    }
-                }
-
-                if ($matchedOption -ne $null) {
-                    if ($matchedOption.Type -eq "bool") {
-                        $options[$matchedOption.Name] = $true
-                    }
-                    else {
-                        Write-Error "Short option: $arg must be bool type"
-                    }
-                }
-                else {
-                    # Unknown option, report an error
-                    Write-Error "Unknown option: $shortOption"
-                }
-            }
-        }
-        else {
-            # Collect arguments
-            $parsedArguments += $arg
-        }
-
-        $i++
-    }
-
-    if ($options.ContainsKey("help")) {
-        Show-Help -Prog $Prog -OptionSet $OptionSet -Desc $Desc -Epilog $Epilog
-        exit 1
-    }
-
-    return $options, $parsedArguments
-}
+. ArgParse.ps1
 
 $optionSet = @(
     @{
-        "Name"  = "help"
-        "Alias" = $null
-        "Type"  = "bool"
-        "Help"  = "display this help and exit"
+        "Name" = "help"
+        #"Alias" = $null
+        "Type" = "bool"
+        "Help" = "display this help and exit"
     },
     @{
-        "Name"  = "version"
-        "Alias" = $null
-        "Type"  = "string"
-        "Help"  = "output version information and exit"
+        "Name" = "version"
+        #"Alias" = $null
+        "Type" = "string"
+        "Help" = "output version information and exit"
     },
     @{
         "Name"  = "force"
@@ -165,7 +50,7 @@ $optionSet = @(
 $Desc = "Remove (unlink) the FILE(s)."
 
 $Epilog = @"
-By default, rm does not remove directories.  Use the --recursive (-r or -R)
+By default, rm does not remove directories.  Use the --recursive (-r)
 option to remove each listed directory, too, along with all of its contents.
 
 To remove a file whose name starts with a '-', for example '-foo',
