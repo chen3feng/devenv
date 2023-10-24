@@ -2,10 +2,13 @@
 
 function Show-Help {
     param (
-        [array]$OptionSet
+        [string]$Prog,
+        [array]$OptionSet,
+        [string]$Desc,
+        [string]$Epilog
     )
 
-    Write-Host "Usage: YourScript.ps1 [options]"
+    Write-Host "Usage: $Prog [options]... [files]...`n$Desc`n"
 
     foreach ($option in $OptionSet) {
         if ($name -match "^-") {
@@ -18,13 +21,20 @@ function Show-Help {
         $optionText = if ($alias) { "-$alias, --$name" } else { "--$name" }
         Write-Host "$optionText : $help"
     }
+
+    if ($Epilog -ne "") {
+        Write-Host "`n$Epilog"
+    }
 }
 
 # Parse command line arguments with case sensitivity
 function Parse-CommandLine {
     param (
+        [string]$Prog,
+        [array]$OptionSet,
         [string[]]$Arguments,
-        [array]$OptionSet
+        [string]$Desc,
+        [string]$Epilog
     )
 
     $options = @{}
@@ -100,7 +110,7 @@ function Parse-CommandLine {
     }
 
     if ($options.ContainsKey("help")) {
-        Show-Help $optionSet
+        Show-Help -Prog $Prog -OptionSet $OptionSet -Desc $Desc -Epilog $Epilog
         exit 1
     }
 
@@ -137,7 +147,7 @@ $optionSet = @(
         "Alias" = "r"
         "Type"  = "bool"
         "Help"  = "remove directories and their contents recursively"
-    }, 
+    },
     @{
         "Name"  = "directly"
         "Alias" = "D"
@@ -152,7 +162,20 @@ $optionSet = @(
     }
 )
 
-$commandLineOptions, $commandLineArgs = Parse-CommandLine -Arguments $args -OptionSet $optionSet
+$Desc = "Remove (unlink) the FILE(s)."
+
+$Epilog = @"
+By default, rm does not remove directories.  Use the --recursive (-r or -R)
+option to remove each listed directory, too, along with all of its contents.
+
+To remove a file whose name starts with a '-', for example '-foo',
+use one of these commands:
+  rm -- -foo
+
+  rm ./-foo
+"@
+
+$commandLineOptions, $commandLineArgs = Parse-CommandLine -Prog "rm" -Desc $Desc -Epilog $Epilog -Arguments $args -OptionSet $optionSet
 
 Write-Debug "commandLineOptions:"
 foreach ($key in $commandLineOptions.Keys) {
@@ -162,35 +185,6 @@ foreach ($key in $commandLineOptions.Keys) {
 
 Write-Debug "commandLineArgs:"
 $commandLineArgs | ForEach-Object { Write-Debug $_ }
-
-# Check for help and version options
-if ($Help) {
-    # Display help message and exit
-    Write-Host "
-Usage: rm [OPTION]... [FILE]...
-Remove (unlink) the FILE(s).
-
-  -I                    prompt once before removing more than three files, or
-                          when removing recursively; less intrusive than -i,
-                          while still giving protection against most mistakes
-      --interactive[=WHEN]  prompt according to WHEN: never, once (-I), or
-                          always (-i); without WHEN, prompt always
-      --no-preserve-root  do not treat '/' specially
-      --preserve-root[=all]  do not remove '/' (default);
-                              with 'all', reject any command line argument
-                              on a separate device from its parent
-  -d, --dir             remove empty directories
-
-By default, rm does not remove directories.  Use the --recursive (-r or -R)
-option to remove each listed directory, too, along with all of its contents.
-
-To remove a file whose name starts with a '-', for example '-foo',
-use one of these commands:
-  rm -- -foo
-
-  rm ./-foo
-"
-}
 
 $Direct = $commandLineOptions["directly"]
 $Force = $commandLineOptions["force"]
