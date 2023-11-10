@@ -7,6 +7,9 @@
 ```console
 devenv /edit path\to\your\path
 ```
+### Show Vertical Ruler
+
+[Editor Guidelines](https://marketplace.visualstudio.com/items?itemName=PaulHarrington.EditorGuidelinesPreview)
 
 ### Trailing Whitespaces
 - https://marketplace.visualstudio.com/items?itemName=Predelnik.RemoveTrailingWhitespaces
