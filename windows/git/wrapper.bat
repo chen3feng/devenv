@@ -1,6 +1,6 @@
 @echo off
 
-git.exe %*
+call %~dp0commands.bat %*
 set /a exitcode=%errorlevel%
 
 call %~dp0update-prompt.cmd

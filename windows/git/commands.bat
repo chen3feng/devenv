@@ -1,9 +1,10 @@
 @echo off
 
-if "%1" == "finish" (
+if [%1] == [finish] (
+	shift
 	call :finish %*
 ) else (
-	echo Unknown subcommand %1 1>&2
+	git.exe %*
 )
 
 goto :eof
@@ -31,5 +32,5 @@ if errorlevel 1 (
 git.exe checkout %DEFAULT_BRANCH%
 :: can be --rebase ?
 shift
-git.exe pull %*
+git.exe pull
 goto :eof
