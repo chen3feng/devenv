@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 import sys
 import re
 from optparse import OptionParser
@@ -11,9 +10,9 @@ _INDENT = 2
 
 _FUNCTION = re.compile(r'^(function)?\s*([A-Za-z_][A-Za-z0-9_:]+)\s*\(\s*\)\s*{?')
 _TEST = re.compile(r'^(if|elif|while)\s*\[[^[]')
-_VAR_ASSIGN = re.compile(r'\s*(local)?\s+([A-Za-z_][A-Za-z0-9_]*)=')
-_LOCAL_VAR = re.compile(r'\s*(local)\s+([A-Za-z_][A-Za-z0-9_]*)$')
-_LOCAL_VAR_COMMAND = re.compile(r'\s*local\s+[A-Za-z_][A-Za-z0-9_]*=\$\(')
+_VAR_ASSIGN = re.compile(r'\s*(local)?\s+([A-Za-z_]\w*)=')
+_LOCAL_VAR = re.compile(r'\s*(local)\s+([A-Za-z_]\w*)$')
+_LOCAL_VAR_COMMAND = re.compile(r'\s*local\s+[A-Za-z_]\w*=\$\(')
 _LOOP_WORDS = re.compile(r'^(then|do)$')
 _MISSING_SPACES = re.compile(r'.*;(then|do)$')
 
@@ -34,7 +33,7 @@ class BashLint(object):
             if check_method:
                 check_method()
             else:
-                print 'only-check: method %s not found' % self.only_check
+                print('only-check: method %s not found' % self.only_check)
         else:
             # All checking functions are starts with '_check_'
             for method in dir(self):
@@ -44,7 +43,7 @@ class BashLint(object):
 
         self.errors.sort()
         for error in self.errors:
-            print '%s:%d: %s: %s' % (self.filename, error[0], error[1], error[2])
+            print('%s:%d: %s: %s' % (self.filename, error[0], error[1], error[2]))
         return not self.errors
 
     def _load(self, filename):

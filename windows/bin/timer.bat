@@ -7,7 +7,7 @@ for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
 )
 
 REM Execute the command
-%*
+call %*
 set err=%errorlevel%
 
 rem Get end time:
