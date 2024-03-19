@@ -60,3 +60,13 @@ bindkey "\e[1;2C" forward-word
 # Ctrl-Left/Right, same as above, for XShell
 bindkey "\e[1;5D" backward-word
 bindkey "\e[1;5C" forward-word
+
+# Fix problem: Directory color is too dark on Mac
+# https://github.com/sorin-ionescu/prezto/issues/1539
+if [ ls --color -d . >/dev/null 2>&1 ]; then
+    eval "$(gdircolors ${HOME}/.dir_colors)"
+    zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+else
+    export LSCOLORS="gxfxbEaEBxxEhEhBaDaCaD"
+    zstyle ':completion:*:default' list-colors ${(s.:.)LSCOLORS}
+fi

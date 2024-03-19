@@ -1,4 +1,15 @@
-# Visual Studio Trickies
+# Visual Studio Tricky
+
+## Tutorial
+
+- https://visualstudio.microsoft.com/zh-hans/vs/getting-started/
+- https://learn.microsoft.com/zh-cn/visualstudio/ide/productivity-features?view=vs-2022
+
+## Terminal
+
+Open builtin terminal
+
+![image](https://github.com/chen3feng/devenv/assets/1998410/0a1fdea8-de0a-4f34-bd86-17de2edf505a)
 
 ## Edit
 
@@ -15,6 +26,11 @@ devenv /edit path\to\your\path
 
 - https://marketplace.visualstudio.com/items?itemName=Predelnik.RemoveTrailingWhitespaces
 - https://marketplace.visualstudio.com/items?itemName=MadsKristensen.TrailingWhitespaceVisualizer
+
+### Auto Format
+
+- [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfigTeam.EditorConfig) Support `.editconfig`
+- [FormatDocumentOnSave](https://marketplace.visualstudio.com/items?itemName=mynkow.FormatDocumentOnSave)
 
 ## Debug
 
