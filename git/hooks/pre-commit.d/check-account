@@ -3,8 +3,8 @@
 remote=$(git remote get-url --push origin)
 email=$(git config user.email)
 
-if [[ $remote == *[:/]*github.com[:/]* && $email == *@tencent.com || \
-      $remote == *[:/]*oa.com[:/]* && $email != *@tencent.com ]]; then
+if [[ $remote == *[:/]*github.com[:/]* && $email == *@*tencent.com || \
+      $remote == *[:/]*oa.com[:/]* && $email != *@*tencent.com ]]; then
     echo "Don't use your account '$email' to commit to '$remote'"
     exit 1
 fi

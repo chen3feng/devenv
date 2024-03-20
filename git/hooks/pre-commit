@@ -1,3 +1,5 @@
 #!/bin/bash
 
-$(dirname $0)/hook-runner $(basename $0) $@
+HOOK_DIR=$(dirname $0)
+HOOK_DIR=${HOOK_DIR//\\//} # Convert windows path to unix form
+$HOOK_DIR/hook-runner $(basename $0) $@
