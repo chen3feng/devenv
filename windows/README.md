@@ -12,6 +12,8 @@
 - `clear`
 - `cp`
 - `history`
+- `kill`
+- `killall`
 - `ls`
 - `ll`
 - `mkdir`
