@@ -2,7 +2,7 @@
 
 set -e
 
-default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed -e 's|^refs/remotes/origin/||g')
+default_branch=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$current_branch" = "$default_branch" ]; then
@@ -17,4 +17,4 @@ fi
 
 git checkout $default_branch
 git pull $@  # can be --rebase
-git branch -D $branch
+git branch -D $current_branch
