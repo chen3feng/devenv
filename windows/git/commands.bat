@@ -13,16 +13,20 @@ goto :EOF
 :: function finish(args...)
 :finish
 	setlocal
-	shift
-	if "%1" == "--help" (
+	if "%2" == "--help" (
 		call :finish_help
 		exit /b
 	)
 	set CURRENT_BRANCH=
 	set DEFAULT_BRANCH=
 
+	for /f "tokens=3" %%I in ('git.exe remote show origin ^| findstr /C:"HEAD branch:" 2^> NUL') do set DEFAULT_BRANCH=%%I
 	for /f "tokens=1" %%I in ('git.exe rev-parse --abbrev-ref HEAD 2^> NUL') do set CURRENT_BRANCH=%%I
-	for /f "tokens=1" %%I in ('git.exe symbolic-ref -q HEAD --short 2^> NUL') do set DEFAULT_BRANCH=%%I
+
+	if "%DEFAULT_BRANCH%" == "" (
+		echo Can't find default branch.
+		exit /b 1
+	)
 
 	if "%CURRENT_BRANCH%" == "%DEFAULT_BRANCH%" (
 		echo You are already in the mainline branch.
@@ -37,9 +41,8 @@ goto :EOF
 
 	git.exe checkout %DEFAULT_BRANCH%
 	:: can be --rebase ?
-	shift
 	git.exe pull
-	git.exe branch -D %DEFAULT_BRANCH%
+	git.exe branch -D %CURRENT_BRANCH%
 exit /b
 
 
