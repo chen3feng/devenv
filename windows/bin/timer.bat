@@ -1,6 +1,8 @@
 @REM Calculate time of a command
 @echo off
 
+setlocal
+
 rem Get start time:
 for /F "tokens=1-4 delims=:.," %%a in ("%time%") do (
    set /A "start=(((%%a*60)+1%%b %% 100)*60+1%%c %% 100)*100+1%%d %% 100"

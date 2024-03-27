@@ -43,12 +43,13 @@ goto :EOF
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:: function :Usage()
 :Usage
-echo kill: kill [-9] pid...
-echo    Send a signal to a job.
-echo.
-echo    Send the processes identified by PID signal to terminate.
-echo.
-echo    Options:
-echo      -9        Specifies to forcefully terminate the process(es).
+    echo kill: kill [-9] pid...
+    echo    Send a signal to a job.
+    echo.
+    echo    Send the processes identified by PID signal to terminate.
+    echo.
+    echo    Options:
+    echo      -9        Specifies to forcefully terminate the process(es).
 exit /b

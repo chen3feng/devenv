@@ -2,6 +2,7 @@
 :: example:   git branch | grep -v "develop" | xargs git branch -D
 :: example    xargs -a input.txt echo
 :: https://helloacm.com/simple-xargs-batch-implementation-for-windows/
+
 setlocal enabledelayedexpansion
 
 set args=

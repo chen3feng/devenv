@@ -38,33 +38,34 @@ echo %msg%
 
 goto :EOF
 
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:: function ShowUsage()
 :ShowUsage
-echo Usage: uname [OPTION]...
-echo.
-echo Print certain system information.  With no OPTION, same as -s.
-echo.
-echo   -a, --all                print all information, in the following order,
-echo                              except omit -p and -i if unknown:
-echo   -s, --kernel-name        print the kernel name
-echo   -n, --nodename           print the network node hostname
-echo   -r, --kernel-release     print the kernel release
-echo   -v, --kernel-version     print the kernel version
-echo   -m, --machine            print the machine hardware name
-echo   -o, --operating-system   print the operating system
-echo       --help     display this help and exit
-echo       --version  output version information and exit
+    echo Usage: uname [OPTION]...
+    echo.
+    echo Print certain system information.  With no OPTION, same as -s.
+    echo.
+    echo   -a, --all                print all information, in the following order,
+    echo                              except omit -p and -i if unknown:
+    echo   -s, --kernel-name        print the kernel name
+    echo   -n, --nodename           print the network node hostname
+    echo   -r, --kernel-release     print the kernel release
+    echo   -v, --kernel-version     print the kernel version
+    echo   -m, --machine            print the machine hardware name
+    echo   -o, --operating-system   print the operating system
+    echo       --help     display this help and exit
+    echo       --version  output version information and exit
 exit /b 0
 
+
+:: function AppendVariable(&varname, value)
 :: :Append varname value
 :AppendVariable
-call set "AppendVariable_value=%%%~1%%%"
-if "%AppendVariable_value%" == "" (
-    call set "%~1=%~2"
-) else (
-    call set "%~1=%%%~1%% %~2"
-)
+    call set "AppendVariable_value=%%%~1%%%"
+    if "%AppendVariable_value%" == "" (
+        call set "%~1=%~2"
+    ) else (
+        call set "%~1=%%%~1%% %~2"
+    )
 exit /b 0
-
-
-endlocal

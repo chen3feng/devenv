@@ -1,5 +1,7 @@
 @echo off
 
+setlocal
+
 set argc=0
 for %%x in (%*) do Set /A argc+=1
 
