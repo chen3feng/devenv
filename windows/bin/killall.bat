@@ -32,18 +32,17 @@ for %%t in (%targets%) do (
 
 taskkill %force% %args%
 
-endlocal
-
 goto :EOF
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:: function :Usage()
 :Usage
-echo killall [-9] NAME...
-echo    Send a signal to a process.
-echo.
-echo    Send the processes identified by name signal to terminate.
-echo.
-echo    Options:
-echo      -9        Specifies to forcefully terminate the process(es).
+    echo killall [-9] NAME...
+    echo    Send a signal to a process.
+    echo.
+    echo    Send the processes identified by name signal to terminate.
+    echo.
+    echo    Options:
+    echo      -9        Specifies to forcefully terminate the process(es).
 exit /b
