@@ -3,6 +3,8 @@ $include /etc/inputrc
 # DELETE key
 # NOTE: bash know HOME/END keys
 "\e[3~": delete-char
+# Ctrl-Backspace
+"\C-H": shell-backward-kill-word
 
 # Arrow up/down to history by existed prefix
 "\e[A": history-search-backward
