@@ -33,6 +33,47 @@
 - `...`   ::进入上上一级目录
 - `....`  ::依此类推...
 
+### lsr
+
+类似 POSIX 的 `find . -name 'pattern'`，递归查找当前目录及子目录下所有匹配的文件：
+
+不带参数列出所有文件：
+
+```console
+C:\Work\code\devenv>lsr
+...
+```
+
+带参数列出匹配的文件：
+
+```console
+C:\Work\code\devenv>lsr *.bat
+C:\Work\code\devenv\install.bat
+C:\Work\code\devenv\git\install.bat
+C:\Work\code\devenv\windows\autorun.bat
+C:\Work\code\devenv\windows\cd-wrapper.bat
+...
+```
+
+带参数列出匹配的文件：
+
+```console
+C:\Work\code\devenv>lsr *.bat
+C:\Work\code\devenv\install.bat
+C:\Work\code\devenv\git\install.bat
+C:\Work\code\devenv\windows\autorun.bat
+C:\Work\code\devenv\windows\cd-wrapper.bat
+...
+```
+
+通配符可以有目录前缀：
+
+```console
+C:\Work\code\devenv>lsr windows\kill*.bat
+C:\Work\code\devenv\windows\bin\kill.bat
+C:\Work\code\devenv\windows\bin\killall.bat
+```
+
 ### rm
 
 删除到回收站，用法和 Linux 下的一样。
