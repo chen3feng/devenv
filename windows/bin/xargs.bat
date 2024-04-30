@@ -31,8 +31,6 @@ shift
     goto start
 
 :start1
-    for /F "tokens=*" %%a in (!file!) do (
-        %args% %%a
-    )
+    for /F "tokens=*" %%a in (!file!) do call %args% %%a
 
 :end
