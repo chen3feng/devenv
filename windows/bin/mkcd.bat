@@ -1,7 +1,7 @@
 @echo off
 
 if not "%2" == "" (
-	echo Too much arguments
+	echo Too many arguments
 	exit /b 1
 )
 
