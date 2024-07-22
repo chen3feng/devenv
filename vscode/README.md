@@ -31,7 +31,7 @@
 
 ## 同步配置
 
-点击左下角的小齿轮，在弹出的选单中选择“Settings Sync”，登录 github 账号或者 Microsoft 账户，按提示操作即可。
+点击左下角的小齿轮⚙️，在弹出的选单中选择“Settings Sync”，登录 github 账号或者 Microsoft 账户，按提示操作即可。
 
 ## 快捷键
 
@@ -56,6 +56,12 @@
 |扩展中心         |⇧⌘X
 |Markdown 预览   |<kbd>⌃</kbd><kbd>K</kbd> <kbd>P</kbd>
 |Markdown分屏预览 |<kbd>⌘</kbd><kbd>K</kbd> <kbd>V</kbd> | 
+
+浏览：
+
+|功能             |按键    |说明   |
+|----------------|-------|-------|
+|跳到匹配的括号处  |<kbd>⌘</kbd><kbd>⇧</kbd><kbd>\\</kbd>
 
 编辑：
 
