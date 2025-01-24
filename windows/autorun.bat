@@ -1,5 +1,11 @@
 @echo off
 
+:: Stop if cmd.exe is runing a batch file (contains a "/C" switch, case insensitive)
+:: Using the "echo.%CMDCMDLINE%|find" or findstr way may occasionally hang in Unreal Engine build batch,
+:: the reason is unknown.
+if not "%CMDCMDLINE%"=="%CMDCMDLINE:/c=%" goto :EOF
+if not "%CMDCMDLINE%"=="%CMDCMDLINE:/C=%" goto :EOF
+
 :: In case of the window directory was removed from PATH by something like Unreal Engine builder script.
 ::if not [%SESSIONNAME%] == [] exit /b 0
 
@@ -51,21 +57,26 @@ exit /b
     setlocal
     doskey /? >nul 2>nul
     if errorlevel 1 exit /b
+
     doskey /macrofile=%~dp0doskey.macros 2>nul
-    doskey git=%~dp0git\wrapper.bat $* 2>nul
+
+    set "tmpfile=%tmp%\%RANDOM%.macros"
+    echo git=%~dp0git\wrapper.bat $*>%tmpfile%
 
     ::CD Aliases
     ::https://stackoverflow.com/questions/9228950/what-is-the-alternative-for-users-home-directory-on-windows-command-prompt
     ::https://stackoverflow.com/questions/48189935/how-can-i-return-to-the-previous-directory-in-windows-command-prompt
-    doskey cd=%~dp0cd-wrapper.bat $*
-    doskey cd..=%~dp0cd-wrapper.bat ..
-    doskey .=cd
-    doskey ..=%~dp0cd-wrapper.bat ..
-    doskey ...=%~dp0cd-wrapper.bat ..\..
-    doskey ....=%~dp0cd-wrapper.bat ..\..\..
-    doskey .....=%~dp0cd-wrapper.bat ..\..\..\..
-    doskey ......=%~dp0cd-wrapper.bat ..\..\..\..\..
-    doskey .......=%~dp0cd-wrapper.bat ..\..\..\..\..\..
-    doskey ........=%~dp0cd-wrapper.bat ..\..\..\..\..\..\..
-    doskey .........=%~dp0cd-wrapper.bat ..\..\..\..\..\..\..\..
+    echo cd=%~dp0cd-wrapper.bat $*>>%tmpfile%
+    echo cd..=%~dp0cd-wrapper.bat ..>>%tmpfile%
+    echo .=cd>>%tmpfile%
+    echo ..=%~dp0cd-wrapper.bat ..>>%tmpfile%
+    echo ...=%~dp0cd-wrapper.bat ..\..>>%tmpfile%
+    echo ....=%~dp0cd-wrapper.bat ..\..\..>>%tmpfile%
+    echo .....=%~dp0cd-wrapper.bat ..\..\..\..>>%tmpfile%
+    echo ......=%~dp0cd-wrapper.bat ..\..\..\..\..>>%tmpfile%
+    echo .......=%~dp0cd-wrapper.bat ..\..\..\..\..\..>>%tmpfile%
+    echo ........=%~dp0cd-wrapper.bat ..\..\..\..\..\..\..>>%tmpfile%
+    echo .........=%~dp0cd-wrapper.bat ..\..\..\..\..\..\..\..>>%tmpfile%
+    doskey /macrofile=%tmpfile% 2>nul
+    del %tmpfile%
 exit /b
