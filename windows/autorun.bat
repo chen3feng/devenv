@@ -3,8 +3,10 @@
 :: Stop if cmd.exe is runing a batch file (contains a "/C" switch, case insensitive)
 :: Using the "echo.%CMDCMDLINE%|find" or findstr way may occasionally hang in Unreal Engine build batch,
 :: the reason is unknown.
-if not "%CMDCMDLINE%"=="%CMDCMDLINE:/c=%" goto :EOF
-if not "%CMDCMDLINE%"=="%CMDCMDLINE:/C=%" goto :EOF
+setlocal enabledelayedexpansion
+if not "!CMDCMDLINE!"=="!CMDCMDLINE:/c=!" goto :EOF
+if not "!CMDCMDLINE!"=="!CMDCMDLINE:/C=!" goto :EOF
+endlocal
 
 :: In case of the window directory was removed from PATH by something like Unreal Engine builder script.
 ::if not [%SESSIONNAME%] == [] exit /b 0
