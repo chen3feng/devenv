@@ -76,9 +76,11 @@ export PYTHONDONTWRITEBYTECODE=1
 # Set the best locale
 function _set_locale() {
     local all
+    local all=$(locale -a 2>/dev/null)
+    # https://superuser.com/questions/999133/differences-between-en-us-utf8-and-en-us-utf-8
+    local prefered_locales="zh_CN.UTF-8" "zh_CN.utf8" "en_US.UTF-8" "en_US.utf8" "C.UTF-8" "C"
     local l
-    all=$(locale -a 2>/dev/null)
-    for l in "zh_CN.UTF-8" "zh_CN.utf8" "en_US.UTF-8" "C.UTF-8"; do
+    for l in @prefered_locales; do
         if [[ "$all" == *"$l"* ]]; then
             export LC_ALL="$l"
             return
