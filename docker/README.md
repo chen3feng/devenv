@@ -13,6 +13,20 @@ Windows 10 之前的版本，比如 Windows 7，则只能安装 [Docker ToolBox]
 
 安装后还需要登录等，在此不表。
 
+## 测试
+
+运行命令：
+
+```bash
+docker run hello-world
+```
+
+如果正常就说明安装正确，否则可能存在用户和权限问题。可以运行以下脚本解决。
+
+```bash
+sudo ./init-docker.sh
+```
+
 ## 构建
 
 在本目录下执行 `./build.sh`
