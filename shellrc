@@ -5,6 +5,10 @@ if [[ -z "$_THIS_DIR" ]]; then
     return
 fi
 
+if [[ -f ~/.profile ]]; then
+    source ~/.profile
+fi
+
 source $_THIS_DIR/shell/find_sources
 source $_THIS_DIR/shell/trash_rm
 
