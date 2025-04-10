@@ -24,4 +24,7 @@ echo git global hook '%hookspath%' is installed.
 :: https://stackoverflow.com/questions/20168639/git-commit-get-fatal-error-fatal-crlf-would-be-replaced-by-lf-in
 :: https://markentier.tech/posts/2021/10/autocrlf-true-considered-harmful/
 git config --global core.autocrlf false
-git config --global core.safecrlf false
+
+:: Check whether file contains mixed LF and CRLF
+:: git config --global core.safecrlf false
+:: can also be true and warn
