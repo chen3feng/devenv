@@ -7,9 +7,16 @@
 
 ## Terminal
 
-Open builtin terminal
+Open built-in terminal
 
 ![image](https://github.com/chen3feng/devenv/assets/1998410/0a1fdea8-de0a-4f34-bd86-17de2edf505a)
+
+## Shortcuts
+
+|Function             |Key    |Description   |
+|----------------|-------|-------|
+|Goto File  |<kbd>^</kbd><kbd>;</kbd>
+
 
 ## Edit
 
