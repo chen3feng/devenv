@@ -1,0 +1,69 @@
+#!/bin/sh
+
+# Physical core count (excluding hyper-threading)
+get_physical_cores() {
+  if command -v lscpu >/dev/null 2>&1; then
+    lscpu | awk '
+      /^Core\(s\) per socket:/ {cores=$4}
+      /^Socket\(s\):/ {sockets=$2}
+      END {
+        if (cores && sockets) print cores * sockets;
+        else print "N/A"
+      }'
+  else
+    echo "N/A"
+  fi
+}
+
+# Number of CPU Quota in containerized environments
+# Returns the CPU limit in cores or "unlimited" if no limit is set
+get_cpu_quota() {
+
+    cpu_limit="unlimited"
+
+    if [ -f /sys/fs/cgroup/cgroup.controllers ]; then
+        # cgroup v2
+        cpu_max_file="/sys/fs/cgroup/cpu.max"
+        if [ -f "$cpu_max_file" ]; then
+            read quota period < "$cpu_max_file"
+            if [ "$quota" != "max" ]; then
+                cpu_limit=$(echo "scale=2; $quota / $period" | bc | awk '{printf "%g", $0}')
+                source="(from cgroup v2: cpu.max)"
+            fi
+        fi
+    else
+        # cgroup v1
+        quota_file="/sys/fs/cgroup/cpu/cpu.cfs_quota_us"
+        period_file="/sys/fs/cgroup/cpu/cpu.cfs_period_us"
+        if [ -f "$quota_file" ] && [ -f "$period_file" ]; then
+            quota=$(cat "$quota_file")
+            period=$(cat "$period_file")
+            if [ "$quota" -gt 0 ] 2>/dev/null; then
+                cpu_limit=$(echo "scale=2; $quota / $period" | bc | awk '{printf "%g", $0}')
+                source="(from cgroup v1)"
+            fi
+        fi
+    fi
+    echo "$cpu_limit"
+}
+
+if [[ $# -eq 0 ]]; then
+    echo "logical=$(nproc) physical=$(get_physical_cores) quota=$(get_cpu_quota)"
+else
+    case "$1" in
+        -l)
+            nproc
+            ;;
+        -p)
+            get_physical_cores
+            ;;
+        -q)
+            get_cpu_quota
+            ;;
+        *|-h|--help)
+            echo "Print number of CPUs."
+            echo "Usage: $0 [-p|-l|-q|-h|--help]"
+            echo -e "  -p: physical\n  -l: logical\n  -q: quota"
+            ;;
+    esac
+fi

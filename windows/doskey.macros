@@ -6,6 +6,7 @@ ll=dir $*
 ls=dir /b $*
 mkdir=md $*
 mv=move $*
+npp=start notepad++.exe $*
 pwd=cd
 sleep=powershell.exe sleep $*
 which=where $*
