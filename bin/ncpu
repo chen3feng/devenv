@@ -28,7 +28,6 @@ get_cpu_quota() {
             read quota period < "$cpu_max_file"
             if [ "$quota" != "max" ]; then
                 cpu_limit=$(echo "scale=2; $quota / $period" | bc | awk '{printf "%g", $0}')
-                source="(from cgroup v2: cpu.max)"
             fi
         fi
     else
@@ -40,15 +39,29 @@ get_cpu_quota() {
             period=$(cat "$period_file")
             if [ "$quota" -gt 0 ] 2>/dev/null; then
                 cpu_limit=$(echo "scale=2; $quota / $period" | bc | awk '{printf "%g", $0}')
-                source="(from cgroup v1)"
             fi
         fi
     fi
     echo "$cpu_limit"
 }
 
+# Get cgroup version
+get_cgroup_version() {
+    if [ -d /sys/fs/cgroup ]; then
+        if [ -f /sys/fs/cgroup/cgroup.controllers ]; then
+            echo "v2"
+        elif [ -d /sys/fs/cgroup/cpu ]; then
+            echo "v1"
+        else
+            echo "unknown"
+        fi
+    else
+        echo "none"
+    fi
+}
+
 if [[ $# -eq 0 ]]; then
-    echo "logical=$(nproc) physical=$(get_physical_cores) quota=$(get_cpu_quota)"
+    echo "logical=$(nproc) physical=$(get_physical_cores) cgroup=$(get_cgroup_version) quota=$(get_cpu_quota)"
 else
     case "$1" in
         -l)
@@ -57,13 +70,16 @@ else
         -p)
             get_physical_cores
             ;;
+        -c)
+            get_cgroup_version
+            ;;
         -q)
             get_cpu_quota
             ;;
         *|-h|--help)
             echo "Print number of CPUs."
             echo "Usage: $0 [-p|-l|-q|-h|--help]"
-            echo -e "  -p: physical\n  -l: logical\n  -q: quota"
+            echo -e "  -p: physical\n  -l: logical\n  -c: cgroup\n  -q: quota"
             ;;
     esac
 fi
