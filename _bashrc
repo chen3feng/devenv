@@ -13,11 +13,14 @@ source $_THIS_DIR/shellrc
 
 
 # Shorten shell prompt
-PROMPT_DIRTRIM=3
+shorten_prompt() {
+    if [[ $COLUMNS -lt 100 ]]; then
+        echo ".../$(basename $(pwd))"
+    elif [[ $COLUMNS -lt 150 ]]; then
+        pwd | sed -E 's|.*/([^/]+/[^/]+)$|.../\1|'
+    else
+        echo "$USER@$HOSTNAME $(pwd)"
+    fi
+}
 
-# Using shorter prompt in vscode terminal
-if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-    export PS1="\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
-else
-    export PS1="\u@\h \w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
-fi
+export PS1="\$(shorten_prompt)\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
