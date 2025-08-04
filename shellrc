@@ -6,6 +6,7 @@ if [[ -z "$_THIS_DIR" ]]; then
 fi
 
 source $_THIS_DIR/shell/find_sources
+source $_THIS_DIR/shell/path_manager
 source $_THIS_DIR/shell/trash_rm
 
 # Only show my processes

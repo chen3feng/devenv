@@ -1,0 +1,73 @@
+# Manage ':' separated variables, such as PATH, LD_LIBRARY_PATH
+
+# Check whether a path exists in a var
+_contains_path() {
+    local var_value=":$1:"
+    local target=":$2:"
+    [[ "$var_value" == *"$target"* ]]
+}
+
+# Append a path to a path variable
+# Example:
+#   path_var_prepend PATH /usr/local/bin
+path_var_append() {
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: ${FUNCNAME[0]} VARIABLE_NAME PATH" >&2
+        return 1
+    fi
+    local var_name="$1"
+    local new_path="$2"
+    local current_value="${!var_name}"
+
+    if ! _contains_path "$current_value" "$new_path"; then
+        if [[ -z "$current_value" ]]; then
+            export "$var_name=$new_path"
+        else
+            export "$var_name=$current_value:$new_path"
+        fi
+    fi
+}
+
+# Prepend a path to a path variable
+# Example:
+#   path_var_prepend PATH /usr/local/bin
+path_var_prepend() {
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: ${FUNCNAME[0]} VARIABLE_NAME PATH" >&2
+        return 1
+    fi
+    local var_name="$1"
+    local new_path="$2"
+    local current_value="${!var_name}"
+
+    if ! _contains_path "$current_value" "$new_path"; then
+        if [[ -z "$current_value" ]]; then
+            export "$var_name=$new_path"
+        else
+            export "$var_name=$new_path:$current_value"
+        fi
+    fi
+}
+
+# Remove a path from path variable
+# Example:
+#   path_var_remove PATH /usr/local/bin
+path_var_remove() {
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: ${FUNCNAME[0]} VARIABLE_NAME PATH" >&2
+        return 1
+    fi
+    local var_name="$1"
+    local remove_path="$2"
+    local current_value="${!var_name}"
+
+    local result=":"
+    IFS=':' read -ra parts <<< "$current_value"
+    for part in "${parts[@]}"; do
+        [[ "$part" != "$remove_path" && -n "$part" ]] && result+="$part:"
+    done
+
+    result="${result#:}"
+    result="${result%:}"
+    export "$var_name=$result"
+}
