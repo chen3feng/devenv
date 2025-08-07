@@ -38,6 +38,7 @@ fi
 # see https://github.com/advisories/GHSA-735j-r9q6-48mw
 setopt PROMPT_SUBST
 
+# Adaptive command line prompt.
 shorten_prompt() {
     if [[ $COLUMNS -lt 100 ]]; then
         echo '4~|.../%1~|%~'

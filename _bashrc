@@ -11,16 +11,18 @@ test -s ~/bin/bladefunctions && . ~/bin/bladefunctions || true
 _THIS_DIR=$(dirname "${BASH_SOURCE[0]}")
 source $_THIS_DIR/shellrc
 
-
-# Shorten shell prompt
-shorten_prompt() {
+# Adaptive command line prompt.
+prompt_command() {
+    local login_info
     if [[ $COLUMNS -lt 100 ]]; then
-        echo ".../$(basename $(pwd))"
+        export PROMPT_DIRTRIM=1
     elif [[ $COLUMNS -lt 150 ]]; then
-        pwd | sed -E 's|.*/([^/]+/[^/]+)$|.../\1|'
+        export PROMPT_DIRTRIM=2
     else
-        echo "$USER@$HOSTNAME $(pwd)"
+        export PROMPT_DIRTRIM=0
+        login_info="\u@\h "
     fi
+    export PS1="$login_info\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 }
 
-export PS1="\$(shorten_prompt)\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+PROMPT_COMMAND=prompt_command
