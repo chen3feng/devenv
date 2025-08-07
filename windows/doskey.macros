@@ -10,4 +10,4 @@ npp=start notepad++.exe $*
 pwd=cd
 sleep=powershell.exe sleep $*
 which=where $*
-whoami=powershell.exe whoami $*
+whoami=echo %USERNAME%
