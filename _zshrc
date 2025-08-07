@@ -38,12 +38,19 @@ fi
 # see https://github.com/advisories/GHSA-735j-r9q6-48mw
 setopt PROMPT_SUBST
 
+# Adaptive command line prompt.
+shorten_prompt() {
+    if [[ $COLUMNS -lt 100 ]]; then
+        echo '4~|.../%1~|%~'
+    elif [[ $COLUMNS -lt 150 ]]; then
+        echo '4~|.../%2~|%~'
+    else
+        echo '5~|%-2~/…/%3~|%4~'
+    fi
+}
+
 # Using shorter prompt in vscode terminal
-if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-    export PS1=$'%(4~|.../%3~|%~)\e[32m$(parse_git_branch)\e[m%# '
-else
-    export PS1=$'%(5~|%-2~/…/%3~|%4~)\e[32m$(parse_git_branch)\e[m%# '
-fi
+export PS1=$'%($(shorten_prompt))\e[32m$(parse_git_branch)\e[m%# '
 
 # HOME, END and DELETE key
 bindkey  "\e[H"   beginning-of-line

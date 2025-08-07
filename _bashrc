@@ -11,13 +11,18 @@ test -s ~/bin/bladefunctions && . ~/bin/bladefunctions || true
 _THIS_DIR=$(dirname "${BASH_SOURCE[0]}")
 source $_THIS_DIR/shellrc
 
+# Adaptive command line prompt.
+prompt_command() {
+    local login_info
+    if [[ $COLUMNS -lt 100 ]]; then
+        export PROMPT_DIRTRIM=1
+    elif [[ $COLUMNS -lt 150 ]]; then
+        export PROMPT_DIRTRIM=2
+    else
+        export PROMPT_DIRTRIM=0
+        login_info="\u@\h "
+    fi
+    export PS1="$login_info\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+}
 
-# Shorten shell prompt
-PROMPT_DIRTRIM=3
-
-# Using shorter prompt in vscode terminal
-if [[ "$TERM_PROGRAM" == "vscode" ]]; then
-    export PS1="\w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
-else
-    export PS1="\u@\h \w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
-fi
+PROMPT_COMMAND=prompt_command
