@@ -1,0 +1,38 @@
+
+#!/bin/bash
+
+# Usage:
+#   # Switch alternative screen
+#   alt-screen
+#
+#   # Enter alternative screen
+#   alt-screen enter
+#
+#   # Leave alternative screen
+#   alt-screen leave
+
+export IN_ALT_SCREEN
+
+enter-alt-screen() {
+    echo -ne "\e[?1049h"
+    IN_ALT_SCREEN=1
+}
+
+leave-alt-screen() {
+    echo -ne "\e[?1049l"
+    IN_ALT_SCREEN=0
+}
+
+alt-screen() {
+    if [ "$1" == "enter" ]; then
+        enter-alt-screen
+    elif [ "$1" == "leave" ]; then
+        leave-alt-screen
+    else
+        if [ "$IN_ALT_SCREEN" == "1" ]; then
+            leave-alt-screen
+        else
+            enter-alt-screen
+        fi
+    fi
+}

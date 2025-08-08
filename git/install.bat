@@ -25,6 +25,9 @@ echo git global hook '%hookspath%' is installed.
 :: https://markentier.tech/posts/2021/10/autocrlf-true-considered-harmful/
 git config --global core.autocrlf false
 
+:: Ignore file mode changes on Windows.
+git config --global core.fileMode false
+
 :: Check whether file contains mixed LF and CRLF
 :: git config --global core.safecrlf false
 :: can also be true and warn

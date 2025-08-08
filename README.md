@@ -75,6 +75,22 @@ findallcc | xargs grep '#include'
 
 grep 自动带彩色，排除 `.svn`、`.git` 目录。
 
+#### alt-screen 命令
+
+切换终端的[备用屏幕缓冲区](https://ratatui.rs/concepts/backends/alternate-screen/)。
+
+```console
+$ # 切换备用屏幕缓冲区
+$ alt-screen
+
+$ # 切换回先前的屏幕缓冲区
+$ alt-screen
+
+$ # 支持显式指定参数
+$ alt-screen enter
+$ alt-screen leave
+```
+
 #### mkcd 命令
 
 创建并立即进入目录，支持 `mkdir` 的各种参数，比如 `-p` 等，只允许支持一个目录名参数。

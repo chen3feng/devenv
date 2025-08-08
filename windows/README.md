@@ -33,6 +33,10 @@
 - `...`   ::进入上上一级目录
 - `....`  ::依此类推...
 
+### alt-screen
+
+同 Linux 版。
+
 ### lsr
 
 类似 POSIX 的 `find . -name 'pattern'`，递归查找当前目录及子目录下所有匹配的文件：
@@ -73,6 +77,10 @@ C:\Work\code\devenv>lsr windows\kill*.bat
 C:\Work\code\devenv\windows\bin\kill.bat
 C:\Work\code\devenv\windows\bin\killall.bat
 ```
+
+### npp
+
+用 [Notepad++](https://notepad-plus-plus.org/) 打开文件。
 
 ### rm
 
