@@ -9,6 +9,7 @@ source $_THIS_DIR/shell/alt_screen
 source $_THIS_DIR/shell/find_sources
 source $_THIS_DIR/shell/path_manager
 source $_THIS_DIR/shell/trash_rm
+source $_THIS_DIR/shell/unquarantine
 
 # Only show my processes
 alias mytop='top -u $(id -u -n)'

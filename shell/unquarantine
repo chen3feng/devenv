@@ -1,0 +1,15 @@
+# uquarantine downloaded files on the MacOS
+
+if [ "$(uname)" = "Darwin" ]; then
+    unquarantine() {
+        if [ "$#" -eq "0" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+            echo "Unquarantine files."
+            echo "Usage:"
+            echo "  $0 [-h|--help]"
+            echo "  $0 files..."
+            echo "  $0 -r dirs..."
+            return 1
+        fi
+        sudo xattr -d com.apple.quarantine "$@"
+    }
+fi
