@@ -5,130 +5,15 @@ if [[ -z "$_THIS_DIR" ]]; then
     return
 fi
 
+source $_THIS_DIR/shell/settings
+
+# Sort by alphabet
+source $_THIS_DIR/shell/alias
 source $_THIS_DIR/shell/alt_screen
 source $_THIS_DIR/shell/find_sources
+source $_THIS_DIR/shell/git
+source $_THIS_DIR/shell/locale
+source $_THIS_DIR/shell/macos
 source $_THIS_DIR/shell/path_manager
 source $_THIS_DIR/shell/trash_rm
-source $_THIS_DIR/shell/unquarantine
-
-# Only show my processes
-alias mytop='top -u $(id -u -n)'
-
-
-# Dequarantine files downloaded from the Internet
-if [[ $(uname) == "Darwin" ]]; then
-    alias dequarantine='xattr -r -d com.apple.quarantine'
-    allowapp() {
-        if [[ "$#" -eq 0 ]]; then
-            echo "Usage: $0 <path/to/app>"
-            return 1
-        fi
-        codesign --sign - --force --deep $@ && xattr -d com.apple.quarantine $@
-    }
-fi
-
-# Grep options
-_GREP_OPTIONS="--color --exclude-dir=.svn --exclude-dir=.git"
-alias grep="grep $_GREP_OPTIONS"
-alias egrep="egrep $_GREP_OPTIONS"
-alias fgrep="fgrep $_GREP_OPTIONS"
-alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
-
-if [[ $(uname) == "Darwin" ]]; then
-    export CLICOLOR=1
-    alias ls="ls -G"
-else
-    alias ls="ls --color --time-style='+%F %T'"
-fi
-
-# The `pinstall` aliaa -- package install
-make_install_alias() {
-    local sudo
-    if which sudo &> /dev/null; then
-        sudo='sudo '
-    fi
-    if which yum &> /dev/null; then
-        alias pinstall="${sudo}yum install"
-    elif which brew &> /dev/null; then
-        alias pinstall="brew install"
-    elif which apt &> /dev/null; then
-        alias pinstall="${sudo}apt install"
-    elif which apt-get &> /dev/null; then
-        alias pinstall="${sudo}apt-get install"
-    fi
-}
-
-make_install_alias
-
-alias ll='ls -l'
-alias la='ls -a'
-
-# Fix `tail -f` problem for WSL
-if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
-    alias tail='tail ---disable-inotify'
-fi
-
-export EDITOR=vim
-export FIGNORE=svn
-export NINJA_STATUS='[%es:%p %o/s %f/%r/%t] '
-export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$_THIS_DIR/bin
-export PATH=$PATH:$HOME/go/bin
-export PYTHONDONTWRITEBYTECODE=1
-
-# Set the best locale
-function _set_locale() {
-    local all
-    local all=$(locale -a 2>/dev/null)
-    # https://superuser.com/questions/999133/differences-between-en-us-utf8-and-en-us-utf-8
-    local prefered_locales="zh_CN.UTF-8 zh_CN.utf8 en_US.UTF-8 en_US.utf8 C.UTF-8 C"
-    local l
-    for l in $prefered_locales; do
-        if [[ "$all" == *"$l"* ]]; then
-            export LC_ALL="$l"
-            return
-        fi
-    done
-    echo "Warning: Can't set correct locale" > /dev/stderr
-}
-_set_locale
-
-# Git branch in prompt.
-parse_git_branch() {
-    LC_ALL=C git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-
-# Make dir and change to it immediately
-mkcd() {
-    mkdir $@ && cd "${@: -1}"
-}
-
-# Prohibit the use of vim in the vscode terminal
-_no_vim_in_vscode() {
-    echo "Don't use vim in vscode terminal, [cmd+click] the filename to edit in in vscode." > /dev/stderr
-    # Check this variable again to allow change the behavior dynamically
-    if [ "$ALLOW_VIM_IN_VSCODE" != "1" ]; then
-        local answer
-        echo -n "Open it in vscode (y/N)? "
-        read answer
-        if [ "$answer" = "y" ]; then
-            code "$@"
-            return
-        fi
-    fi
-    \vim "$@"
-}
-
-if [ "$ALLOW_VIM_IN_VSCODE" != "1" -a "$TERM_PROGRAM" = "vscode" ]; then
-    alias vim=_no_vim_in_vscode
-    alias vi=vim
-fi
-
-# Use vscode as git editor in vscode terminal
-if [ "$TERM_PROGRAM" = "vscode" ]; then
-    export EDITOR="code --wait"
-fi
-
-# Shell history optimization
-# ignoreboth=ignoreboth:ignoredups
-export HISTCONTROL=ignoreboth
+source $_THIS_DIR/shell/vscode
