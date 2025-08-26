@@ -31,3 +31,7 @@ git config --global core.fileMode false
 :: Check whether file contains mixed LF and CRLF
 :: git config --global core.safecrlf false
 :: can also be true and warn
+
+:: Make git push smooth
+git config --global push.default current
+git config --global push.autoSetupRemote true

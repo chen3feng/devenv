@@ -27,31 +27,6 @@ fi
 _THIS_DIR=$(dirname ${(%):-%N})
 source $_THIS_DIR/shellrc
 
-# Ohyyzsh beceme too slow in large git repository,
-# See https://github.com/ohmyzsh/ohmyzsh/issues/3009
-if [[ $ZSH =~ .*\.oh-my-zsh ]]; then
-    git config --global --add oh-my-zsh.hide-dirty 1
-    git config --global --add oh-my-zsh.hide-status 1
-fi
-
-# zsh 5.8 disabled this option defaultly,
-# see https://github.com/advisories/GHSA-735j-r9q6-48mw
-setopt PROMPT_SUBST
-
-# Adaptive command line prompt.
-shorten_prompt() {
-    if [[ $COLUMNS -lt 100 ]]; then
-        echo '4~|.../%1~|%~'
-    elif [[ $COLUMNS -lt 150 ]]; then
-        echo '4~|.../%2~|%~'
-    else
-        echo '5~|%-2~/…/%3~|%4~'
-    fi
-}
-
-# Using shorter prompt in vscode terminal
-export PS1=$'%($(shorten_prompt))\e[32m$(parse_git_branch)\e[m%# '
-
 # HOME, END and DELETE key
 bindkey  "\e[H"   beginning-of-line
 bindkey  "\e[F"   end-of-line

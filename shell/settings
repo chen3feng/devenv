@@ -1,0 +1,10 @@
+export EDITOR=vim
+export FIGNORE=svn
+export NINJA_STATUS='[%es:%p %o/s %f/%r/%t] '
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$_THIS_DIR/bin
+export PATH=$PATH:$HOME/go/bin
+export PYTHONDONTWRITEBYTECODE=1
+# Shell history optimization
+# ignoreboth=ignoreboth:ignoredups
+export HISTCONTROL=ignoreboth

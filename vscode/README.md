@@ -95,6 +95,11 @@
 - [Sort](https://marketplace.visualstudio.com/items?itemName=henriiik.vscode-sort) 排序，选中后按 <kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd> 排序，再按一次逆序。
 - [Zip Explorer](https://marketplace.visualstudio.com/items?itemName=slevesque.vscode-zipexplorer)，查看 Zip 文件的内容。
 
+## 右键菜单
+
+资源管理器右键菜单里的用 VS Code 打开突然没了，以管理员权限运行此脚本手动加回来[Add_OpenWithCode.bat](https://github.com/aweber1/FixMicrosoft/tree/aweber1-patch-1)。
+有时间写个用 reg add 的实现，这样就不需要管理员权限了。
+
 ## 其他
 
 从 `vim` 转来的开发者往往会不由自主地在 `vscode` 的终端里继续用 `vim`，为了加快适应使用 `vscode`，默认禁止这种用法。

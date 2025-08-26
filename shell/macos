@@ -1,4 +1,4 @@
-# uquarantine downloaded files on the MacOS
+# Unquarantine downloaded files on the MacOS
 
 if [ "$(uname)" = "Darwin" ]; then
     unquarantine() {
@@ -11,5 +11,13 @@ if [ "$(uname)" = "Darwin" ]; then
             return 1
         fi
         sudo xattr -d com.apple.quarantine "$@"
+    }
+
+    allowapp() {
+        if [[ "$#" -eq 0 ]]; then
+            echo "Usage: $0 <path/to/app>"
+            return 1
+        fi
+        codesign --sign - --force --deep $@ && xattr -d com.apple.quarantine $@
     }
 fi
