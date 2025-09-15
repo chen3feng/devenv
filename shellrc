@@ -77,7 +77,11 @@ export PATH=$PATH:$HOME/go/bin
 export PYTHONDONTWRITEBYTECODE=1
 
 # Set the best locale
-function _set_locale() {
+function _fix_locale() {
+    if [[ $LANG =~ (en_US|zh_CN)\.(utf|UTF).* ]]; then
+        # Already correct
+        return
+    fi
     local all
     local all=$(locale -a 2>/dev/null)
     # https://superuser.com/questions/999133/differences-between-en-us-utf8-and-en-us-utf-8
@@ -91,7 +95,7 @@ function _set_locale() {
     done
     echo "Warning: Can't set correct locale" > /dev/stderr
 }
-_set_locale
+_fix_locale
 
 # Git branch in prompt.
 parse_git_branch() {
