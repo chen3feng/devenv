@@ -1,10 +1,6 @@
 # Enable case-insensitive completion matching
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-# zinit configurations
-autoload -Uz compinit
-compinit
-
 # This can be useful when pasting large amount of text in the terminal, to avoid triggering
 # autosuggestion for strings that are too long.
 # see https://github.com/zsh-users/zsh-autosuggestions#disabling-suggestion-for-large-buffers
@@ -23,6 +19,10 @@ if command -v zinit &> /dev/null; then
     zinit snippet OMZ::lib/key-bindings.zsh
     zinit snippet OMZ::lib/theme-and-appearance.zsh
 fi
+
+# compinit must run after all $fpath setup (zinit, Docker, etc.) and only once
+autoload -Uz compinit
+compinit -d ~/.zcompdump
 
 _THIS_DIR=$(dirname ${(%):-%N})
 source "$_THIS_DIR/shellrc"
@@ -70,7 +70,7 @@ bindkey "\e[1;5C" forward-word
 
 # Fix problem: Directory color is too dark on Mac
 # https://github.com/sorin-ionescu/prezto/issues/1539
-if ls --color -d . >/dev/null 2>&1; then
+if ls --color -d . >/dev/null 2>&1 && command -v gdircolors >/dev/null 2>&1; then
     eval "$(gdircolors ${HOME}/.dir_colors)"
     zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 else

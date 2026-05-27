@@ -100,7 +100,8 @@ _fix_locale
 
 # Git branch in prompt.
 parse_git_branch() {
-    LC_ALL=C git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    local branch
+    branch=$(LC_ALL=C git symbolic-ref --short HEAD 2>/dev/null) && echo " ($branch)"
 }
 
 # Make dir and change to it immediately
