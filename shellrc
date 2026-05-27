@@ -5,11 +5,12 @@ if [[ -z "$_THIS_DIR" ]]; then
     return
 fi
 
-source $_THIS_DIR/shell/alt_screen
-source $_THIS_DIR/shell/find_sources
-source $_THIS_DIR/shell/path_manager
-source $_THIS_DIR/shell/trash_rm
-source $_THIS_DIR/shell/unquarantine
+source "$_THIS_DIR"/shell/alt_screen
+source "$_THIS_DIR"/shell/find_sources
+source "$_THIS_DIR"/shell/path_manager
+source "$_THIS_DIR"/shell/proxy
+source "$_THIS_DIR"/shell/trash_rm
+source "$_THIS_DIR"/shell/unquarantine
 
 # Only show my processes
 alias mytop='top -u $(id -u -n)'
@@ -20,10 +21,10 @@ if [[ $(uname) == "Darwin" ]]; then
     alias dequarantine='xattr -r -d com.apple.quarantine'
     allowapp() {
         if [[ "$#" -eq 0 ]]; then
-            echo "Usage: $0 <path/to/app>"
+            echo "Usage: allowapp <path/to/app>"
             return 1
         fi
-        codesign --sign - --force --deep $@ && xattr -d com.apple.quarantine $@
+        codesign --sign - --force --deep "$@" && xattr -d com.apple.quarantine "$@"
     }
 fi
 
@@ -41,7 +42,7 @@ else
     alias ls="ls --color --time-style='+%F %T'"
 fi
 
-# The `pinstall` aliaa -- package install
+# The `pinstall` alias -- package install
 make_install_alias() {
     local sudo
     if which sudo &> /dev/null; then
@@ -71,29 +72,29 @@ fi
 export EDITOR=vim
 export FIGNORE=svn
 export NINJA_STATUS='[%es:%p %o/s %f/%r/%t] '
-export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$_THIS_DIR/bin
-export PATH=$PATH:$HOME/go/bin
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$_THIS_DIR/bin"
+export PATH="$PATH:$HOME/go/bin"
 export PYTHONDONTWRITEBYTECODE=1
 
 # Set the best locale
-function _fix_locale() {
+_fix_locale() {
     if [[ $LANG =~ (en_US|zh_CN)\.(utf|UTF).* ]]; then
         # Already correct
         return
     fi
     local all
-    local all=$(locale -a 2>/dev/null)
+    all=$(locale -a 2>/dev/null)
     # https://superuser.com/questions/999133/differences-between-en-us-utf8-and-en-us-utf-8
-    local prefered_locales="zh_CN.UTF-8 zh_CN.utf8 en_US.UTF-8 en_US.utf8 C.UTF-8 C"
+    local preferred_locales="zh_CN.UTF-8 zh_CN.utf8 en_US.UTF-8 en_US.utf8 C.UTF-8 C"
     local l
-    for l in $prefered_locales; do
+    for l in $preferred_locales; do
         if [[ "$all" == *"$l"* ]]; then
             export LC_ALL="$l"
             return
         fi
     done
-    echo "Warning: Can't set correct locale" > /dev/stderr
+    echo "Warning: Can't set correct locale" >&2
 }
 _fix_locale
 
@@ -104,18 +105,18 @@ parse_git_branch() {
 
 # Make dir and change to it immediately
 mkcd() {
-    mkdir $@ && cd "${@: -1}"
+    mkdir "$@" && cd "${@: -1}"
 }
 
 # Prohibit the use of vim in the vscode terminal
 _no_vim_in_vscode() {
-    echo "Don't use vim in vscode terminal, [cmd+click] the filename to edit in in vscode." > /dev/stderr
+    echo "Don't use vim in vscode terminal, [cmd+click] the filename to edit in in vscode." >&2
     # Check this variable again to allow change the behavior dynamically
-    if [ "$ALLOW_VIM_IN_VSCODE" != "1" ]; then
+    if [[ "$ALLOW_VIM_IN_VSCODE" != "1" ]]; then
         local answer
-        echo -n "Open it in vscode (y/N)? "
-        read answer
-        if [ "$answer" = "y" ]; then
+        printf "Open it in vscode (y/N)? "
+        read -r answer
+        if [[ "$answer" = "y" ]]; then
             code "$@"
             return
         fi
@@ -123,13 +124,13 @@ _no_vim_in_vscode() {
     \vim "$@"
 }
 
-if [ "$ALLOW_VIM_IN_VSCODE" != "1" -a "$TERM_PROGRAM" = "vscode" ]; then
+if [[ "$ALLOW_VIM_IN_VSCODE" != "1" && "$TERM_PROGRAM" = "vscode" ]]; then
     alias vim=_no_vim_in_vscode
     alias vi=vim
 fi
 
 # Use vscode as git editor in vscode terminal
-if [ "$TERM_PROGRAM" = "vscode" ]; then
+if [[ "$TERM_PROGRAM" = "vscode" ]]; then
     export EDITOR="code --wait"
 fi
 

@@ -1,0 +1,53 @@
+setproxy() {
+    export http_proxy=http://127.0.0.1:10808
+    export https_proxy=http://127.0.0.1:10808
+    export all_proxy=socks5://127.0.0.1:10808
+
+    export HTTP_PROXY=http://127.0.0.1:10808
+    export HTTPS_PROXY=http://127.0.0.1:10808
+    export ALL_PROXY=socks5://127.0.0.1:10808
+
+    export no_proxy="localhost,127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+    export NO_PROXY="$no_proxy"
+    echo "Proxy settings is turned on"
+}
+
+unsetproxy() {
+    unset http_proxy
+    unset https_proxy
+    unset all_proxy
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
+    unset ALL_PROXY
+    unset no_proxy
+    unset NO_PROXY
+    echo "Proxy settings turned off"
+}
+
+_proxyusage() {
+    echo "Set or unset proxy settings for the current session"
+    echo "Usage: proxy [on|off]"
+    return 0
+}
+
+proxy() {
+    if [[ "$#" -eq 0 ]]; then
+        _proxyusage
+        return 0
+    fi
+    if [[ "$1" == "on" ]]; then
+        setproxy
+    elif [[ "$1" == "off" ]]; then
+        unsetproxy
+    else
+        echo "Unknown argument: $@"
+        _proxyusage
+        return 1
+    fi
+}
+
+autosetproxy() {
+    if [[ "$AUTO_SET_PROXY" == "1" ]]; then
+        setproxy
+    fi
+}

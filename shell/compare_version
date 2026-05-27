@@ -1,31 +1,37 @@
 #!/bin/bash
-
+#
 # From:
 #   https://stackoverflow.com/questions/4023830/how-to-compare-two-strings-in-dot-separated-version-format-in-bash
 
-# Compare 2 version numbers
-# return 0 if equals
-# return 1 if greater
-# return 2 if lesser
-vercomp () {
-    if [[ $1 == $2 ]]; then
+# Compare two dot-separated version strings.
+# Return: 0 if equal, 1 if $1 > $2, 2 if $1 < $2
+#
+# Example:
+#   vercomp "1.10.3" "1.9.5"   # returns 1
+#   vercomp "2.0" "2.0.0"      # returns 0
+vercomp() {
+    if [[ "$1" == "$2" ]]; then
         return 0
     fi
-    local IFS=.
-    local i ver1=($1) ver2=($2)
-    # fill empty fields in ver1 with zeros
-    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++)); do
-        ver1[i]=0
-    done
-    for ((i=0; i<${#ver1[@]}; i++)); do
-        if [[ -z ${ver2[i]} ]]; then
-            # fill empty fields in ver2 with zeros
-            ver2[i]=0
-        fi
-        if ((10#${ver1[i]} > 10#${ver2[i]})); then
+    local i ver1 ver2 idx_offset maxlen v1 v2
+    # zsh uses `-A` for read-array; bash uses `-a`
+    if [[ -n "$ZSH_VERSION" ]]; then
+        IFS=. read -rA ver1 <<< "$1"
+        IFS=. read -rA ver2 <<< "$2"
+        idx_offset=1   # zsh arrays are 1-indexed
+    else
+        IFS=. read -ra ver1 <<< "$1"
+        IFS=. read -ra ver2 <<< "$2"
+        idx_offset=0   # bash arrays are 0-indexed
+    fi
+    maxlen=$((${#ver1[@]} > ${#ver2[@]} ? ${#ver1[@]} : ${#ver2[@]}))
+    for ((i = 0; i < maxlen; i++)); do
+        v1=${ver1[$((i + idx_offset))]:-0}
+        v2=${ver2[$((i + idx_offset))]:-0}
+        if ((10#$v1 > 10#$v2)); then
             return 1
         fi
-        if ((10#${ver1[i]} < 10#${ver2[i]})); then
+        if ((10#$v1 < 10#$v2)); then
             return 2
         fi
     done

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 tag="###chen3feng-devenv###"
-this_dir="$(cd $(dirname $0) && pwd)"
+this_dir="$(cd "$(dirname "$0")" && pwd)"
 
 install() {
   local command="$1"
@@ -9,14 +9,13 @@ install() {
   local to="$3"
   local comment="$4 $tag"
   local stmt="$command $from"
-  if [ -e $to ] && grep "$comment" "$to" > /dev/null; then
-    # Find the tag line
+  if [[ -e "$to" ]] && grep "$comment" "$to" > /dev/null; then
     local lineno=$(grep -n -m1 "$comment" "$to" | cut -f1 -d:)
-    let lineno++
-    sed -i "${lineno}s|.*|$stmt|g" $to # Replace next line of tag line
+    ((lineno++))
+    sed -i.bak "${lineno}s|.*|$stmt|" "$to" && /bin/rm -f "$to.bak"
   else
-    echo "$comment" >> $to
-    echo "$stmt" >> $to
+    echo "$comment" >> "$to"
+    echo "$stmt" >> "$to"
   fi
   echo "$to is updated."
 }
@@ -26,8 +25,8 @@ install source _zshrc ~/.zshrc "#"
 install source _vimrc ~/.vimrc '"'
 install "\$include" _inputrc ~/.inputrc "#"
 
-$this_dir/git/install
+"$this_dir/git/install"
 
-# Install the `vim-plug` plug manager
+# Install the vim-plug plugin manager
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
