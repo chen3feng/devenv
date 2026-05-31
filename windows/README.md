@@ -113,6 +113,21 @@ devenv  (master)
 > git push
 ```
 
+### PowerShell 路径变量管理
+
+`shell/path_manager` 的 PowerShell 版，管理 `PATH` 这类以 `;` 分隔的路径变量，去重后追加/前置：
+
+```powershell
+Add-PathVar C:\tools                 # 追加到 PATH（默认变量），仅当前会话（默认 Process）
+Add-PathVar C:\tools -Prepend        # 放到最前
+Add-PathVar C:\tools -Scope User     # 持久化到用户级，并同步到当前会话
+Add-PathVar D:\lib -Name LIB -Scope Machine   # 系统级（需管理员）
+Remove-PathVar C:\tools              # 移除
+```
+
+- 默认变量为 `PATH`，默认作用域为 `Process`（只影响当前交互）。
+- 已存在的路径会**提示并忽略**（大小写、结尾斜杠不敏感）。
+
 ## 安装
 
 ```console
