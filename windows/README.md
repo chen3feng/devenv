@@ -106,6 +106,13 @@ sudo notepad C:\Windows\System32\drivers\etc\hosts
 C:\Work\code\devenv (master) > git push
 ```
 
+PowerShell 下同样支持，分支名的红/绿含义一致。采用两行布局，第一行显示「仓库相对路径 + 分支」，第二行输入命令，这样无论路径或分支名多长，光标都从最左侧开始：
+
+```console
+devenv  (master)
+> git push
+```
+
 ## 安装
 
 ```console
