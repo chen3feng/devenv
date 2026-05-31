@@ -55,7 +55,7 @@ git clone https://github.com/chen3feng/devenv.git
 | [path_manager](shell/path_manager) | 管理 PATH 等冒号分隔的环境变量 |
 | [proxy](shell/proxy) | 开启/关闭 http_proxy / https_proxy / all_proxy |
 | [trash_rm](shell/trash_rm) | 带回收站功能的 rm 命令 |
-| [unquarantine](shell/unquarantine) | 移除 macOS 下载文件的隔离属性 |
+| [macos](shell/macos) | macOS 下载文件相关：移除隔离属性、签名放行应用 |
 
 #### mkcd 命令
 

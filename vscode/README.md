@@ -95,6 +95,12 @@
 - [Sort](https://marketplace.visualstudio.com/items?itemName=henriiik.vscode-sort) 排序，选中后按 <kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd> 排序，再按一次逆序。
 - [Zip Explorer](https://marketplace.visualstudio.com/items?itemName=slevesque.vscode-zipexplorer)，查看 Zip 文件的内容。
 
+## 右键菜单
+
+资源管理器右键菜单里的「用 VS Code 打开」有时会丢失，运行 [Add_OpenWithCode.bat](Add_OpenWithCode.bat) 即可加回来，[Remove_OpenWithCode.bat](Remove_OpenWithCode.bat) 用于移除。
+
+脚本写入 `HKCU\Software\Classes`（会自动并入 `HKCR`），因此**无需管理员权限**，与仓库里其它基于 `reg add` 的安装方式一致。
+
 ## 其他
 
 从 `vim` 转来的开发者往往会不由自主地在 `vscode` 的终端里继续用 `vim`，为了加快适应使用 `vscode`，默认禁止这种用法。

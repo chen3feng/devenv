@@ -1,0 +1,20 @@
+# Set the best locale
+_fix_locale() {
+    if [[ $LANG =~ (en_US|zh_CN)\.(utf|UTF).* ]]; then
+        # Already correct
+        return
+    fi
+    local all
+    all=$(locale -a 2>/dev/null)
+    # https://superuser.com/questions/999133/differences-between-en-us-utf8-and-en-us-utf-8
+    local preferred_locales="zh_CN.UTF-8 zh_CN.utf8 en_US.UTF-8 en_US.utf8 C.UTF-8 C"
+    local l
+    for l in $preferred_locales; do
+        if [[ "$all" == *"$l"* ]]; then
+            export LC_ALL="$l"
+            return
+        fi
+    done
+    echo "Warning: Can't set correct locale" >&2
+}
+_fix_locale
