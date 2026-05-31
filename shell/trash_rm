@@ -54,8 +54,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     }
 fi
 
-# bool _file_in_dir(string file, string dir)
-_file_in_dir() {
+# bool trash_file_in_dir(string file, string dir)
+# Note: helper names must NOT start with '_'. Some environments (e.g. shell
+# snapshots used by tools that re-source the profile) drop underscore-prefixed
+# functions, which would make rm fail with "command not found: _file_in_dir".
+trash_file_in_dir() {
     local file dir file_dir
     file="$(realpath "$1")"
     dir="$2"
@@ -71,7 +74,7 @@ _file_in_dir() {
     done
 }
 
-_move_to_trash() {
+trash_move_to_trash() {
     local verbose="$1"
     local arg="$2"
     local osas
@@ -180,7 +183,7 @@ rm() {
     error=0
 
     for arg in "$@"; do
-        if _file_in_dir "$arg" "$trash_dir"; then
+        if trash_file_in_dir "$arg" "$trash_dir"; then
             /bin/rm $force $recursive $verbose $interactive "$arg"
             continue
         fi
@@ -222,7 +225,7 @@ rm() {
             fi
             /bin/rm "$arg"
         else
-            _move_to_trash "$verbose" "$arg"
+            trash_move_to_trash "$verbose" "$arg"
         fi
     done
 
