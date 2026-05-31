@@ -1,0 +1,27 @@
+# MacOS specific helpers for files downloaded from the Internet
+
+if [ "$(uname)" = "Darwin" ]; then
+    # Recursively strip the quarantine attribute
+    alias dequarantine='xattr -r -d com.apple.quarantine'
+
+    unquarantine() {
+        if [ "$#" -eq "0" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+            echo "Unquarantine files."
+            echo "Usage:"
+            echo "  $0 [-h|--help]"
+            echo "  $0 files..."
+            echo "  $0 -r dirs..."
+            return 1
+        fi
+        sudo xattr -d com.apple.quarantine "$@"
+    }
+
+    # Sign and unquarantine an app so MacOS allows running it
+    allowapp() {
+        if [[ "$#" -eq 0 ]]; then
+            echo "Usage: allowapp <path/to/app>"
+            return 1
+        fi
+        codesign --sign - --force --deep "$@" && xattr -d com.apple.quarantine "$@"
+    }
+fi
