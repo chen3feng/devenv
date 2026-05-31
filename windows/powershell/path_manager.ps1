@@ -6,6 +6,25 @@
 #   Add-PathVar C:\tools -Scope User           # persist for the user
 #   Add-PathVar D:\lib -Name LIB -Scope Machine
 #   Remove-PathVar C:\tools
+#   Get-PathVar                                # list PATH, one entry per line
+
+# List the entries of a path variable, one per line. The result is an array
+# of strings, so it also pipes into Where-Object / Select-String etc.
+function Get-PathVar {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position = 0)]
+        [string] $Name = 'PATH',
+
+        [ValidateSet('Process', 'User', 'Machine')]
+        [string] $Scope = 'Process'
+    )
+
+    $value = [Environment]::GetEnvironmentVariable($Name, $Scope)
+    if ($value) {
+        $value -split ';' | Where-Object { $_ -ne '' }
+    }
+}
 
 # Compare two path entries (case-insensitive, ignoring a trailing slash).
 function Test-PathVarContains {

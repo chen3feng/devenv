@@ -123,10 +123,13 @@ Add-PathVar C:\tools -Prepend        # 放到最前
 Add-PathVar C:\tools -Scope User     # 持久化到用户级，并同步到当前会话
 Add-PathVar D:\lib -Name LIB -Scope Machine   # 系统级（需管理员）
 Remove-PathVar C:\tools              # 移除
+Get-PathVar                          # 列出 PATH，每行一条（可接管道过滤）
+Get-PathVar PSModulePath -Scope User # 列出指定变量、指定作用域
 ```
 
 - 默认变量为 `PATH`，默认作用域为 `Process`（只影响当前交互）。
 - 已存在的路径会**提示并忽略**（大小写、结尾斜杠不敏感）。
+- `Get-PathVar` 返回字符串数组，可 `Get-PathVar | Where-Object { ... }` 过滤。
 
 ## 安装
 
