@@ -1,16 +1,16 @@
 # Manage ';' separated path variables such as PATH and PSModulePath.
 # PowerShell counterpart of shell/path_manager.
 #
-#   Add-PathVar C:\tools                       # append to PATH, current session
-#   Add-PathVar C:\tools -Prepend              # put it in front
-#   Add-PathVar C:\tools -Scope User           # persist for the user
-#   Add-PathVar D:\lib -Name LIB -Scope Machine
-#   Remove-PathVar C:\tools
-#   Get-PathVar                                # list PATH, one entry per line
+#   Add-Path C:\tools                       # append to PATH, current session
+#   Add-Path C:\tools -Prepend              # put it in front
+#   Add-Path C:\tools -Scope User           # persist for the user
+#   Add-Path D:\lib -Name LIB -Scope Machine
+#   Remove-Path C:\tools
+#   Get-Path                                # list PATH, one entry per line
 
 # List the entries of a path variable, one per line. The result is an array
 # of strings, so it also pipes into Where-Object / Select-String etc.
-function Get-PathVar {
+function Get-Path {
     [CmdletBinding()]
     param(
         [Parameter(Position = 0)]
@@ -26,8 +26,8 @@ function Get-PathVar {
     }
 }
 
-# Compare two path entries (case-insensitive, ignoring a trailing slash).
-function Test-PathVarContains {
+# Internal: does $Value already contain $Path? (case- and trailing-slash-insensitive)
+function _PathContains {
     param([string] $Value, [string] $Path)
     if (-not $Value) { return $false }
     $target = $Path.TrimEnd('\', '/')
@@ -37,15 +37,15 @@ function Test-PathVarContains {
     return $false
 }
 
-# Build the new value of a path variable after adding $Path (no dedup here).
-function Join-PathVar {
+# Internal: build the new value after adding $Path (no dedup here).
+function _JoinPath {
     param([string] $Current, [string] $Path, [switch] $Prepend)
     if (-not $Current) { return $Path }
     if ($Prepend) { return "$Path;$Current" }
     return "$Current;$Path"
 }
 
-function Add-PathVar {
+function Add-Path {
     [CmdletBinding()]
     param(
         # The path to add.
@@ -67,13 +67,13 @@ function Add-PathVar {
 
     $current = [Environment]::GetEnvironmentVariable($Name, $Scope)
 
-    if (Test-PathVarContains $current $Path) {
+    if (_PathContains $current $Path) {
         Write-Warning "'$Path' is already in $Name ($Scope); skipped."
         return
     }
 
     try {
-        [Environment]::SetEnvironmentVariable($Name, (Join-PathVar $current $Path -Prepend:$Prepend), $Scope)
+        [Environment]::SetEnvironmentVariable($Name, (_JoinPath $current $Path -Prepend:$Prepend), $Scope)
     } catch {
         Write-Error "Failed to set $Name at $Scope scope: $($_.Exception.Message)"
         return
@@ -83,13 +83,13 @@ function Add-PathVar {
     # the current process so it takes effect right away too.
     if ($Scope -ne 'Process') {
         $proc = [Environment]::GetEnvironmentVariable($Name, 'Process')
-        if (-not (Test-PathVarContains $proc $Path)) {
-            [Environment]::SetEnvironmentVariable($Name, (Join-PathVar $proc $Path -Prepend:$Prepend), 'Process')
+        if (-not (_PathContains $proc $Path)) {
+            [Environment]::SetEnvironmentVariable($Name, (_JoinPath $proc $Path -Prepend:$Prepend), 'Process')
         }
     }
 }
 
-function Remove-PathVar {
+function Remove-Path {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory, Position = 0)]
