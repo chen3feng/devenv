@@ -81,13 +81,15 @@ trash_move_to_trash() {
 
     # Move it to the ~/.Trash dir under macOS
     if [[ "$(uname)" == Darwin ]]; then
-        osas="tell application \"Finder\" to delete POSIX file \"${PWD}/${arg}\""
+        # Use realpath so absolute paths are not mangled by prefixing $PWD.
+        osas="tell application \"Finder\" to delete POSIX file \"$(realpath "$arg")\""
         if [[ -n "$verbose" ]]; then
             osascript -e "$osas"
         else
             osascript -e "$osas" >/dev/null
         fi
-        return
+        # Propagate osascript's status so a failed delete is not reported as success.
+        return $?
     fi
 
     if [[ ! -d "$TRASH_DIR" ]]; then
@@ -225,7 +227,10 @@ rm() {
             fi
             /bin/rm "$arg"
         else
-            trash_move_to_trash "$verbose" "$arg"
+            if ! trash_move_to_trash "$verbose" "$arg"; then
+                echo "rm: cannot remove '$arg': failed to move to trash" >&2
+                error=1
+            fi
         fi
     done
 
