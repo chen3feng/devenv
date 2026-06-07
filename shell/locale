@@ -1,7 +1,7 @@
 # Set the best locale
 _fix_locale() {
-    if [[ $LANG =~ (en_US|zh_CN)\.(utf|UTF).* ]]; then
-        # Already correct
+    if [[ $LANG =~ (en_US|en_SG|zh_CN)\.(utf|UTF).* ]]; then
+# Already correct
         return
     fi
     local all
