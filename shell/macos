@@ -1,19 +1,16 @@
-# MacOS specific helpers for files downloaded from the Internet
+# MacOS specific helpers (quarantine, code signing, sleep)
 
 if [ "$(uname)" = "Darwin" ]; then
     # Recursively strip the quarantine attribute
-    alias dequarantine='xattr -r -d com.apple.quarantine'
-
     unquarantine() {
         if [ "$#" -eq "0" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-            echo "Unquarantine files."
+            echo "Unquarantine files (recurses into directories)."
             echo "Usage:"
-            echo "  $0 [-h|--help]"
-            echo "  $0 files..."
-            echo "  $0 -r dirs..."
+            echo "  unquarantine [-h|--help]"
+            echo "  unquarantine files... dirs..."
             return 1
         fi
-        sudo xattr -d com.apple.quarantine "$@"
+        xattr -rd com.apple.quarantine "$@"
     }
 
     # Sign and unquarantine an app so MacOS allows running it
@@ -22,6 +19,14 @@ if [ "$(uname)" = "Darwin" ]; then
             echo "Usage: allowapp <path/to/app>"
             return 1
         fi
-        codesign --sign - --force --deep "$@" && xattr -d com.apple.quarantine "$@"
+        codesign --sign - --force --deep "$@" && unquarantine "$@"
+    }
+
+    disablesleep() {
+        sudo pmset -b disablesleep 1
+    }
+
+    restoresleep() {
+        sudo pmset -b disablesleep 0
     }
 fi
