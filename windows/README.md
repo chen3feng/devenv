@@ -131,6 +131,21 @@ Get-Path PSModulePath -Scope User # 列出指定变量、指定作用域
 - 已存在的路径会**提示并忽略**（大小写、结尾斜杠不敏感）。
 - `Get-Path` 返回字符串数组，可 `Get-Path | Where-Object { ... }` 过滤。
 
+### SSH 公钥授权
+
+让别的机器（如 Mac）用密钥免密登录本机的 OpenSSH。当 Windows 账户没设密码时尤其有用——Windows 禁止空密码账户走网络登录，密钥是唯一的路。[Authorize-SshKey.ps1](Authorize-SshKey.ps1) 会自动按账户类型选对位置和 ACL：
+
+```powershell
+# 管理员账户需在「管理员 PowerShell」里运行（写 C:\ProgramData\ssh）
+.\Authorize-SshKey.ps1 'ssh-ed25519 AAAA... user@mac'
+.\Authorize-SshKey.ps1 -Path C:\Users\cf\mac.pub
+```
+
+- 管理员账户 → `C:\ProgramData\ssh\administrators_authorized_keys`，并把 ACL 限制为 Administrators + SYSTEM。
+- 普通账户 → `%USERPROFILE%\.ssh\authorized_keys`。
+- 账户类型按**组成员身份**判断（不受是否提权影响），管理员账户在非提权窗口运行会提示需要提权，避免把公钥误写到读不到的位置。
+- 同一公钥重复授权会自动跳过。
+
 ## 安装
 
 ```console
