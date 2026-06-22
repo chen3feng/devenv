@@ -131,9 +131,18 @@ Get-Path PSModulePath -Scope User # 列出指定变量、指定作用域
 - 已存在的路径会**提示并忽略**（大小写、结尾斜杠不敏感）。
 - `Get-Path` 返回字符串数组，可 `Get-Path | Where-Object { ... }` 过滤。
 
-### SSH 公钥授权
+### SSH 远程访问
 
-让别的机器（如 Mac）用密钥免密登录本机的 OpenSSH。当 Windows 账户没设密码时尤其有用——Windows 禁止空密码账户走网络登录，密钥是唯一的路。[Authorize-SshKey.ps1](Authorize-SshKey.ps1) 会自动按账户类型选对位置和 ACL：
+让别的机器（如 Mac）通过 OpenSSH 登录本机。先装服务端，再授权公钥。
+
+**安装并启用 sshd**（在「管理员 PowerShell」里运行）。[Install-SshServer.ps1](Install-SshServer.ps1) 装好 OpenSSH 服务端、设为开机自启、放行防火墙 22 端口，可选把默认 shell 设为 PowerShell 7：
+
+```powershell
+.\Install-SshServer.ps1
+.\Install-SshServer.ps1 -DefaultShell 'C:\Program Files\PowerShell\7\pwsh.exe'
+```
+
+**授权公钥**——当 Windows 账户没设密码时尤其有用（Windows 禁止空密码账户走网络登录，密钥是唯一的路）。[Authorize-SshKey.ps1](Authorize-SshKey.ps1) 会自动按账户类型选对位置和 ACL：
 
 ```powershell
 # 管理员账户需在「管理员 PowerShell」里运行（写 C:\ProgramData\ssh）
