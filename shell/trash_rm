@@ -123,59 +123,87 @@ trash_move_to_trash() {
 rm() {
     local direct force interactive recursive verbose
     local trash_dir="$TRASH_DIR"
+    local files=()
+    local end_of_options=
+    local chars char pos
 
-    if [[ "$(getopt 2>/dev/null)" == ' --' ]]; then
-        # macOS getopt doesn't support long options
-        if ! rm_args=$(getopt firDRv "$@"); then
-            return 1
+    # Parse the options by hand instead of through getopt: the BSD getopt
+    # on macOS does not quote its output, so re-splitting it with eval
+    # breaks every path that contains a space. Options may appear before or
+    # after the operands, and short options may be grouped (-rf).
+    while [[ $# -gt 0 ]]; do
+        if [[ -n "$end_of_options" ]]; then
+            files+=("$1")
+            shift
+            continue
         fi
-    else
-        if ! rm_args=$(getopt -o firDRv -n rm --long direct,force,help,interactive,recursive,verbose,version -- "$@"); then
-            return 1
-        fi
-    fi
-    eval set -- "$rm_args"
-    while [[ -n "$1" ]]; do
         case "$1" in
-            -D|--direct)
+            --)
+                end_of_options=1
+                shift ;;
+            --direct)
                 direct='-D'
                 shift ;;
-            -f|--force)
-                force="-f"
+            --force)
+                force='-f'
                 shift ;;
-            -i|--interactive)
-                interactive="-i"
+            --interactive)
+                interactive='-i'
                 shift ;;
-            -r|-R|--recursive)
-                recursive="-r"
+            --recursive)
+                recursive='-r'
                 shift ;;
-            -v|--verbose)
-                verbose="-v"
+            --verbose)
+                verbose='-v'
                 shift ;;
             --help)
-                /bin/rm "$1"
+                /bin/rm --help
                 printf '\nAdditional options:\n  -D, --direct          remove directly, don'"'"'t use trash\n'
                 return ;;
             --version)
-                /bin/rm "$1"
+                /bin/rm --version
                 return ;;
-            --)
-                shift
-                break ;;
-            *)
+            --*)
                 echo "unknown option $1" >&2
                 return 1 ;;
+            -?*)
+                chars="${1#-}"
+                shift
+                pos=0
+                while [[ $pos -lt ${#chars} ]]; do
+                    char="${chars:$pos:1}"
+                    pos=$((pos + 1))
+                    case "$char" in
+                        D) direct='-D' ;;
+                        f) force='-f' ;;
+                        i) interactive='-i' ;;
+                        r|R) recursive='-r' ;;
+                        v) verbose='-v' ;;
+                        *)
+                            echo "unknown option -$char" >&2
+                            return 1 ;;
+                    esac
+                done ;;
+            *)
+                files+=("$1")
+                shift ;;
         esac
     done
 
     local arg confirm error
 
     if [[ -n "$direct" ]]; then
-        /bin/rm $force $recursive $verbose $interactive "$@"
+        # Expand the operand list only when it is non-empty: an empty
+        # "${files[@]}" is an unbound variable under `set -u` in older bash.
+        if [[ ${#files[@]} -gt 0 ]]; then
+            /bin/rm $force $recursive $verbose $interactive "${files[@]}"
+        else
+            /bin/rm $force $recursive $verbose $interactive
+        fi
         return $?
     fi
 
-    if [[ $# -eq 0 ]]; then
+    if [[ ${#files[@]} -eq 0 ]]; then
         if [[ -z "$force" ]]; then
             /bin/rm
         fi
@@ -184,7 +212,7 @@ rm() {
 
     error=0
 
-    for arg in "$@"; do
+    for arg in "${files[@]}"; do
         if trash_file_in_dir "$arg" "$trash_dir"; then
             /bin/rm $force $recursive $verbose $interactive "$arg"
             continue
